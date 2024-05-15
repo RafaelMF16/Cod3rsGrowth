@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,14 +9,31 @@ namespace Cod3rsGrowth.Dominio.EnumGenero
 {
     public enum Genero
     {
+        [Description("Jogo de tiro em primeira pessoa")] 
         FPS,
+
+        [Description("Jogo de competição eliminatória entre jogadores em um cenário de sobrevivência")]
         BATTLEROYALE,
+
+        [Description("Jogo de batalha em equipes dentro de arenas")]
         MOBA,
+
+        [Description("Jogo de interpretação de personagens")]
         RPG,
+
+        [Description("Jogo de interpretação de personagens aonde o jogador tem liberdade para explorar um mundo virtual aberto")]
         MMORPG,
+
+        [Description("Jogo de aventura em primeira pessoa")]
         FPA,
+
+        [Description("Jogo de estratégia em tempo real")]
         RTS,
+
+        [Description("Jogo aonde jogadores se enfrentam em batalhas reais em um mundo virtual")]
         PVP,
+
+        [Description("Jogo aonde uma experiência real é simulada em um mundo virtual")]
         SIMULADOR,
     }
 }
