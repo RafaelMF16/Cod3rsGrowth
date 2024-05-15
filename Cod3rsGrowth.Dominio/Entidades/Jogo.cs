@@ -1,4 +1,5 @@
 ﻿using Cod3rsGrowth.Dominio.EnumGenero;
+
 namespace Cod3rsGrowth.Dominio.Entidades
 {
     public class Jogo

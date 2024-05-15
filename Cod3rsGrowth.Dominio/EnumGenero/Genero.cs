@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+
 namespace Cod3rsGrowth.Dominio.EnumGenero
 {
     public enum Genero
