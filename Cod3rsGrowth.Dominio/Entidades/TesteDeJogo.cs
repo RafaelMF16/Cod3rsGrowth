@@ -7,7 +7,7 @@ namespace Cod3rsGrowth.Dominio.Entidades
 {
     public class TesteDeJogo
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public string NomeResponsavelDoTeste { get; set; }
         public string Descricao { get; set; }
         public decimal Nota { get; set; }
