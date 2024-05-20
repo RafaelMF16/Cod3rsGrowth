@@ -35,6 +35,12 @@ namespace Cod3rsGrowth.Testes
             var quantidadeDeElementosNaListaDoBanco = _servicoJogo.RemoverElemento(1).Count();
 
             Assert.Equal(1, quantidadeDeElementosNaListaDoBanco);
-        }  
+        }
+
+        [Fact]
+        public void Remover_Elemento_Quando_Chamado_Deve_Retonar_Exception_Caso_Id_Seja_Nulo()
+        {
+
+        }
     }
 }
