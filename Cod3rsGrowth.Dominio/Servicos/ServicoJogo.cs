@@ -14,5 +14,19 @@ namespace Cod3rsGrowth.Dominio.Servicos
             };
             return listaDeJogos;
         }
+
+        public List<Jogo> RemoverElemento(int id)
+        {
+            var listaDeJogos = ObterTodos();         
+
+            foreach(Jogo jogo in listaDeJogos.ToList())
+            {
+                if (jogo.Id == id)
+                {
+                    listaDeJogos.Remove(jogo);
+                }
+            }
+            return listaDeJogos;
+        }
     }
 }

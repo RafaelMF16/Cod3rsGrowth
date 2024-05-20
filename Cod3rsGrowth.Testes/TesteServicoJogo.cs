@@ -7,6 +7,7 @@ namespace Cod3rsGrowth.Testes
     public class TesteServicoJogo : TesteBase
     {
         private readonly IServicoJogo _servicoJogo;
+        
         public TesteServicoJogo()
         {   
             _servicoJogo = ServiceProvider.GetService<IServicoJogo>()
@@ -23,8 +24,19 @@ namespace Cod3rsGrowth.Testes
             };
 
             var listaDoBanco = _servicoJogo.ObterTodos();
+            // verificar se lista é de jogos
 
             Assert.Equivalent(listaEsperada, listaDoBanco);
         }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        public void Remover_Elemento_Quando_Chamado_Deve_Remover_Elemento_Da_Lista_De_Jogos_Que_Tem_O_Id_Passado(int id)
+        {
+            var quantidadeDeElementosNaListaDoBanco = _servicoJogo.RemoverElemento(id).Count();
+
+            Assert.Equal(1, quantidadeDeElementosNaListaDoBanco);
+        }  
     }
 }
