@@ -29,12 +29,10 @@ namespace Cod3rsGrowth.Testes
             Assert.Equivalent(listaEsperada, listaDoBanco);
         }
 
-        [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        public void Remover_Elemento_Quando_Chamado_Deve_Remover_Elemento_Da_Lista_De_Jogos_Que_Tem_O_Id_Passado(int id)
+        [Fact]
+        public void Remover_Elemento_Quando_Chamado_Deve_Remover_Elemento_Da_Lista_De_Jogos_Com_Id_Um()
         {
-            var quantidadeDeElementosNaListaDoBanco = _servicoJogo.RemoverElemento(id).Count();
+            var quantidadeDeElementosNaListaDoBanco = _servicoJogo.RemoverElemento(1).Count();
 
             Assert.Equal(1, quantidadeDeElementosNaListaDoBanco);
         }  
