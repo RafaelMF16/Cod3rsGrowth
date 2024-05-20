@@ -6,25 +6,25 @@ namespace Cod3rsGrowth.Testes
 {
     public class TesteServicoJogo : TesteBase
     {
-        public IServicoJogo ServicoJogo;
+        private readonly IServicoJogo _servicoJogo;
         public TesteServicoJogo()
         {   
-            ServicoJogo = ServiceProvider.GetService<IServicoJogo>();
+            _servicoJogo = ServiceProvider.GetService<IServicoJogo>()
+                ?? throw new Exception($"Erro ao obter servico {nameof(IServicoJogo)}");
         }
 
         [Fact]
-        public void TesteSeObterTodosRetornaListaDeJogos()
+        public void Obter_Todos_Quando_Chamado_Deve_Retornar_Lista_De_Jogos()
         {
-            //Arrange
-            var resultadoAtual = new List<Jogo>();
+            var listaEsperada = new List<Jogo>
+            {
+                new Jogo { Id = 1, Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 150m },
+                new Jogo { Id = 2, Nome = "GTA", Genero = Dominio.EnumGenero.Genero.TPS, Preco = 200m }
+            };
 
-            //Act
-            resultadoAtual.Add(new Jogo { Id = 1, Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 150m });
-            resultadoAtual.Add(new Jogo { Id = 2, Nome = "GTA", Genero = Dominio.EnumGenero.Genero.TPS, Preco = 200m });
-            var resultadoEsperado = ServicoJogo.ObterTodos();
+            var listaDoBanco = _servicoJogo.ObterTodos();
 
-            //Assert
-            Assert.Equivalent(resultadoEsperado, resultadoAtual);
+            Assert.Equivalent(listaEsperada, listaDoBanco);
         }
     }
 }

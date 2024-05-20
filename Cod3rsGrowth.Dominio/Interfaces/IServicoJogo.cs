@@ -4,6 +4,6 @@ namespace Cod3rsGrowth.Dominio.Interfaces
 {
     public interface IServicoJogo
     {
-        public List<Jogo> ObterTodos();
+        List<Jogo> ObterTodos();
     }
 }
