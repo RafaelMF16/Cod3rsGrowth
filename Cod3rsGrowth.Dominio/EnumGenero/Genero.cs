@@ -30,5 +30,11 @@ namespace Cod3rsGrowth.Dominio.EnumGenero
 
         [Description("Jogo aonde uma experiência real é simulada em um mundo virtual")]
         SIMULADOR,
+
+        [Description("Jogo que coloca jogadores em situações extremas aonde o objetivo é sobreviver")]
+        SOBREVIVENCIA,
+
+        [Description("Jogo de tiro em terceira pessoa")]
+        TPS
     }
 }
