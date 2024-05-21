@@ -1,5 +1,6 @@
 ﻿using Cod3rsGrowth.Dominio.Interfaces;
 using Cod3rsGrowth.Dominio.Servicos;
+using Cod3rsGrowth.Infra.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Testes
@@ -9,6 +10,8 @@ namespace Cod3rsGrowth.Testes
         public static void AdicionarServicosAoEscopo(ServiceCollection servicos)
         {
             servicos.AddScoped<IServicoJogo, ServicoJogo>();
+            servicos.AddScoped<IJogoRepositorio, JogoRepositorioMock>();
+            servicos.AddScoped<ITesteDeJogoRepositorio, TesteDeJogoRepositorioMock>();
         }
     }
 }
