@@ -1,30 +1,31 @@
-﻿using Cod3rsGrowth.Infra.Interfaces;
+﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Infra.Interfaces;
 
 namespace Cod3rsGrowth.Testes
 {
     public class TesteDeJogoRepositorioMock : ITesteDeJogoRepositorio
     {
-        public void adicionar()
+        public void Adicionar(TesteDeJogo testeDeJogo)
         {
             throw new NotImplementedException();
         }
 
-        public void atualizar()
+        public void Atualizar(TesteDeJogo testeDeJogo)
         {
             throw new NotImplementedException();
         }
 
-        public void ObterPorId()
+        public void Deletar(TesteDeJogo testeDeJogo)
         {
             throw new NotImplementedException();
         }
 
-        public void ObterTodos()
+        public TesteDeJogo ObterPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void remover()
+        public List<TesteDeJogo> ObterTodos()
         {
             throw new NotImplementedException();
         }

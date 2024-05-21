@@ -1,10 +1,13 @@
-﻿namespace Cod3rsGrowth.Infra.Interfaces;
+﻿using Cod3rsGrowth.Dominio.Entidades;
 
-public interface ITesteDeJogoRepositorio
+namespace Cod3rsGrowth.Infra.Interfaces
 {
-    void ObterTodos();
-    void ObterPorId();
-    void adicionar();
-    void atualizar();
-    void remover();
+    public interface ITesteDeJogoRepositorio
+    {
+        List<TesteDeJogo> ObterTodos();
+        TesteDeJogo ObterPorId(int id);
+        void Adicionar(TesteDeJogo testeDeJogo);
+        void Atualizar(TesteDeJogo testeDeJogo);
+        void Deletar(TesteDeJogo testeDeJogo);
+    }
 }
