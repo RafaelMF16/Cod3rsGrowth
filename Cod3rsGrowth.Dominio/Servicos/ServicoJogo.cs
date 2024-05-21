@@ -13,20 +13,6 @@ namespace Cod3rsGrowth.Dominio.Servicos
                 new Jogo { Id = 2, Nome = "GTA", Genero = EnumGenero.Genero.TPS, Preco = 200m }
             };
             return listaDeJogos;
-        }
-
-        public List<Jogo> RemoverElemento(int id)
-        {
-            var listaDeJogos = ObterTodos();         
-
-            foreach(Jogo jogo in listaDeJogos.ToList())
-            {
-                if (jogo.Id == id)
-                {
-                    listaDeJogos.Remove(jogo);
-                }
-            }
-            return listaDeJogos;
-        }
+        }       
     }
 }

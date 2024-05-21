@@ -4,7 +4,6 @@ namespace Cod3rsGrowth.Dominio.Interfaces
 {
     public interface IServicoJogo
     {
-        List<Jogo> ObterTodos();
-        List<Jogo> RemoverElemento(int id);
+        List<Jogo> ObterTodos();        
     }
 }

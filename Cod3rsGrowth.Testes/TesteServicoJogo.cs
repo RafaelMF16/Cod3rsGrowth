@@ -7,9 +7,9 @@ namespace Cod3rsGrowth.Testes
     public class TesteServicoJogo : TesteBase
     {
         private readonly IServicoJogo _servicoJogo;
-        
+
         public TesteServicoJogo()
-        {   
+        {
             _servicoJogo = ServiceProvider.GetService<IServicoJogo>()
                 ?? throw new Exception($"Erro ao obter servico {nameof(IServicoJogo)}");
         }
@@ -24,23 +24,16 @@ namespace Cod3rsGrowth.Testes
             };
 
             var listaDoBanco = _servicoJogo.ObterTodos();
-            // verificar se lista é de jogos
 
             Assert.Equivalent(listaEsperada, listaDoBanco);
         }
 
         [Fact]
-        public void Remover_Elemento_Quando_Chamado_Deve_Remover_Elemento_Da_Lista_De_Jogos_Com_Id_Um()
+        public void Obter_Todos_Quando_Chamado_Deve_Retornar_Uma_Lista_Do_Tipo_Jogo()
         {
-            var quantidadeDeElementosNaListaDoBanco = _servicoJogo.RemoverElemento(1).Count();
+            var listaDoBanco = _servicoJogo.ObterTodos();
 
-            Assert.Equal(1, quantidadeDeElementosNaListaDoBanco);
-        }
-
-        [Fact]
-        public void Remover_Elemento_Quando_Chamado_Deve_Retonar_Exception_Caso_Id_Seja_Nulo()
-        {
-
+            Assert.IsType<List<Jogo>>(listaDoBanco);
         }
     }
 }
