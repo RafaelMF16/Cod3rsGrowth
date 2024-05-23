@@ -2,8 +2,8 @@
 
 namespace Cod3rsGrowth.Servico.Interfaces
 {
-    public interface IServicoJogo
+    public interface IServicoTesteDeJogo
     {
-        List<Jogo> CriarLista();      
+        List<TesteDeJogo> CriarLista();
     }
 }
