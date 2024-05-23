@@ -1,6 +1,6 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 
-namespace Cod3rsGrowth.Dominio.Interfaces
+namespace Cod3rsGrowth.Servico.Interfaces
 {
     public interface IServicoJogo
     {

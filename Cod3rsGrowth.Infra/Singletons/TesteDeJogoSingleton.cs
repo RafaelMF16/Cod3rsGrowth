@@ -7,16 +7,17 @@ namespace Cod3rsGrowth.Infra.Singletons
         private TesteDeJogoSingleton() { }
 
         private static TesteDeJogoSingleton? _instancia;
-        private static Object _singletonlock = new Object();
 
         public static TesteDeJogoSingleton Instancia
         {
             get
             {
-                lock (_singletonlock)
+                lock (typeof(TesteDeJogoSingleton))
                 {
                     if (_instancia == null)
+                    {
                         _instancia = new TesteDeJogoSingleton();
+                    }
                 }
                 return _instancia;
             }

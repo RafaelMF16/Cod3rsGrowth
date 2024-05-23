@@ -1,8 +1,8 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
-using Cod3rsGrowth.Dominio.Interfaces;
+using Cod3rsGrowth.Servico.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cod3rsGrowth.Testes
+namespace Cod3rsGrowth.Testes.Testes
 {
     public class TesteServicoJogo : TesteBase
     {
@@ -11,7 +11,7 @@ namespace Cod3rsGrowth.Testes
         public TesteServicoJogo()
         {
             _servicoJogo = ServiceProvider.GetService<IServicoJogo>()
-                ?? throw new Exception($"Erro ao obter servico {nameof(IServicoJogo)}");
+                ?? throw new Exception($"Erro ao obter serviço {nameof(IServicoJogo)}");
         }
 
         [Fact]
