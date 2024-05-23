@@ -8,6 +8,6 @@
         public decimal Nota { get; set; }
         public bool Aprovado { get; set; }
         public DateTime DataRealizacaoTeste { get; set; }
-        public Jogo JogoId { get; set; }
+        public int JogoId { get; set; }
     }
 }

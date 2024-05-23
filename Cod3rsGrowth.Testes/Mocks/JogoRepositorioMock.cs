@@ -1,7 +1,7 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
 
-namespace Cod3rsGrowth.Testes
+namespace Cod3rsGrowth.Testes.Mocks
 {
     public class JogoRepositorioMock : IJogoRepositorio
     {
