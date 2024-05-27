@@ -15,6 +15,16 @@ namespace Cod3rsGrowth.Testes.Testes
                 ?? throw new Exception($"Erro ao obter serviço{nameof(ITesteDeJogoRepositorio)}");
         }
 
+        [Fact]
+        public void Obter_Todos_Quando_Chamado_Retorna_Uma_Lista_De_Teste_De_Jogo()
+        {
+            var listaEsperada = CriarLista();
+
+            var listaDoBanco = _servicoTesteDeJogo.ObterTodos();
+
+            Assert.Equivalent(listaEsperada, listaDoBanco);
+        }
+
         public List<TesteDeJogo> CriarLista()
         {
             var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
@@ -55,17 +65,7 @@ namespace Cod3rsGrowth.Testes.Testes
 
             listaTesteDeJogoSingleton.AddRange(listaDeTesteDeJogo);
 
-            return listaTesteDeJogoSingleton;
-        }
-
-        [Fact]
-        public void Obter_Todos_Quando_Chamado_Retorna_Uma_Lista_De_Teste_De_Jogo()
-        {
-            var listaEsperada = CriarLista();
-
-            var listaDoBanco = _servicoTesteDeJogo.ObterTodos();
-
-            Assert.Equivalent(listaEsperada, listaDoBanco);
+            return listaDeTesteDeJogo;
         }
     }
 }

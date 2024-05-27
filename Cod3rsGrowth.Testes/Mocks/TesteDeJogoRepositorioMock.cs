@@ -29,7 +29,7 @@ namespace Cod3rsGrowth.Testes.Mocks
 
         public List<TesteDeJogo> ObterTodos()
         {
-            var listaDoBanco = _instancia.ToList();
+            var listaDoBanco = _instancia;
 
             return listaDoBanco;
         }
