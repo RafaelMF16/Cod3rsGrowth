@@ -1,5 +1,4 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
-using Cod3rsGrowth.Infra.Singletons;
 using Cod3rsGrowth.Servico.Interfaces;
 
 namespace Cod3rsGrowth.Servico.Servicos
@@ -8,8 +7,6 @@ namespace Cod3rsGrowth.Servico.Servicos
     {
         public List<Jogo> CriarLista()
         {
-            var listaJogoSingleton = JogoSingleton.Instancia;
-
             var listaDeJogo = new List<Jogo>
             {
                 new Jogo
@@ -35,9 +32,7 @@ namespace Cod3rsGrowth.Servico.Servicos
                 }
             };
 
-            listaJogoSingleton.AddRange(listaDeJogo);
-
-            return listaJogoSingleton;
+            return listaDeJogo;
         }
     }
 }

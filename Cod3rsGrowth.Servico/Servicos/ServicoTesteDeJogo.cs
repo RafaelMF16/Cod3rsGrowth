@@ -8,8 +8,6 @@ namespace Cod3rsGrowth.Servico.Servicos
     {
         public List<TesteDeJogo> CriarLista()
         {
-            var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
-
             var listaDeTesteDeJogo = new List<TesteDeJogo>
             {
                 new TesteDeJogo
@@ -44,9 +42,7 @@ namespace Cod3rsGrowth.Servico.Servicos
                 }
             };
 
-            listaTesteDeJogoSingleton.AddRange(listaDeTesteDeJogo);
-
-            return listaTesteDeJogoSingleton;
+            return listaDeTesteDeJogo;
         }
     }
 }
