@@ -60,9 +60,9 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void Criar_Lista_Quando_Chamado_Deve_Retornar_Uma_Lista_Do_Tipo_Teste_De_Jogo()
         {
-            var listaDoBanco = _servicoJogo.CriarLista();
+            var listaDoBanco = _servicoJogo.CriarLista().ToList();
 
-            Assert.IsType<TesteDeJogoSingleton>(listaDoBanco);
+            Assert.IsType<List<TesteDeJogo>>(listaDoBanco);
         }
     }
 }
