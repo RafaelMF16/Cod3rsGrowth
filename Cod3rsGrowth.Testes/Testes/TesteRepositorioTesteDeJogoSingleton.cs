@@ -59,7 +59,6 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void Obter_Todos_Quando_Chamado_Retorna_Uma_Lista_De_Teste_De_Jogo()
         {
-            //arrange
             var listaEsperada = new List<TesteDeJogo>
             {
                 new TesteDeJogo
@@ -93,10 +92,10 @@ namespace Cod3rsGrowth.Testes.Testes
                     JogoId = 3
                 }
             };
-            //act
+
             CriarLista();
             var listaDoBanco = _servicoTesteDeJogo.ObterTodos();
-            //assert
+
             Assert.Equivalent(listaEsperada, listaDoBanco);
         }
     }
