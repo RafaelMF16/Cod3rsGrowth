@@ -15,7 +15,7 @@ namespace Cod3rsGrowth.Testes.Testes
                 ?? throw new Exception($"Erro ao obter o serviço {nameof(IJogoRepositorio)}");
         }
 
-        public void CriarLista()
+        public List<Jogo> CriarLista()
         {
             var listaJogoSingleton = JogoSingleton.Instancia;
 
@@ -45,37 +45,15 @@ namespace Cod3rsGrowth.Testes.Testes
             };
 
             listaJogoSingleton.AddRange(listaDeJogo);
+
+            return listaJogoSingleton;
         }
 
         [Fact]
         public void Obter_Todos_Quando_Chamado_Retorna_Uma_Lista_De_Jogo()
         {
-            var listaEsperada = new List<Jogo>
-            {
-                new Jogo
-                {
-                    Id = 1,
-                    Nome = "Minecraft",
-                    Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA,
-                    Preco = 100m
-                },
-                new Jogo
-                {
-                    Id = 2,
-                    Nome = "GTA",
-                    Genero = Dominio.EnumGenero.Genero.TPS,
-                    Preco = 200m
-                },
-                new Jogo
-                {
-                    Id = 3,
-                    Nome = "Counter Strike 2",
-                    Genero = Dominio.EnumGenero.Genero.FPS,
-                    Preco = 60m
-                }
-            };
+            var listaEsperada = CriarLista();
             
-            CriarLista();
             var listaDoBanco = _servicoJogo.ObterTodos();
             
             Assert.Equivalent(listaEsperada, listaDoBanco);

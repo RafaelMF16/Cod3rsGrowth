@@ -6,6 +6,7 @@ namespace Cod3rsGrowth.Testes.Mocks
 {
     public class TesteDeJogoRepositorioMock : ITesteDeJogoRepositorio
     {
+        private TesteDeJogoSingleton _instancia = TesteDeJogoSingleton.Instancia;
         public void Adicionar(TesteDeJogo testeDeJogo)
         {
             throw new NotImplementedException();
@@ -28,7 +29,7 @@ namespace Cod3rsGrowth.Testes.Mocks
 
         public List<TesteDeJogo> ObterTodos()
         {
-            var listaDoBanco = TesteDeJogoSingleton.Instancia.ToList();
+            var listaDoBanco = _instancia.ToList();
 
             return listaDoBanco;
         }
