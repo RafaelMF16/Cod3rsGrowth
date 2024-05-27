@@ -1,13 +1,34 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Singletons;
-using Cod3rsGrowth.Servico.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Cod3rsGrowth.Servico.Servicos
+namespace Cod3rsGrowth.Testes.Testes
 {
-    public class ServicoTesteDeJogo : IServicoTesteDeJogo
+    public class TesteRepositorioTesteDeJogoSingleton : TesteBase
     {
+        private readonly ITesteDeJogoRepositorio _servicoTesteDeJogo;
+
+        public TesteRepositorioTesteDeJogoSingleton()
+        {
+            _servicoTesteDeJogo = ServiceProvider.GetService<ITesteDeJogoRepositorio>()
+                ?? throw new Exception($"Erro ao obter serviço{nameof(ITesteDeJogoRepositorio)}");
+        }
+
+        [Fact]
+        public void Obter_Todos_Quando_Chamado_Retorna_Uma_Lista_De_Teste_De_Jogo()
+        {
+            var listaEsperada = CriarLista();
+
+            var listaDoBanco = _servicoTesteDeJogo.ObterTodos();
+
+            Assert.Equivalent(listaEsperada, listaDoBanco);
+        }
+
         public List<TesteDeJogo> CriarLista()
         {
+            var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
+
             var listaDeTesteDeJogo = new List<TesteDeJogo>
             {
                 new TesteDeJogo
@@ -41,6 +62,8 @@ namespace Cod3rsGrowth.Servico.Servicos
                     JogoId = 3
                 }
             };
+
+            listaTesteDeJogoSingleton.AddRange(listaDeTesteDeJogo);
 
             return listaDeTesteDeJogo;
         }

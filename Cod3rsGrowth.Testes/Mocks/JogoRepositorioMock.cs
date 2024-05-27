@@ -1,10 +1,13 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
+using Cod3rsGrowth.Infra.Singletons;
 
 namespace Cod3rsGrowth.Testes.Mocks
 {
     public class JogoRepositorioMock : IJogoRepositorio
     {
+        private JogoSingleton _instancia = JogoSingleton.Instancia;
+
         public void Adicionar(Jogo jogo)
         {
             throw new NotImplementedException();
@@ -27,7 +30,9 @@ namespace Cod3rsGrowth.Testes.Mocks
 
         public List<Jogo> ObterTodos()
         {
-            throw new NotImplementedException();
+            var listaDoBanco = _instancia;
+
+            return listaDoBanco;
         }
     }
 }
