@@ -38,6 +38,6 @@ namespace Cod3rsGrowth.Servico.Servicos
             listaJogoSingleton.AddRange(listaDeJogo);
 
             return listaJogoSingleton;
-        }       
+        }
     }
 }

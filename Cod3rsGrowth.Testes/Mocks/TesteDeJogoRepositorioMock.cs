@@ -1,5 +1,6 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
+using Cod3rsGrowth.Infra.Singletons;
 
 namespace Cod3rsGrowth.Testes.Mocks
 {
@@ -27,7 +28,9 @@ namespace Cod3rsGrowth.Testes.Mocks
 
         public List<TesteDeJogo> ObterTodos()
         {
-            throw new NotImplementedException();
+            var listaDoBanco = TesteDeJogoSingleton.Instancia.ToList();
+
+            return listaDoBanco;
         }
     }
 }
