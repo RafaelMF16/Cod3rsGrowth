@@ -25,6 +25,31 @@ namespace Cod3rsGrowth.Testes.Testes
             Assert.Equivalent(listaEsperada, listaDoBanco);
         }
 
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void Obter_Por_Id_Quando_Chamado_Retorna_O_Jogo_Que_Tem_O_Id_Um_Dois_Ou_Tres(int id)
+        {
+            CriarLista();
+
+            var idEsperado = id;
+
+            var jogo = _servicoJogo.ObterPorId(id);
+
+            Assert.Equal(idEsperado, jogo.Id);
+        }
+
+        [Fact]
+        public void Obter_Por_Id_Quando_Chamado_Lanca_Excecao_Caso_O_Id_Passado_Seja_Quatro()
+        {
+            CriarLista();
+
+            var idNulo = 4;
+
+            Assert.Throws<Exception>(() => _servicoJogo.ObterPorId(idNulo));
+        }
+
         public List<Jogo> CriarLista()
         {
             var listaJogoSingleton = JogoSingleton.Instancia;

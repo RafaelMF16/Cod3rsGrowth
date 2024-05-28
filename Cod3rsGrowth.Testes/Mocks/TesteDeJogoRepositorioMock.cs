@@ -24,7 +24,10 @@ namespace Cod3rsGrowth.Testes.Mocks
 
         public TesteDeJogo ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            var obterTesteDeJogo = _instancia.Where(x => x.Id == id).FirstOrDefault()
+                ?? throw new Exception($"Erro ao obter teste de jogo com id {id}");
+
+            return obterTesteDeJogo;
         }
 
         public List<TesteDeJogo> ObterTodos()
