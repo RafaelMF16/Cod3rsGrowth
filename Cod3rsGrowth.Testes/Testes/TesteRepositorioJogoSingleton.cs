@@ -25,15 +25,15 @@ namespace Cod3rsGrowth.Testes.Testes
             Assert.Equivalent(listaEsperada, listaDoBanco);
         }
 
-        [Fact]
-        public void Obter_Por_Id_Quando_Chamado_Retorna_O_Jogo_Que_Tem_O_Id_Passado_Como_Parametro()
+        [Theory]
+        [InlineData(1)]
+        public void Obter_Por_Id_Quando_Chamado_Retorna_O_Jogo_Que_Tem_O_Id_Passado_Como_Parametro(int id)
         {
             CriarLista();
 
-            var idEsperado = 1;
-            var jogo = _servicoJogo.ObterPorId(1);
+            var jogo = _servicoJogo.ObterPorId(id);
 
-            Assert.Equal(idEsperado, jogo.Id);
+            Assert.Equal(1, jogo.Id);
         }
 
         [Fact]
