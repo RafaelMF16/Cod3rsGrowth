@@ -27,21 +27,27 @@ namespace Cod3rsGrowth.Testes.Testes
 
         [Theory]
         [InlineData(1)]
-        public void Obter_Por_Id_Quando_Chamado_Retorna_O_Teste_De_Jogo_Que_Tem_O_Id_Passado_Como_Parametro(int id)
+        [InlineData(2)]
+        [InlineData(3)]
+        public void Obter_Por_Id_Quando_Chamado_Retorna_O_Teste_De_Jogo_Que_Tem_O_Id_Um_Dois_Ou_Tres(int id)
         {
             CriarLista();
 
-            var testeDeJogo = _servicoTesteDeJogo.ObterPorId(id);
+            var idEsperado = id;
 
-            Assert.Equal(1, testeDeJogo.Id);
+            var obterTesteDeJogo = _servicoTesteDeJogo.ObterPorId(id);
+
+            Assert.Equal(idEsperado, obterTesteDeJogo.Id);
         }
 
         [Fact]
-        public void Obter_Por_Id_Quando_Chamado_Lanca_Excecao_Caso_O_Id_Passado_Seja_Nulo()
+        public void Obter_Por_Id_Quando_Chamado_Lanca_Excecao_Caso_O_Id_Passado_Seja_Quatro()
         {
             CriarLista();
 
-            Assert.Throws<Exception>(() => _servicoTesteDeJogo.ObterPorId(4));
+            var idNulo = 4;
+
+            Assert.Throws<Exception>(() => _servicoTesteDeJogo.ObterPorId(idNulo));
         }
 
         public List<TesteDeJogo> CriarLista()
