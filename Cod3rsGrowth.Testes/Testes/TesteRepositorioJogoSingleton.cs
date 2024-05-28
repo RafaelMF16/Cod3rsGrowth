@@ -35,9 +35,9 @@ namespace Cod3rsGrowth.Testes.Testes
 
             var idEsperado = id;
 
-            var obterJogo = _servicoJogo.ObterPorId(id);
+            var jogo = _servicoJogo.ObterPorId(id);
 
-            Assert.Equal(idEsperado, obterJogo.Id);
+            Assert.Equal(idEsperado, jogo.Id);
         }
 
         [Fact]
