@@ -1,15 +1,26 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Singletons;
+using FluentValidation;
 
 namespace Cod3rsGrowth.Testes.Mocks
 {
     public class TesteDeJogoRepositorioMock : ITesteDeJogoRepositorio
     {
-        private TesteDeJogoSingleton _instancia = TesteDeJogoSingleton.Instancia;
+        private TesteDeJogoSingleton _instancia;
+        private readonly IValidator<TesteDeJogo> _testeDeJogoValidador;
+
+        public TesteDeJogoRepositorioMock(IValidator<TesteDeJogo> validador)
+        {
+            _instancia = TesteDeJogoSingleton.Instancia;
+
+            _testeDeJogoValidador = validador;
+        }
         public void Adicionar(TesteDeJogo testeDeJogo)
         {
-            throw new NotImplementedException();
+            _testeDeJogoValidador.ValidateAndThrow(testeDeJogo);
+
+            _instancia.Add(testeDeJogo);
         }
 
         public void Atualizar(TesteDeJogo testeDeJogo)

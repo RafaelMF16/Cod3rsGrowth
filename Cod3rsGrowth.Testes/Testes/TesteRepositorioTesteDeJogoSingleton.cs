@@ -13,12 +13,14 @@ namespace Cod3rsGrowth.Testes.Testes
         {
             _servicoTesteDeJogo = ServiceProvider.GetService<ITesteDeJogoRepositorio>()
                 ?? throw new Exception($"Erro ao obter serviço{nameof(ITesteDeJogoRepositorio)}");
+
+            TesteDeJogoSingleton.Instancia.Clear();
         }
 
         [Fact]
-        public void Obter_Todos_Quando_Chamado_Retorna_Uma_Lista_De_Teste_De_Jogo()
+        public void obter_todos_quando_chamado_retorna_uma_lista_de_teste_de_jogo()
         {
-            var listaEsperada = CriarLista();
+            var listaEsperada = criarLista();
 
             var listaDoBanco = _servicoTesteDeJogo.ObterTodos();
 
@@ -29,9 +31,9 @@ namespace Cod3rsGrowth.Testes.Testes
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
-        public void Obter_Por_Id_Quando_Chamado_Retorna_O_Teste_De_Jogo_Que_Tem_O_Id_Um_Dois_Ou_Tres(int id)
+        public void obter_por_id_quando_chamado_retorna_o_teste_de_jogo_que_tem_o_id_um_dois_ou_tres(int id)
         {
-            CriarLista();
+            criarLista();
 
             var idEsperado = id;
 
@@ -41,16 +43,72 @@ namespace Cod3rsGrowth.Testes.Testes
         }
 
         [Fact]
-        public void Obter_Por_Id_Quando_Chamado_Lanca_Excecao_Caso_O_Id_Passado_Seja_Quatro()
+        public void obter_por_id_quando_chamado_lanca_excecao_caso_o_id_passado_seja_quatro()
         {
-            CriarLista();
+            criarLista();
 
             var idNulo = 4;
 
             Assert.Throws<Exception>(() => _servicoTesteDeJogo.ObterPorId(idNulo));
         }
 
-        public List<TesteDeJogo> CriarLista()
+        [Fact]
+        public void adicionar_quando_chamado_adiciona_teste_de_jogo_no_repositorio_singleton()
+        {
+            var testeDeJogo = new TesteDeJogo {
+                Id = 4,
+                NomeResponsavelDoTeste = "Victor",
+                Descricao = "Gostei muito, mas o jogo é muito fácil",
+                Nota = 8m,
+                Aprovado = true,
+                DataRealizacaoTeste = DateTime.Today,
+                JogoId = 4
+            };
+
+            _servicoTesteDeJogo.Adicionar(testeDeJogo);
+
+            Assert.Contains(TesteDeJogoSingleton.Instancia, testeDeJogo1 => testeDeJogo1 == testeDeJogo);
+        }
+
+        [Fact]
+        public void adicionar_quando_chamado_nao_deve_adicionar_teste_de_jogo_caso_nota_nao_esteja_entre_zero_e_dez()
+        {
+            var testeDeJogo = new TesteDeJogo
+            {
+                Id = 4,
+                NomeResponsavelDoTeste = "Victor",
+                Descricao = "Gostei muito, mas o jogo é muito fácil",
+                Nota = 12m,
+                Aprovado = true,
+                DataRealizacaoTeste = DateTime.Today,
+                JogoId = 4
+            };
+
+            var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoTesteDeJogo.Adicionar(testeDeJogo));
+
+            Assert.Equal("Nota deve estar entre 0 e 10", mensagemDeErro.Errors.First().ErrorMessage);
+        }
+
+        [Fact]
+        public void adicionar_quando_chamado_nao_deve_adicionar_teste_de_jogo_caso_data_realizacao_teste_nao_seja_a_data_atual()
+        {
+            var testeDeJogo = new TesteDeJogo
+            {
+                Id = 4,
+                NomeResponsavelDoTeste = "Victor",
+                Descricao = "Gostei muito, mas o jogo é muito fácil",
+                Nota = 8m,
+                Aprovado = true,
+                DataRealizacaoTeste = DateTime.Parse("30/05/2024"),
+                JogoId = 4
+            };
+
+            var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoTesteDeJogo.Adicionar(testeDeJogo));
+
+            Assert.Equal("Data de realização do teste deve ser a data atual", mensagemDeErro.Errors.First().ErrorMessage);
+        }
+
+        public List<TesteDeJogo> criarLista()
         {
             var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
 
