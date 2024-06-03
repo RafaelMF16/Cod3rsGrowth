@@ -33,11 +33,7 @@ namespace Cod3rsGrowth.Servico.Validadores
 
         private static bool validaEnum(Genero genero)
         {
-            if (genero == Genero.NAODEFINIDO)
-            {
-                return false;
-            }
-            return true;
+            return !(genero == Genero.NAODEFINIDO);
         }
     }
 }
