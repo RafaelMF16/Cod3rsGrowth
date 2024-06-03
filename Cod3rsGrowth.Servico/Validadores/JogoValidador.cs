@@ -23,16 +23,16 @@ namespace Cod3rsGrowth.Servico.Validadores
             RuleFor(jogo => jogo.Genero)
                 .IsInEnum()
                 .WithMessage("O Gênero não é válido")
-                .Must((jogo, genero) => validaEnum(jogo.Genero)).WithMessage("Enum não pode ser NAODEFINIDO");
+                .Must((jogo, genero) => validaEnum(jogo.Genero)).WithMessage("O Gênero não é válido");
 
             RuleFor(jogo => jogo.Preco)
                 .PrecisionScale(6, 2, true)
                 .WithMessage("Preco deve ter 4 digitos e duas casas decimais");
         }
 
-        public bool validaEnum(Genero genero)
+        private static bool validaEnum(Genero genero)
         {
-            if (genero == (Genero)0)
+            if (genero == Genero.NAODEFINIDO)
             {
                 return false;
             }

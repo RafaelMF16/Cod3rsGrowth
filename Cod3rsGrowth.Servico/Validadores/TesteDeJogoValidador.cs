@@ -48,11 +48,8 @@ namespace Cod3rsGrowth.Servico.Validadores
         {
             var menorNota = 0;
             var maiorNota = 10;
-            if (nota >= menorNota && nota <= maiorNota)
-            {
-                return true;
-            }
-            return false;
+            
+            return nota >= menorNota && nota <= maiorNota;
         }
     }
 }

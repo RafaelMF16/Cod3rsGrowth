@@ -79,7 +79,7 @@ namespace Cod3rsGrowth.Testes.Testes
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Adicionar(jogo));
 
-            Assert.Equal("Enum não pode ser NAODEFINIDO", mensagemDeErro.Errors.First().ErrorMessage);
+            Assert.Equal("O Gênero não é válido", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
         public List<Jogo> criarLista()
