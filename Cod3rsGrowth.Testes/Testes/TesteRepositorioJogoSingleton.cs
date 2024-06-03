@@ -13,25 +13,27 @@ namespace Cod3rsGrowth.Testes.Testes
         {
             _servicoJogo = ServiceProvider.GetService<IJogoRepositorio>()
                 ?? throw new Exception($"Erro ao obter o serviço {nameof(IJogoRepositorio)}");
+
+            JogoSingleton.Instancia.Clear();
         }
 
         [Fact]
-        public void Obter_Todos_Quando_Chamado_Retorna_Uma_Lista_De_Jogo()
+        public void obter_todos_quando_chamado_retorna_uma_lista_de_jogo()
         {
-            var listaEsperada = CriarLista();
+            var listaEsperada = criarLista();
 
             var listaDoBanco = _servicoJogo.ObterTodos();
 
-            Assert.Equivalent(listaEsperada, listaDoBanco);
+            Assert.Equivalent(listaEsperada, listaDoBanco, true);
         }
 
         [Theory]
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
-        public void Obter_Por_Id_Quando_Chamado_Retorna_O_Jogo_Que_Tem_O_Id_Um_Dois_Ou_Tres(int id)
+        public void obter_por_id_quando_chamado_retorna_o_jogo_que_tem_o_id_um_dois_ou_tres(int id)
         {
-            CriarLista();
+            criarLista();
 
             var idEsperado = id;
 
@@ -41,16 +43,46 @@ namespace Cod3rsGrowth.Testes.Testes
         }
 
         [Fact]
-        public void Obter_Por_Id_Quando_Chamado_Lanca_Excecao_Caso_O_Id_Passado_Seja_Quatro()
+        public void obter_por_id_quando_chamado_lanca_excecao_caso_o_id_passado_seja_quatro()
         {
-            CriarLista();
+            criarLista();
 
             var idNulo = 4;
 
             Assert.Throws<Exception>(() => _servicoJogo.ObterPorId(idNulo));
         }
 
-        public List<Jogo> CriarLista()
+        [Fact]
+        public void adicionar_quando_chamado_adiciona_jogo_no_repositorio_singleton()
+        {
+            var jogo = new Jogo { Id = 4, Nome = "Elden Ring", Genero = Dominio.EnumGenero.Genero.RPG, Preco = 200.00m };
+
+            _servicoJogo.Adicionar(jogo);
+
+            Assert.Contains(JogoSingleton.Instancia, jogo1 => jogo1 == jogo);
+        }
+
+        [Fact]
+        public void adicionar_quando_chamado_nao_deve_adicionar_jogo_caso_id_seja_nulo()
+        {
+            var jogo = new Jogo { Nome = "Elden Ring", Genero = Dominio.EnumGenero.Genero.RPG, Preco = 200.00m };
+
+            var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Adicionar(jogo));
+
+            Assert.Equal("O campo id é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
+        }
+        
+        [Fact]
+        public void adicionar_quando_chamado_nao_deve_adicionar_jogo_caso_enum_seja_vazio()
+        {
+            var jogo = new Jogo { Id = 4, Nome = "Elden Ring", Preco = 200.00m };
+
+            var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Adicionar(jogo));
+
+            Assert.Equal("O Gênero não é válido", mensagemDeErro.Errors.First().ErrorMessage);
+        }
+
+        public List<Jogo> criarLista()
         {
             var listaJogoSingleton = JogoSingleton.Instancia;
 
