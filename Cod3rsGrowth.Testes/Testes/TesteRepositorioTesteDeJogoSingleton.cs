@@ -108,6 +108,68 @@ namespace Cod3rsGrowth.Testes.Testes
             Assert.Equal("Data de realização do teste deve ser a data atual", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
+        [Fact]
+        public void atualizar_quando_chamado_deve_atualizar_o_campo_nota_do_teste_de_jogo_com_id_dois()
+        {
+            criarLista();
+
+            var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
+
+            var testeDeJogoAtualizado = new TesteDeJogo
+            {
+                Id = 2,
+                NomeResponsavelDoTeste = "Paulo",
+                Descricao = "Não gostei do Jogo",
+                Nota = 2m,
+                Aprovado = false,
+                DataRealizacaoTeste = DateTime.Today,
+                JogoId = 1
+            };
+
+            _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado);
+
+            Assert.Contains(listaTesteDeJogoSingleton, testeDeJogo => testeDeJogo == testeDeJogoAtualizado);
+        }
+
+        [Fact]
+        public void atualizar_quando_chamado_lanca_excecao_caso_id_passado_nao_exista()
+        {
+            criarLista();
+
+            var testeDeJogoAtualizado = new TesteDeJogo
+            {
+                Id = 4,
+                NomeResponsavelDoTeste = "Paulo",
+                Descricao = "Não gostei do Jogo",
+                Nota = 2m,
+                Aprovado = false,
+                DataRealizacaoTeste = DateTime.Today,
+                JogoId = 1
+            };
+
+            Assert.Throws<Exception>(() => _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado));
+        }
+
+        [Fact]
+        public void atualizar_quando_chamado_nao_deve_atualizar_teste_de_jogo_caso_id_seja_nulo()
+        {
+            criarLista();
+
+            var testeDeJogoAtualizado = new TesteDeJogo
+            {
+                NomeResponsavelDoTeste = "Paulo",
+                Descricao = "Não gostei do Jogo",
+                Nota = 2m,
+                Aprovado = false,
+                DataRealizacaoTeste = DateTime.Today,
+                JogoId = 1
+            };
+
+            var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado));
+
+            Assert.Equal("O campo id é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
+        }
+
         public List<TesteDeJogo> criarLista()
         {
             var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;

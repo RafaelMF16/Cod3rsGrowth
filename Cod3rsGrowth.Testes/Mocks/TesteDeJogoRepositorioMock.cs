@@ -17,15 +17,23 @@ namespace Cod3rsGrowth.Testes.Mocks
             _testeDeJogoValidador = validador;
         }
         public void Adicionar(TesteDeJogo testeDeJogo)
+
         {
             _testeDeJogoValidador.ValidateAndThrow(testeDeJogo);
 
             _instancia.Add(testeDeJogo);
         }
 
-        public void Atualizar(TesteDeJogo testeDeJogo)
+        public void Atualizar(TesteDeJogo testeDeJogoAtualizado)
         {
-            throw new NotImplementedException();
+            _testeDeJogoValidador.ValidateAndThrow(testeDeJogoAtualizado);
+
+            var testeDeJogoDesatualizado = _instancia.Find(testeDeJogo => testeDeJogo.Id == testeDeJogoAtualizado.Id)
+                ?? throw new Exception($"Erro ao obter teste de jogo com id {testeDeJogoAtualizado.Id}");
+
+            var index = _instancia.IndexOf(testeDeJogoDesatualizado);
+
+            _instancia[index] = testeDeJogoAtualizado;
         }
 
         public void Deletar(TesteDeJogo testeDeJogo)

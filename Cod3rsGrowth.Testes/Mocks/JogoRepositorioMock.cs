@@ -24,9 +24,16 @@ namespace Cod3rsGrowth.Testes.Mocks
             _instancia.Add(jogo);
         }
 
-        public void Atualizar(Jogo jogo)
+        public void Atualizar(Jogo jogoAtualizado)
         {
-            throw new NotImplementedException();
+            _jogoValidador.ValidateAndThrow(jogoAtualizado);
+
+            var jogoDesatualizado = _instancia.Find(jogo => jogo.Id == jogoAtualizado.Id)
+                ?? throw new Exception($"Erro ao obter jogo com id {jogoAtualizado.Id}");
+
+            var index = _instancia.IndexOf(jogoDesatualizado);
+
+            _instancia[index] = jogoAtualizado;
         }
 
         public void Deletar(Jogo jogo)
