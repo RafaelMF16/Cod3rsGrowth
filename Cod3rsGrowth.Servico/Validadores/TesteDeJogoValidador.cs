@@ -30,7 +30,7 @@ namespace Cod3rsGrowth.Servico.Validadores
                 .WithMessage("Nota deve estar entre 0 e 10");
 
             RuleFor(testeDeJogo => testeDeJogo.Aprovado)
-                .NotEmpty()
+                .NotNull()
                 .WithMessage("O campo aprovado é obrigatório");
 
             RuleFor(testeDeJogo => testeDeJogo.DataRealizacaoTeste)

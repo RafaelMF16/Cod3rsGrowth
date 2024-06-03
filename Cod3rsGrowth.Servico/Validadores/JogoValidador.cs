@@ -23,7 +23,8 @@ namespace Cod3rsGrowth.Servico.Validadores
             RuleFor(jogo => jogo.Genero)
                 .IsInEnum()
                 .WithMessage("O Gênero não é válido")
-                .Must((jogo, genero) => validaEnum(jogo.Genero)).WithMessage("O Gênero não é válido");
+                .Must((jogo, genero) => validaEnum(jogo.Genero))
+                .WithMessage("O Gênero não é válido");
 
             RuleFor(jogo => jogo.Preco)
                 .PrecisionScale(6, 2, true)
@@ -32,11 +33,7 @@ namespace Cod3rsGrowth.Servico.Validadores
 
         private static bool validaEnum(Genero genero)
         {
-            if (genero == Genero.NAODEFINIDO)
-            {
-                return false;
-            }
-            return true;
+            return !(genero == Genero.NAODEFINIDO);
         }
     }
 }

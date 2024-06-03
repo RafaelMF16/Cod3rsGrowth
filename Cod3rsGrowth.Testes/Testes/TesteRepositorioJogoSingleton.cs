@@ -82,6 +82,42 @@ namespace Cod3rsGrowth.Testes.Testes
             Assert.Equal("O Gênero não é válido", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
+        [Fact]
+        public void atualizar_quando_chamado_deve_atualizar_o_campo_preco_do_jogo_com_id_um()
+        {
+            criarLista();
+
+            var listaDeJogoSingleton = JogoSingleton.Instancia;
+
+            var jogoAtualizado = new Jogo { Id = 1, Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 150m};
+
+            _servicoJogo.Atualizar(jogoAtualizado);
+
+            Assert.Contains(listaDeJogoSingleton, jogo => jogo == jogoAtualizado);
+        }
+
+        [Fact]
+        public void atualizar_quando_chamado_lanca_excecao_caso_id_passado_nao_exista()
+        {
+            criarLista();
+
+            var jogoAtualizado = new Jogo { Id = 4, Nome = "Terraria", Genero = Dominio.EnumGenero.Genero.RPG, Preco = 150m };
+
+            Assert.Throws<Exception>(() => _servicoJogo.Atualizar(jogoAtualizado));
+        }
+
+        [Fact]
+        public void atualizar_quando_chamado_nao_deve_atualizar_jogo_caso_id_seja_nulo()
+        {
+            criarLista();
+
+            var jogoAtualizado = new Jogo { Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 150m };
+
+            var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Atualizar(jogoAtualizado));
+
+            Assert.Equal("O campo id é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
+        }
+
         public List<Jogo> criarLista()
         {
             var listaJogoSingleton = JogoSingleton.Instancia;
