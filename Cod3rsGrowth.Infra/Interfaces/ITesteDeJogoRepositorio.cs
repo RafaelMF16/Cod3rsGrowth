@@ -8,6 +8,6 @@ namespace Cod3rsGrowth.Infra.Interfaces
         TesteDeJogo ObterPorId(int id);
         void Adicionar(TesteDeJogo testeDeJogo);
         void Atualizar(TesteDeJogo testeDeJogo);
-        void Deletar(TesteDeJogo testeDeJogo);
+        void Deletar(int id);
     }
 }

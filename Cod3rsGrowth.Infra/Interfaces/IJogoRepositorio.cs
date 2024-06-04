@@ -8,6 +8,6 @@ namespace Cod3rsGrowth.Infra.Interfaces
         Jogo ObterPorId(int id);
         void Adicionar(Jogo jogo);
         void Atualizar(Jogo jogo);
-        void Deletar(Jogo jogo);
+        void Deletar(int id);
     }
 }

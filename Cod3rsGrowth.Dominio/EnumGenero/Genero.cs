@@ -4,7 +4,10 @@ namespace Cod3rsGrowth.Dominio.EnumGenero
 {
     public enum Genero
     {
-        [Description("Jogo de tiro em primeira pessoa")] 
+        [Description("Padrão caso enum não seja definido")]
+        NAODEFINIDO,
+
+        [Description("Jogo de tiro em primeira pessoa")]
         FPS,
 
         [Description("Jogo de competição eliminatória entre jogadores em um cenário de sobrevivência")]

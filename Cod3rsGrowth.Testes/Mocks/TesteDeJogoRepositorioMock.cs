@@ -1,33 +1,60 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
+using Cod3rsGrowth.Infra.Singletons;
+using FluentValidation;
 
 namespace Cod3rsGrowth.Testes.Mocks
 {
     public class TesteDeJogoRepositorioMock : ITesteDeJogoRepositorio
     {
+        private TesteDeJogoSingleton _instancia;
+        private readonly IValidator<TesteDeJogo> _testeDeJogoValidador;
+
+        public TesteDeJogoRepositorioMock(IValidator<TesteDeJogo> validador)
+        {
+            _instancia = TesteDeJogoSingleton.Instancia;
+
+            _testeDeJogoValidador = validador;
+        }
         public void Adicionar(TesteDeJogo testeDeJogo)
+
         {
-            throw new NotImplementedException();
+            _testeDeJogoValidador.ValidateAndThrow(testeDeJogo);
+
+            _instancia.Add(testeDeJogo);
         }
 
-        public void Atualizar(TesteDeJogo testeDeJogo)
+        public void Atualizar(TesteDeJogo testeDeJogoAtualizado)
         {
-            throw new NotImplementedException();
+            _testeDeJogoValidador.ValidateAndThrow(testeDeJogoAtualizado);
+
+            var testeDeJogoDesatualizado = _instancia.Find(testeDeJogo => testeDeJogo.Id == testeDeJogoAtualizado.Id)
+                ?? throw new Exception($"Erro ao obter teste de jogo com id {testeDeJogoAtualizado.Id}");
+
+            var index = _instancia.IndexOf(testeDeJogoDesatualizado);
+
+            _instancia[index] = testeDeJogoAtualizado;
         }
 
-        public void Deletar(TesteDeJogo testeDeJogo)
+        public void Deletar(int id)
         {
-            throw new NotImplementedException();
+            var testeDeJogoQueVaiSerDeletado = _instancia.Find(testeDeJogo => testeDeJogo.Id == id)
+                ?? throw new Exception($"Erro ao obter teste de jogo com id {id}");
+
+            _instancia.Remove(testeDeJogoQueVaiSerDeletado);
         }
 
         public TesteDeJogo ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            var obterTesteDeJogo = _instancia.Find(x => x.Id == id)
+                ?? throw new Exception($"Erro ao obter teste de jogo com id {id}");
+
+            return obterTesteDeJogo;
         }
 
         public List<TesteDeJogo> ObterTodos()
         {
-            throw new NotImplementedException();
+            return _instancia;
         }
     }
 }

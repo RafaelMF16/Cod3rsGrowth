@@ -16,7 +16,7 @@ namespace Cod3rsGrowth.Testes.Testes
         }
 
         [Fact]
-        public void Criar_Lista_Quando_Chamado_Deve_Retornar_Lista_De_Teste_De_Jogo()
+        public void criar_lista_quando_chamado_deve_retornar_lista_de_teste_de_jogo()
         {
             var listaEsperada = new List<TesteDeJogo>
             {
@@ -58,7 +58,7 @@ namespace Cod3rsGrowth.Testes.Testes
         }
 
         [Fact]
-        public void Criar_Lista_Quando_Chamado_Deve_Retornar_Uma_Lista_Do_Tipo_Teste_De_Jogo()
+        public void criar_lista_quando_chamado_deve_retornar_uma_lista_do_tipo_teste_de_jogo()
         {
             var listaDoBanco = _servicoJogo.CriarLista().ToList();
 

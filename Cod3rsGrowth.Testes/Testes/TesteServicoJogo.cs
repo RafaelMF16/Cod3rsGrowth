@@ -1,5 +1,4 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
-using Cod3rsGrowth.Infra.Singletons;
 using Cod3rsGrowth.Servico.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +15,7 @@ namespace Cod3rsGrowth.Testes.Testes
         }
 
         [Fact]
-        public void Criar_Lista_Quando_Chamado_Deve_Retornar_Lista_De_Jogos()
+        public void criar_lista_quando_chamado_deve_retornar_lista_de_jogos()
         {
             var listaEsperada = new List<Jogo>
             {
@@ -31,7 +30,7 @@ namespace Cod3rsGrowth.Testes.Testes
         }
 
         [Fact]
-        public void Criar_Lista_Quando_Chamado_Deve_Retornar_Uma_Lista_Do_Tipo_Jogo()
+        public void criar_lista_quando_chamado_deve_retornar_uma_lista_do_tipo_jogo()
         {
             var listaDoBanco = _servicoJogo.CriarLista().ToList();
 
