@@ -170,6 +170,30 @@ namespace Cod3rsGrowth.Testes.Testes
             Assert.Equal("O campo id é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
+        [Fact]
+        public void deletar_quando_chamado_deve_remover_teste_de_jogo_com_id_um()
+        {
+            criarLista();
+
+            var idTesteDeJogoDeletado = 1;
+
+            var listaDeTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
+
+            _servicoTesteDeJogo.Deletar(idTesteDeJogoDeletado);
+
+            Assert.DoesNotContain(listaDeTesteDeJogoSingleton, testeDeJogo => testeDeJogo.Id == idTesteDeJogoDeletado);
+        }
+
+        [Fact]
+        public void deletar_quando_chamado_deve_lancar_excecao_caso_id_passado_nao_exista()
+        {
+            criarLista();
+
+            var idQueNaoExiste = 4;
+
+            Assert.Throws<Exception>(() => _servicoTesteDeJogo.Deletar(idQueNaoExiste));
+        }
+
         public List<TesteDeJogo> criarLista()
         {
             var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
