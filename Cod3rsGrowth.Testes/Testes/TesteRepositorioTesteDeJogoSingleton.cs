@@ -151,13 +151,13 @@ namespace Cod3rsGrowth.Testes.Testes
         }
 
         [Fact]
-        public void atualizar_quando_chamado_nao_deve_atualizar_teste_de_jogo_caso_id_seja_nulo()
+        public void atualizar_quando_chamado_nao_deve_atualizar_teste_de_jogo_caso_nome_do_responsavel_seja_nulo()
         {
             criarLista();
 
             var testeDeJogoAtualizado = new TesteDeJogo
             {
-                NomeResponsavelDoTeste = "Paulo",
+                Id = 2,
                 Descricao = "Não gostei do Jogo",
                 Nota = 2m,
                 Aprovado = false,
@@ -167,7 +167,7 @@ namespace Cod3rsGrowth.Testes.Testes
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado));
 
-            Assert.Equal("O campo id é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
+            Assert.Equal("O campo Nome do responsável do teste é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
         [Fact]

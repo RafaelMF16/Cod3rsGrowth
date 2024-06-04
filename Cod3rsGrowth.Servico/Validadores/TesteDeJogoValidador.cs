@@ -9,10 +9,6 @@ namespace Cod3rsGrowth.Servico.Validadores
         {
             ClassLevelCascadeMode = CascadeMode.Stop;
 
-            RuleFor(testeDeJogo => testeDeJogo.Id)
-                .NotEmpty()
-                .WithMessage("O campo id é obrigatório");
-
             RuleFor(testeDeJogo => testeDeJogo.NomeResponsavelDoTeste)
                 .NotEmpty()
                 .WithMessage("O campo Nome do responsável do teste é obrigatório")

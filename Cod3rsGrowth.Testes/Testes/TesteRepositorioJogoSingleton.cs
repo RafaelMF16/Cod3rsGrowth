@@ -63,13 +63,13 @@ namespace Cod3rsGrowth.Testes.Testes
         }
 
         [Fact]
-        public void adicionar_quando_chamado_nao_deve_adicionar_jogo_caso_id_seja_nulo()
+        public void adicionar_quando_chamado_nao_deve_adicionar_jogo_caso_nome_seja_nulo()
         {
-            var jogo = new Jogo { Nome = "Elden Ring", Genero = Dominio.EnumGenero.Genero.RPG, Preco = 200.00m };
+            var jogo = new Jogo { Id = 4, Genero = Dominio.EnumGenero.Genero.RPG, Preco = 200.00m };
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Adicionar(jogo));
 
-            Assert.Equal("O campo id é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
+            Assert.Equal("O campo nome é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
         }
         
         [Fact]
@@ -107,15 +107,15 @@ namespace Cod3rsGrowth.Testes.Testes
         }
 
         [Fact]
-        public void atualizar_quando_chamado_nao_deve_atualizar_jogo_caso_id_seja_nulo()
+        public void atualizar_quando_chamado_nao_deve_atualizar_jogo_caso_nome_seja_nulo()
         {
             criarLista();
 
-            var jogoAtualizado = new Jogo { Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 150m };
+            var jogoAtualizado = new Jogo { Id = 1, Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 150m };
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Atualizar(jogoAtualizado));
 
-            Assert.Equal("O campo id é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
+            Assert.Equal("O campo nome é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
         [Fact]
