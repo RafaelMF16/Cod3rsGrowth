@@ -36,9 +36,12 @@ namespace Cod3rsGrowth.Testes.Mocks
             _instancia[index] = testeDeJogoAtualizado;
         }
 
-        public void Deletar(TesteDeJogo testeDeJogo)
+        public void Deletar(int id)
         {
-            throw new NotImplementedException();
+            var testeDeJogoQueVaiSerDeletado = _instancia.Find(testeDeJogo => testeDeJogo.Id == id)
+                ?? throw new Exception($"Erro ao obter teste de jogo com id {id}");
+
+            _instancia.Remove(testeDeJogoQueVaiSerDeletado);
         }
 
         public TesteDeJogo ObterPorId(int id)
