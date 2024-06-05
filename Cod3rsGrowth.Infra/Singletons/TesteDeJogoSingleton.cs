@@ -1,4 +1,5 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
+using System.Collections.Generic;
 
 namespace Cod3rsGrowth.Infra.Singletons
 {

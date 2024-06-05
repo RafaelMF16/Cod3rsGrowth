@@ -1,4 +1,6 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
+using System;
+using System.Collections.Generic;
 
 namespace Cod3rsGrowth.Servico.Servicos
 {
