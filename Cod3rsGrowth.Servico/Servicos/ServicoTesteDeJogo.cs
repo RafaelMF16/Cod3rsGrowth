@@ -1,10 +1,8 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
-using Cod3rsGrowth.Infra.Singletons;
-using Cod3rsGrowth.Servico.Interfaces;
 
 namespace Cod3rsGrowth.Servico.Servicos
 {
-    public class ServicoTesteDeJogo : IServicoTesteDeJogo
+    public class ServicoTesteDeJogo
     {
         public List<TesteDeJogo> CriarLista()
         {
