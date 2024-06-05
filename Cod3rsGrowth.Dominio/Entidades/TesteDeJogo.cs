@@ -1,4 +1,6 @@
-﻿namespace Cod3rsGrowth.Dominio.Entidades
+﻿using System;
+
+namespace Cod3rsGrowth.Dominio.Entidades
 {
     public class TesteDeJogo
     {

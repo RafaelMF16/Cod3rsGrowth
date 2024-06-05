@@ -1,9 +1,9 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
-using Cod3rsGrowth.Servico.Interfaces;
+using System.Collections.Generic;
 
 namespace Cod3rsGrowth.Servico.Servicos
 {
-    public class ServicoJogo : IServicoJogo
+    public class ServicoJogo
     {
         public List<Jogo> CriarLista()
         {
