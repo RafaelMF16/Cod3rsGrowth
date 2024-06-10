@@ -1,4 +1,5 @@
-﻿using Cod3rsGrowth.Dominio.Entidades;
+﻿using Cod3rsGrowth.Dominio;
+using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Singletons;
 using FluentValidation;
@@ -52,7 +53,7 @@ namespace Cod3rsGrowth.Testes.Mocks
             return obterJogo;
         }
 
-        public List<Jogo> ObterTodos()
+        public List<Jogo> ObterTodos(FiltroJogo? filtro = null)
         {
             return _instancia;
         }
