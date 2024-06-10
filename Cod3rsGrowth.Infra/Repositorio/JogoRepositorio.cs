@@ -9,11 +9,11 @@ namespace Cod3rsGrowth.Infra.Repositorio
 {
     public class JogoRepositorio : IJogoRepositorio
     {
-        DbCod3rsGrowth bancoDeDados;
+        private readonly DbCod3rsGrowth bancoDeDados;
 
-        public JogoRepositorio(DbCod3rsGrowth bancoDeDados)
+        public JogoRepositorio(DbCod3rsGrowth db)
         {
-            this.bancoDeDados = bancoDeDados;
+            bancoDeDados = db;
         }
 
         public void Adicionar(Jogo jogo)
@@ -38,25 +38,25 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public List<Jogo> ObterTodos(FiltroJogo? filtro = null)
         {
-            var jogos = bancoDeDados.GetTable<Jogo>();
+            var jogos = bancoDeDados.GetTable<Jogo>().ToList();
 
             if (filtro != null)
             {
-                if (filtro.Nome != null)
+                if (!string.IsNullOrEmpty(filtro.Nome))
                 {
-                    jogos = (ITable<Jogo>)jogos.Where(j => j.Nome == filtro.Nome);
+                    jogos = jogos.FindAll(j => j.Nome == filtro.Nome);
                 }
                 if (filtro.Genero != null)
                 {
-                    jogos = (ITable<Jogo>)jogos.Where(j => j.Genero == filtro.Genero);
+                    jogos = jogos.FindAll(j => j.Genero == filtro.Genero);
                 }
                 if (filtro.Preco != null)
                 {
-                    jogos = (ITable<Jogo>)jogos.Where(j => j.Preco == filtro.Preco);
+                    jogos = jogos.FindAll(j => j.Preco == filtro.Preco);
                 }
             }
 
-            return jogos.ToList();
+            return jogos;
         }
     }
 }

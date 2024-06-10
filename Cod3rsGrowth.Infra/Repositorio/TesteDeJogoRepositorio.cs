@@ -1,6 +1,7 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
 using LinqToDB;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,11 +9,11 @@ namespace Cod3rsGrowth.Infra.Repositorio
 {
     public class TesteDeJogoRepositorio : ITesteDeJogoRepositorio
     {
-        DbCod3rsGrowth bancoDeDados;
+        private readonly DbCod3rsGrowth bancoDeDados;
 
         public TesteDeJogoRepositorio(DbCod3rsGrowth db)
         {
-            this.bancoDeDados = db;
+            bancoDeDados = db;
         }
         public void Adicionar(TesteDeJogo testeDeJogo)
         {
@@ -36,25 +37,25 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public List<TesteDeJogo> ObterTodos(FiltroTesteDeJogo? filtro = null)
         {
-            var testesDeJogos = bancoDeDados.GetTable<TesteDeJogo>();
+            var testesDeJogos = bancoDeDados.GetTable<TesteDeJogo>().ToList();
 
             if (filtro != null)
             {
-                if (filtro.NomeResponsavelTeste != null)
+                if (!string.IsNullOrEmpty(filtro.NomeResponsavelTeste))
                 {
-                    testesDeJogos = (ITable<TesteDeJogo>)testesDeJogos.Where(t => t.NomeResponsavelDoTeste == filtro.NomeResponsavelTeste);
+                    testesDeJogos = testesDeJogos.FindAll(t => t.NomeResponsavelDoTeste == filtro.NomeResponsavelTeste);
                 }
                 if (filtro.Aprovado != null)
                 {
-                    testesDeJogos = (ITable<TesteDeJogo>)testesDeJogos.Where(t => t.Aprovado == filtro.Aprovado);
+                    testesDeJogos = testesDeJogos.FindAll(t => t.Aprovado == filtro.Aprovado);
                 }
                 if (filtro.DataRealizacaoTeste != null)
                 {
-                    testesDeJogos = (ITable<TesteDeJogo>)testesDeJogos.Where(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
+                    testesDeJogos = testesDeJogos.FindAll(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
                 }
             }
 
-            return testesDeJogos.ToList();
+            return testesDeJogos;
         }
     }
 }
