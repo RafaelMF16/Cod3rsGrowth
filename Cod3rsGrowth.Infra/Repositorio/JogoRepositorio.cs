@@ -44,7 +44,7 @@ namespace Cod3rsGrowth.Infra.Repositorio
             {
                 if (!string.IsNullOrEmpty(filtro.Nome))
                 {
-                    jogos = jogos.FindAll(j => j.Nome == filtro.Nome);
+                    jogos = jogos.FindAll(j => j.Nome.StartsWith(filtro.Nome));
                 }
                 if (filtro.Genero != null)
                 {

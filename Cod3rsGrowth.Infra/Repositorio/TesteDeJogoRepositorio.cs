@@ -43,7 +43,7 @@ namespace Cod3rsGrowth.Infra.Repositorio
             {
                 if (!string.IsNullOrEmpty(filtro.NomeResponsavelTeste))
                 {
-                    testesDeJogos = testesDeJogos.FindAll(t => t.NomeResponsavelDoTeste == filtro.NomeResponsavelTeste);
+                    testesDeJogos = testesDeJogos.FindAll(t => t.NomeResponsavelDoTeste.StartsWith(filtro.NomeResponsavelTeste));
                 }
                 if (filtro.Aprovado != null)
                 {
