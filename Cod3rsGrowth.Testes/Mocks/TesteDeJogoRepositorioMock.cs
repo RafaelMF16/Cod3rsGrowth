@@ -55,7 +55,22 @@ namespace Cod3rsGrowth.Testes.Mocks
 
         public List<TesteDeJogo> ObterTodos(FiltroTesteDeJogo? filtro = null)
         {
-            return _instancia;
+            var testesDeJogo = _instancia.ToList();
+
+            if (!string.IsNullOrEmpty(filtro?.NomeResponsavelTeste))
+            {
+                testesDeJogo = testesDeJogo.FindAll(t => t.NomeResponsavelDoTeste.StartsWith(filtro.NomeResponsavelTeste, StringComparison.OrdinalIgnoreCase));
+            }
+            if (filtro?.Aprovado != null)
+            {
+                testesDeJogo = testesDeJogo.FindAll(t => t.Aprovado == filtro.Aprovado);
+            }
+            if (filtro?.DataRealizacaoTeste != null)
+            {
+                testesDeJogo = testesDeJogo.FindAll(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
+            }
+
+            return testesDeJogo;
         }
     }
 }

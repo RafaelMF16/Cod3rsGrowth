@@ -1,6 +1,7 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
 using LinqToDB;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,15 +42,15 @@ namespace Cod3rsGrowth.Infra.Repositorio
             
                 if (!string.IsNullOrEmpty(filtro?.NomeResponsavelTeste))
                 {
-                    testesDeJogos = testesDeJogos.FindAll(t => t.NomeResponsavelDoTeste.StartsWith(filtro?.NomeResponsavelTeste));
+                    testesDeJogos = testesDeJogos.FindAll(t => t.NomeResponsavelDoTeste.StartsWith(filtro.NomeResponsavelTeste, StringComparison.OrdinalIgnoreCase));
                 }
                 if (filtro?.Aprovado != null)
                 {
-                    testesDeJogos = testesDeJogos.FindAll(t => t.Aprovado == filtro?.Aprovado);
+                    testesDeJogos = testesDeJogos.FindAll(t => t.Aprovado == filtro.Aprovado);
                 }
                 if (filtro?.DataRealizacaoTeste != null)
                 {
-                    testesDeJogos = testesDeJogos.FindAll(t => t.DataRealizacaoTeste == filtro?.DataRealizacaoTeste);
+                    testesDeJogos = testesDeJogos.FindAll(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
                 }
 
             return testesDeJogos;

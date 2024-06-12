@@ -2,6 +2,7 @@
 using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
 using LinqToDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,15 +43,15 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
                 if (!string.IsNullOrEmpty(filtro?.Nome))
                 {
-                    jogos = jogos.FindAll(j => j.Nome.StartsWith(filtro?.Nome));
+                    jogos = jogos.FindAll(j => j.Nome.StartsWith(filtro.Nome, StringComparison.OrdinalIgnoreCase));
                 }
                 if (filtro?.Genero != null)
                 {
-                    jogos = jogos.FindAll(j => j.Genero == filtro?.Genero);
+                    jogos = jogos.FindAll(j => j.Genero == filtro.Genero);
                 }
                 if (filtro?.Preco != null)
                 {
-                    jogos = jogos.FindAll(j => j.Preco == filtro?.Preco);
+                    jogos = jogos.FindAll(j => j.Preco == filtro.Preco);
                 }
 
             return jogos;
