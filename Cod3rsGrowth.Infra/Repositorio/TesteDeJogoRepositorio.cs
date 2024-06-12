@@ -38,22 +38,19 @@ namespace Cod3rsGrowth.Infra.Repositorio
         public List<TesteDeJogo> ObterTodos(FiltroTesteDeJogo? filtro = null)
         {
             var testesDeJogos = bancoDeDados.GetTable<TesteDeJogo>().ToList();
-
-            if (filtro != null)
-            {
-                if (!string.IsNullOrEmpty(filtro.NomeResponsavelTeste))
+            
+                if (!string.IsNullOrEmpty(filtro?.NomeResponsavelTeste))
                 {
-                    testesDeJogos = testesDeJogos.FindAll(t => t.NomeResponsavelDoTeste.StartsWith(filtro.NomeResponsavelTeste));
+                    testesDeJogos = testesDeJogos.FindAll(t => t.NomeResponsavelDoTeste.StartsWith(filtro?.NomeResponsavelTeste));
                 }
-                if (filtro.Aprovado != null)
+                if (filtro?.Aprovado != null)
                 {
-                    testesDeJogos = testesDeJogos.FindAll(t => t.Aprovado == filtro.Aprovado);
+                    testesDeJogos = testesDeJogos.FindAll(t => t.Aprovado == filtro?.Aprovado);
                 }
-                if (filtro.DataRealizacaoTeste != null)
+                if (filtro?.DataRealizacaoTeste != null)
                 {
-                    testesDeJogos = testesDeJogos.FindAll(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
+                    testesDeJogos = testesDeJogos.FindAll(t => t.DataRealizacaoTeste == filtro?.DataRealizacaoTeste);
                 }
-            }
 
             return testesDeJogos;
         }
