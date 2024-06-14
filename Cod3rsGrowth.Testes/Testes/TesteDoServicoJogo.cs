@@ -6,11 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Testes.Testes
 {
-    public class TesteRepositorioJogoSingleton : TesteBase
+    public class TesteDoServicoJogo : TesteBase
     {
         private readonly IJogoRepositorio _servicoJogo;
 
-        public TesteRepositorioJogoSingleton()
+        public TesteDoServicoJogo()
         {
             _servicoJogo = ServiceProvider.GetService<IJogoRepositorio>()
                 ?? throw new Exception($"Erro ao obter o serviço {nameof(IJogoRepositorio)}");
