@@ -1,15 +1,16 @@
-﻿using Cod3rsGrowth.Dominio.Entidades;
+﻿using Cod3rsGrowth.Dominio;
+using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Singletons;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Testes.Testes
 {
-    public class TesteRepositorioJogoSingleton : TesteBase
+    public class TesteDoServicoJogo : TesteBase
     {
         private readonly IJogoRepositorio _servicoJogo;
 
-        public TesteRepositorioJogoSingleton()
+        public TesteDoServicoJogo()
         {
             _servicoJogo = ServiceProvider.GetService<IJogoRepositorio>()
                 ?? throw new Exception($"Erro ao obter o serviço {nameof(IJogoRepositorio)}");
@@ -25,6 +26,30 @@ namespace Cod3rsGrowth.Testes.Testes
             var listaDoBanco = _servicoJogo.ObterTodos();
 
             Assert.Equivalent(listaEsperada, listaDoBanco, true);
+        }
+
+        [Fact]
+        public void obter_todos_quando_chamado_com_filtro_de_nome_deve_retornar_lista_de_jogo_de_acordo_com_filtro_passado()
+        {
+            criarLista();
+
+            var listaEsperada = new List<Jogo> { new Jogo { Id = 1, Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 100m} };
+
+            var listaDoBanco = _servicoJogo.ObterTodos(new FiltroJogo { Nome = "mine"});
+
+            Assert.Equivalent(listaEsperada, listaDoBanco);
+        }
+
+        [Fact]
+        public void obter_todos_quando_chamado_com_filtro_invalido_deve_retornar_lista_de_jogo_vazia()
+        {
+            criarLista();
+
+            var listaEsperada = new List<Jogo> { };
+
+            var listaDoBanco = _servicoJogo.ObterTodos(new FiltroJogo { Nome = "Elden Ring"});
+
+            Assert.Equivalent(listaEsperada, listaDoBanco);
         }
 
         [Theory]

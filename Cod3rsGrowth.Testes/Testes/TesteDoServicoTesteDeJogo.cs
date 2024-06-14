@@ -1,15 +1,16 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
+using Cod3rsGrowth.Infra.Repositorio;
 using Cod3rsGrowth.Infra.Singletons;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Testes.Testes
 {
-    public class TesteRepositorioTesteDeJogoSingleton : TesteBase
+    public class TesteDoServicoTesteDeJogo : TesteBase
     {
         private readonly ITesteDeJogoRepositorio _servicoTesteDeJogo;
 
-        public TesteRepositorioTesteDeJogoSingleton()
+        public TesteDoServicoTesteDeJogo()
         {
             _servicoTesteDeJogo = ServiceProvider.GetService<ITesteDeJogoRepositorio>()
                 ?? throw new Exception($"Erro ao obter serviço{nameof(ITesteDeJogoRepositorio)}");
@@ -23,6 +24,52 @@ namespace Cod3rsGrowth.Testes.Testes
             var listaEsperada = criarLista();
 
             var listaDoBanco = _servicoTesteDeJogo.ObterTodos();
+
+            Assert.Equivalent(listaEsperada, listaDoBanco);
+        }
+
+        [Fact]
+        public void obter_todos_quando_chamado_com_filtro_de_aprovado_deve_retornar_lista_de_teste_de_jogo_com_os_testes_que_tem_aprovado_igual_true()
+        {
+            criarLista();
+
+            var listaEsperada = new List<TesteDeJogo>
+            { 
+                new TesteDeJogo
+                { 
+                    Id = 1,
+                    NomeResponsavelDoTeste = "Rafael",
+                    Descricao = "O jogo é top",
+                    Nota = 9m,
+                    Aprovado = true,
+                    DataRealizacaoTeste = DateTime.Parse("22/05/2024"),
+                    JogoId = 1
+                },
+                new TesteDeJogo
+                {
+                    Id = 3,
+                    NomeResponsavelDoTeste = "Italo",
+                    Descricao = "Não é um jogo perfeito, mas é jogável",
+                    Nota = 7.4m,
+                    Aprovado = true,
+                    DataRealizacaoTeste = DateTime.Parse("15/06/2024"),
+                    JogoId = 3
+                }
+            };
+
+            var listaDoBanco = _servicoTesteDeJogo.ObterTodos(new FiltroTesteDeJogo { Aprovado = true});
+
+            Assert.Equivalent(listaEsperada, listaDoBanco);
+        }
+
+        [Fact]
+        public void obter_todos_quando_chamado_com_filtro_invalido_deve_retornar_lista_de_teste_de_jogo_vazia()
+        {
+            criarLista();
+
+            var listaEsperada = new List<TesteDeJogo> { };
+
+            var listaDoBanco = _servicoTesteDeJogo.ObterTodos(new FiltroTesteDeJogo { NomeResponsavelTeste = "Victor"});
 
             Assert.Equivalent(listaEsperada, listaDoBanco);
         }

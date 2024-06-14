@@ -1,4 +1,5 @@
-﻿using Cod3rsGrowth.Dominio.Entidades;
+﻿using Cod3rsGrowth.Dominio;
+using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Singletons;
 using FluentValidation;
@@ -52,9 +53,24 @@ namespace Cod3rsGrowth.Testes.Mocks
             return obterJogo;
         }
 
-        public List<Jogo> ObterTodos()
+        public List<Jogo> ObterTodos(FiltroJogo? filtro = null)
         {
-            return _instancia;
+            var jogos = _instancia.ToList();
+
+            if (!string.IsNullOrEmpty(filtro?.Nome))
+            {
+                jogos = jogos.FindAll(j => j.Nome.StartsWith(filtro.Nome, StringComparison.OrdinalIgnoreCase));
+            }
+            if (filtro?.Genero != null)
+            {
+                jogos = jogos.FindAll(j => j.Genero == filtro.Genero);
+            }
+            if (filtro?.Preco != null)
+            {
+                jogos = jogos.FindAll(j => j.Preco == filtro.Preco);
+            }
+
+            return jogos;
         }
     }
 }

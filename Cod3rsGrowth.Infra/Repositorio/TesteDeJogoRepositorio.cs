@@ -1,11 +1,21 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
+using LinqToDB;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cod3rsGrowth.Infra.Repositorio
 {
     public class TesteDeJogoRepositorio : ITesteDeJogoRepositorio
     {
+        private readonly DbCod3rsGrowth bancoDeDados;
+
+        public TesteDeJogoRepositorio(DbCod3rsGrowth db)
+        {
+            bancoDeDados = db;
+        }
         public void Adicionar(TesteDeJogo testeDeJogo)
         {
             throw new System.NotImplementedException();
@@ -26,9 +36,24 @@ namespace Cod3rsGrowth.Infra.Repositorio
             throw new System.NotImplementedException();
         }
 
-        public List<TesteDeJogo> ObterTodos()
+        public List<TesteDeJogo> ObterTodos(FiltroTesteDeJogo? filtro = null)
         {
-            throw new System.NotImplementedException();
+            var testesDeJogos = bancoDeDados.GetTable<TesteDeJogo>().ToList();
+            
+                if (!string.IsNullOrEmpty(filtro?.NomeResponsavelTeste))
+                {
+                    testesDeJogos = testesDeJogos.FindAll(t => t.NomeResponsavelDoTeste.StartsWith(filtro.NomeResponsavelTeste, StringComparison.OrdinalIgnoreCase));
+                }
+                if (filtro?.Aprovado != null)
+                {
+                    testesDeJogos = testesDeJogos.FindAll(t => t.Aprovado == filtro.Aprovado);
+                }
+                if (filtro?.DataRealizacaoTeste != null)
+                {
+                    testesDeJogos = testesDeJogos.FindAll(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
+                }
+
+            return testesDeJogos;
         }
     }
 }
