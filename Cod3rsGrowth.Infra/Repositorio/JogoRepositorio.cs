@@ -19,7 +19,7 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public void Adicionar(Jogo jogo)
         {
-            throw new System.NotImplementedException();
+            bancoDeDados.Insert(jogo);
         }
 
         public void Atualizar(Jogo jogo)
@@ -55,6 +55,13 @@ namespace Cod3rsGrowth.Infra.Repositorio
                 }
 
             return jogos;
+        }
+
+        public bool VerificarSeTemNomeRepetido(string nome)
+        {
+            var jogoComNomeRepetido = bancoDeDados.GetTable<Jogo>().ToList().FindAll(j => j.Nome == nome);
+
+            return !(jogoComNomeRepetido == null);
         }
     }
 }

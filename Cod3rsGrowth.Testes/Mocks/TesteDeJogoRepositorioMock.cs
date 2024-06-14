@@ -2,33 +2,25 @@
 using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Repositorio;
 using Cod3rsGrowth.Infra.Singletons;
-using FluentValidation;
 
 namespace Cod3rsGrowth.Testes.Mocks
 {
     public class TesteDeJogoRepositorioMock : ITesteDeJogoRepositorio
     {
         private TesteDeJogoSingleton _instancia;
-        private readonly IValidator<TesteDeJogo> _testeDeJogoValidador;
 
-        public TesteDeJogoRepositorioMock(IValidator<TesteDeJogo> validador)
+        public TesteDeJogoRepositorioMock()
         {
             _instancia = TesteDeJogoSingleton.Instancia;
-
-            _testeDeJogoValidador = validador;
         }
         public void Adicionar(TesteDeJogo testeDeJogo)
 
         {
-            _testeDeJogoValidador.ValidateAndThrow(testeDeJogo);
-
             _instancia.Add(testeDeJogo);
         }
 
         public void Atualizar(TesteDeJogo testeDeJogoAtualizado)
         {
-            _testeDeJogoValidador.ValidateAndThrow(testeDeJogoAtualizado);
-
             var testeDeJogoDesatualizado = _instancia.Find(testeDeJogo => testeDeJogo.Id == testeDeJogoAtualizado.Id)
                 ?? throw new Exception($"Erro ao obter teste de jogo com id {testeDeJogoAtualizado.Id}");
 

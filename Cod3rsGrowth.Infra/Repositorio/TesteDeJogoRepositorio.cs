@@ -2,7 +2,6 @@
 using Cod3rsGrowth.Infra.Interfaces;
 using LinqToDB;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +17,7 @@ namespace Cod3rsGrowth.Infra.Repositorio
         }
         public void Adicionar(TesteDeJogo testeDeJogo)
         {
-            throw new System.NotImplementedException();
+            bancoDeDados.Insert(testeDeJogo);
         }
 
         public void Atualizar(TesteDeJogo testeDeJogo)
