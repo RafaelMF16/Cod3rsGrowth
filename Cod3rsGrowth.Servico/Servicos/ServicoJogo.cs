@@ -23,16 +23,14 @@ namespace Cod3rsGrowth.Servico.Servicos
             {
                 _jogoValidador.ValidateAndThrow(jogo);
                 _jogoRepositorio.Adicionar(jogo);
-
-            } catch (ValidationException validationException)
+            } 
+            catch (ValidationException validationException)
             {
                 throw new ValidationException(validationException.Errors);
-
             }
             catch (Exception exception)
             {
                 throw new Exception(exception.Message);
-
             }
         }
 
@@ -42,17 +40,14 @@ namespace Cod3rsGrowth.Servico.Servicos
             {
                 _jogoValidador.ValidateAndThrow(jogo);
                 _jogoRepositorio.Atualizar(jogo);
-
             }
             catch (ValidationException validationException)
             {
                 throw new ValidationException(validationException.Errors);
-
             }
             catch (Exception exception)
             {
                 throw new Exception(exception.Message);
-
             }
         }
 

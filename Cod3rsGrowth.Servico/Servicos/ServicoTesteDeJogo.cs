@@ -24,12 +24,12 @@ namespace Cod3rsGrowth.Servico.Servicos
             {
                 _testeDeJogoValidador.ValidateAndThrow(testeDeJogo);
                 _testeDeJogoRepositorio.Adicionar(testeDeJogo);
-
-            } catch (ValidationException validationException)
+            } 
+            catch (ValidationException validationException)
             {
                 throw new ValidationException(validationException.Errors);
-
-            } catch (Exception exception)
+            } 
+            catch (Exception exception)
             {
                 throw new Exception(exception.Message);
             }
@@ -41,12 +41,10 @@ namespace Cod3rsGrowth.Servico.Servicos
             {
                 _testeDeJogoValidador.ValidateAndThrow(testeDeJogo);
                 _testeDeJogoRepositorio.Atualizar(testeDeJogo);
-
             }
             catch (ValidationException validationException)
             {
                 throw new ValidationException(validationException.Errors);
-
             }
             catch (Exception exception)
             {
