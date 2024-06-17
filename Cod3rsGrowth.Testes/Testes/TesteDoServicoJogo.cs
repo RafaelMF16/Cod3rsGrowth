@@ -1,19 +1,19 @@
 ﻿using Cod3rsGrowth.Dominio;
 using Cod3rsGrowth.Dominio.Entidades;
-using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Singletons;
+using Cod3rsGrowth.Servico.Servicos;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Testes.Testes
 {
     public class TesteDoServicoJogo : TesteBase
     {
-        private readonly IJogoRepositorio _servicoJogo;
+        private readonly ServicoJogo _servicoJogo;
 
         public TesteDoServicoJogo()
         {
-            _servicoJogo = ServiceProvider.GetService<IJogoRepositorio>()
-                ?? throw new Exception($"Erro ao obter o serviço {nameof(IJogoRepositorio)}");
+            _servicoJogo = ServiceProvider.GetService<ServicoJogo>()
+                ?? throw new Exception($"Erro ao obter o serviço {nameof(ServicoJogo)}");
 
             JogoSingleton.Instancia.Clear();
         }
@@ -96,7 +96,19 @@ namespace Cod3rsGrowth.Testes.Testes
 
             Assert.Equal("O campo nome é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
         }
-        
+
+        [Fact]
+        public void adicionar_quando_chamado_nao_deve_adicionar_jogo_caso_nome_seja_repetido()
+        {
+            criarLista();
+
+            var jogoRepetido = new Jogo { Id = 4, Nome = "Counter Strike 2", Genero = Dominio.EnumGenero.Genero.FPS, Preco = 60m };
+
+            var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Adicionar(jogoRepetido));
+
+            Assert.Equal("Já existe um jogo com esse nome cadastrado", mensagemDeErro.Errors.First().ErrorMessage);
+        }
+
         [Fact]
         public void adicionar_quando_chamado_nao_deve_adicionar_jogo_caso_enum_seja_vazio()
         {

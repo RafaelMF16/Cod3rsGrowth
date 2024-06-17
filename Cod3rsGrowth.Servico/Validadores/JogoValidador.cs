@@ -1,13 +1,17 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Dominio.EnumGenero;
+using Cod3rsGrowth.Infra.Interfaces;
 using FluentValidation;
 
 namespace Cod3rsGrowth.Servico.Validadores
 {
     public class JogoValidador : AbstractValidator<Jogo>
     {
-        public JogoValidador()
+        private readonly IJogoRepositorio _jogoRepositorio;
+        public JogoValidador(IJogoRepositorio jogoRepositorio)
         {
+            _jogoRepositorio = jogoRepositorio;
+
             ClassLevelCascadeMode = CascadeMode.Stop;
 
             RuleFor(jogo => jogo.Nome)
@@ -15,6 +19,10 @@ namespace Cod3rsGrowth.Servico.Validadores
                 .WithMessage("O campo nome é obrigatório")
                 .MaximumLength(100)
                 .WithMessage("Nome dever ter 100 caracteres ou menos");
+
+            RuleFor(jogo => jogo)
+                .Must(jogo => _jogoRepositorio.VerificarSeTemNomeRepetido(jogo))
+                .WithMessage("Já existe um jogo com esse nome cadastrado");
 
             RuleFor(jogo => jogo.Genero)
                 .IsInEnum()
@@ -27,7 +35,7 @@ namespace Cod3rsGrowth.Servico.Validadores
                 .WithMessage("Preco deve ter 4 digitos e duas casas decimais");
         }
 
-        private static bool validaEnum(Genero genero)
+        private bool validaEnum(Genero genero)
         {
             return !(genero == Genero.NAODEFINIDO);
         }

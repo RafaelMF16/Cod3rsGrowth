@@ -1,19 +1,19 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
-using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Repositorio;
 using Cod3rsGrowth.Infra.Singletons;
+using Cod3rsGrowth.Servico.Servicos;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Testes.Testes
 {
     public class TesteDoServicoTesteDeJogo : TesteBase
     {
-        private readonly ITesteDeJogoRepositorio _servicoTesteDeJogo;
+        private readonly ServicoTesteDeJogo _servicoTesteDeJogo;
 
         public TesteDoServicoTesteDeJogo()
         {
-            _servicoTesteDeJogo = ServiceProvider.GetService<ITesteDeJogoRepositorio>()
-                ?? throw new Exception($"Erro ao obter serviço{nameof(ITesteDeJogoRepositorio)}");
+            _servicoTesteDeJogo = ServiceProvider.GetService<ServicoTesteDeJogo>()
+                ?? throw new Exception($"Erro ao obter serviço{nameof(ServicoTesteDeJogo)}");
 
             TesteDeJogoSingleton.Instancia.Clear();
         }

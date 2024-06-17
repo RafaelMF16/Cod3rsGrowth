@@ -2,33 +2,25 @@
 using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Singletons;
-using FluentValidation;
 
 namespace Cod3rsGrowth.Testes.Mocks
 {
     public class JogoRepositorioMock : IJogoRepositorio
     {
         private JogoSingleton _instancia;
-        private readonly IValidator<Jogo> _jogoValidador;
 
-        public JogoRepositorioMock(IValidator<Jogo> validator)
+        public JogoRepositorioMock()
         {
-            _jogoValidador = validator;
-
             _instancia = JogoSingleton.Instancia;
         }
 
         public void Adicionar(Jogo jogo)
         {
-            _jogoValidador.ValidateAndThrow(jogo);
-
             _instancia.Add(jogo);
         }
 
         public void Atualizar(Jogo jogoAtualizado)
         {
-            _jogoValidador.ValidateAndThrow(jogoAtualizado);
-
             var jogoDesatualizado = _instancia.Find(jogo => jogo.Id == jogoAtualizado.Id)
                 ?? throw new Exception($"Erro ao obter jogo com id {jogoAtualizado.Id}");
 
@@ -71,6 +63,20 @@ namespace Cod3rsGrowth.Testes.Mocks
             }
 
             return jogos;
+        }
+
+        public bool VerificarSeTemNomeRepetido(Jogo jogo)
+        {
+            var jogoComNomeRepetido = _instancia.Find(j => j.Nome == jogo.Nome);
+
+            if (jogoComNomeRepetido != null)
+            {
+                if (jogoComNomeRepetido.Id != jogo.Id)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
