@@ -2,6 +2,7 @@
 using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Repositorio;
 using FluentValidation;
+using System;
 using System.Collections.Generic;
 
 namespace Cod3rsGrowth.Servico.Servicos
@@ -19,14 +20,38 @@ namespace Cod3rsGrowth.Servico.Servicos
 
         public void Adicionar(TesteDeJogo testeDeJogo)
         {
-            _testeDeJogoValidador.ValidateAndThrow(testeDeJogo);
-            _testeDeJogoRepositorio.Adicionar(testeDeJogo);
+            try
+            {
+                _testeDeJogoValidador.ValidateAndThrow(testeDeJogo);
+                _testeDeJogoRepositorio.Adicionar(testeDeJogo);
+
+            } catch (ValidationException validationException)
+            {
+                throw new ValidationException(validationException.Errors);
+
+            } catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
         }
 
         public void Atualizar(TesteDeJogo testeDeJogo)
         {
-            _testeDeJogoValidador.ValidateAndThrow(testeDeJogo);
-            _testeDeJogoRepositorio.Atualizar(testeDeJogo);
+            try
+            {
+                _testeDeJogoValidador.ValidateAndThrow(testeDeJogo);
+                _testeDeJogoRepositorio.Atualizar(testeDeJogo);
+
+            }
+            catch (ValidationException validationException)
+            {
+                throw new ValidationException(validationException.Errors);
+
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
         }
 
         public void Deletar(int id)

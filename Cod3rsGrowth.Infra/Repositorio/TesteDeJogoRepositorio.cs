@@ -22,7 +22,7 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public void Atualizar(TesteDeJogo testeDeJogo)
         {
-            throw new System.NotImplementedException();
+            bancoDeDados.Update(testeDeJogo);
         }
 
         public void Deletar(int id)
