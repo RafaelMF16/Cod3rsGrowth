@@ -11,6 +11,6 @@ namespace Cod3rsGrowth.Infra.Interfaces
         void Adicionar(Jogo jogo);
         void Atualizar(Jogo jogo);
         void Deletar(int id);
-        bool VerificarSeTemNomeRepetido(string nome);
+        bool VerificarSeTemNomeRepetido(Jogo jogo);
     }
 }

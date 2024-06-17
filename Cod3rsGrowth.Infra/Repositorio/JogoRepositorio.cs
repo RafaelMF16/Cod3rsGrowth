@@ -57,11 +57,18 @@ namespace Cod3rsGrowth.Infra.Repositorio
             return jogos;
         }
 
-        public bool VerificarSeTemNomeRepetido(string nome)
+        public bool VerificarSeTemNomeRepetido(Jogo jogo)
         {
-            var jogoComNomeRepetido = bancoDeDados.GetTable<Jogo>().ToList().FindAll(j => j.Nome == nome);
+            var jogoComNomeRepetido = bancoDeDados.GetTable<Jogo>().ToList().Find(j => j.Nome == jogo.Nome);
 
-            return !(jogoComNomeRepetido == null);
+            if (jogoComNomeRepetido != null)
+            {
+                if (jogoComNomeRepetido.Id != jogo.Id)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

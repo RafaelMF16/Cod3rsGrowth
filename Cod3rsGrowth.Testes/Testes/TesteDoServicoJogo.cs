@@ -102,7 +102,7 @@ namespace Cod3rsGrowth.Testes.Testes
         {
             criarLista();
 
-            var jogoRepetido = new Jogo { Id = 3, Nome = "Counter Strike 2", Genero = Dominio.EnumGenero.Genero.FPS, Preco = 60m };
+            var jogoRepetido = new Jogo { Id = 4, Nome = "Counter Strike 2", Genero = Dominio.EnumGenero.Genero.FPS, Preco = 60m };
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Adicionar(jogoRepetido));
 

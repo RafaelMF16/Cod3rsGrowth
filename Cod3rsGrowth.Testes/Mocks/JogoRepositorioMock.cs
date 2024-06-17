@@ -65,13 +65,18 @@ namespace Cod3rsGrowth.Testes.Mocks
             return jogos;
         }
 
-        public bool VerificarSeTemNomeRepetido(string nome)
+        public bool VerificarSeTemNomeRepetido(Jogo jogo)
         {
-            var quantidadeDeElementosEmUmaListaVazia = 0;
+            var jogoComNomeRepetido = _instancia.Find(j => j.Nome == jogo.Nome);
 
-            var jogoComNomeRepetido = _instancia.FindAll(j => j.Nome == nome);
-
-            return (jogoComNomeRepetido.Count == quantidadeDeElementosEmUmaListaVazia);
+            if (jogoComNomeRepetido != null)
+            {
+                if (jogoComNomeRepetido.Id != jogo.Id)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

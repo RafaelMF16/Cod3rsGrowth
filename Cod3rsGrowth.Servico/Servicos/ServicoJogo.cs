@@ -19,13 +19,8 @@ namespace Cod3rsGrowth.Servico.Servicos
         }
         public void Adicionar(Jogo jogo)
         {
-            ValidationResult result = _jogoValidador.Validate(jogo, options => options.IncludeRuleSets("Adicionar", "default"));
-
-            if (!result.IsValid)
-            {
-                throw new ValidationException(result.Errors);
-            } 
-                _jogoRepositorio.Adicionar(jogo);
+            _jogoValidador.ValidateAndThrow(jogo);
+            _jogoRepositorio.Adicionar(jogo);
         }
 
         public void Atualizar(Jogo jogo)
