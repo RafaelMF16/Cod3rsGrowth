@@ -160,23 +160,27 @@ namespace Cod3rsGrowth.Testes.Testes
         {
             criarLista();
 
-            var idJogoDeletado = 1;
+            var jogoDeletado = new Jogo { Id = 1, Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 100m };
 
             var listaDeJogoSingleton = JogoSingleton.Instancia;
 
-            _servicoJogo.Deletar(idJogoDeletado);
+            _servicoJogo.Deletar(jogoDeletado.Id);
 
-            Assert.DoesNotContain(listaDeJogoSingleton, jogo => jogo.Id == idJogoDeletado);
+            Assert.DoesNotContain(listaDeJogoSingleton, jogo => jogo == jogoDeletado);
         }
 
         [Fact]
-        public void deletar_quando_chamado_deve_lancar_excecao_caso_id_passado_nao_exista()
+        public void deletar_quando_chamado_nao_deve_remover_jogo_com_id_invalido()
         {
-            criarLista();
+            var tamanhoDaListaDoBanco = criarLista().Count;
 
-            var idQueNaoExiste = 4;
+            var tamanhoDaListaEsperado = 3;
 
-            Assert.Throws<Exception>(() => _servicoJogo.Deletar(idQueNaoExiste));
+            var jogoDeletado = new Jogo { Id = 4, Nome = "Spider Man", Genero = Dominio.EnumGenero.Genero.MMORPG, Preco = 250m };
+
+            _servicoJogo.Deletar(jogoDeletado.Id);
+
+            Assert.Equal(tamanhoDaListaEsperado, tamanhoDaListaDoBanco);
         }
 
         public List<Jogo> criarLista()

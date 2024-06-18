@@ -222,23 +222,45 @@ namespace Cod3rsGrowth.Testes.Testes
         {
             criarLista();
 
-            var idTesteDeJogoDeletado = 1;
+            var testeDeJogoDeletado = new TesteDeJogo
+            {
+                Id = 1,
+                NomeResponsavelDoTeste = "Rafael",
+                Descricao = "O jogo é top",
+                Nota = 9m,
+                Aprovado = true,
+                DataRealizacaoTeste = DateTime.Parse("22/05/2024"),
+                JogoId = 1
+            };
 
             var listaDeTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
 
-            _servicoTesteDeJogo.Deletar(idTesteDeJogoDeletado);
+            _servicoTesteDeJogo.Deletar(testeDeJogoDeletado.Id);
 
-            Assert.DoesNotContain(listaDeTesteDeJogoSingleton, testeDeJogo => testeDeJogo.Id == idTesteDeJogoDeletado);
+            Assert.DoesNotContain(listaDeTesteDeJogoSingleton, testeDeJogo => testeDeJogo == testeDeJogoDeletado);
         }
 
         [Fact]
-        public void deletar_quando_chamado_deve_lancar_excecao_caso_id_passado_nao_exista()
+        public void deletar_quando_chamado_nao_deve_remover_teste_de_jogo_com_id_invalido()
         {
-            criarLista();
+            var tamanhoDaListaDoBanco = criarLista().Count;
 
-            var idQueNaoExiste = 4;
+            var tamanhoDaListaEsperado = 3;
 
-            Assert.Throws<Exception>(() => _servicoTesteDeJogo.Deletar(idQueNaoExiste));
+            var testeDeJogoDeletado = new TesteDeJogo
+            {
+                Id = 4,
+                NomeResponsavelDoTeste = "Samuel",
+                Descricao = "O jogo é divertido",
+                Nota = 8m,
+                Aprovado = true,
+                DataRealizacaoTeste = DateTime.Parse("18/06/2024"),
+                JogoId = 4
+            };
+
+            _servicoTesteDeJogo.Deletar(testeDeJogoDeletado.Id);
+
+            Assert.Equal(tamanhoDaListaEsperado, tamanhoDaListaDoBanco);
         }
 
         public List<TesteDeJogo> criarLista()

@@ -29,7 +29,8 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public void Deletar(int id)
         {
-            throw new System.NotImplementedException();
+            bancoDeDados.Jogo
+                .Delete(j => j.Id == id);
         }
 
         public Jogo ObterPorId(int id)

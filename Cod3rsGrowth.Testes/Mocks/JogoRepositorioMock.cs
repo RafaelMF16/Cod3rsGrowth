@@ -30,8 +30,7 @@ namespace Cod3rsGrowth.Testes.Mocks
 
         public void Deletar(int id)
         {
-            var jogoQueVaiSerDeletado = _instancia.Find(jogo => jogo.Id == id)
-                ?? throw new Exception($"Erro ao obter jogo com id {id}");
+            var jogoQueVaiSerDeletado = _instancia.Find(jogo => jogo.Id == id);
 
             _instancia.Remove(jogoQueVaiSerDeletado);
         }
