@@ -37,10 +37,7 @@ namespace Cod3rsGrowth.Testes.Mocks
 
         public TesteDeJogo ObterPorId(int id)
         {
-            var obterTesteDeJogo = _instancia.Find(x => x.Id == id)
-                ?? throw new Exception($"Erro ao obter teste de jogo com id {id}");
-
-            return obterTesteDeJogo;
+            return _instancia.Find(x => x.Id == id);
         }
 
         public List<TesteDeJogo> ObterTodos(FiltroTesteDeJogo? filtro = null)

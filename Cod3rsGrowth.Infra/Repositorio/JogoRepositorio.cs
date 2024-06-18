@@ -35,7 +35,8 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public Jogo ObterPorId(int id)
         {
-            throw new System.NotImplementedException();
+            return bancoDeDados.GetTable<Jogo>()
+                .FirstOrDefault(j => j.Id == id);
         }
 
         public List<Jogo> ObterTodos(FiltroJogo? filtro = null)

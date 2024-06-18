@@ -33,25 +33,26 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public TesteDeJogo ObterPorId(int id)
         {
-            throw new System.NotImplementedException();
+            return bancoDeDados.GetTable<TesteDeJogo>()
+                .FirstOrDefault(t => t.Id == id);
         }
 
         public List<TesteDeJogo> ObterTodos(FiltroTesteDeJogo? filtro = null)
         {
             var testesDeJogos = bancoDeDados.GetTable<TesteDeJogo>().ToList();
-            
-                if (!string.IsNullOrEmpty(filtro?.NomeResponsavelTeste))
-                {
-                    testesDeJogos = testesDeJogos.FindAll(t => t.NomeResponsavelDoTeste.StartsWith(filtro.NomeResponsavelTeste, StringComparison.OrdinalIgnoreCase));
-                }
-                if (filtro?.Aprovado != null)
-                {
-                    testesDeJogos = testesDeJogos.FindAll(t => t.Aprovado == filtro.Aprovado);
-                }
-                if (filtro?.DataRealizacaoTeste != null)
-                {
-                    testesDeJogos = testesDeJogos.FindAll(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
-                }
+
+            if (!string.IsNullOrEmpty(filtro?.NomeResponsavelTeste))
+            {
+                testesDeJogos = testesDeJogos.FindAll(t => t.NomeResponsavelDoTeste.StartsWith(filtro.NomeResponsavelTeste, StringComparison.OrdinalIgnoreCase));
+            }
+            if (filtro?.Aprovado != null)
+            {
+                testesDeJogos = testesDeJogos.FindAll(t => t.Aprovado == filtro.Aprovado);
+            }
+            if (filtro?.DataRealizacaoTeste != null)
+            {
+                testesDeJogos = testesDeJogos.FindAll(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
+            }
 
             return testesDeJogos;
         }
