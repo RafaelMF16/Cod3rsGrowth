@@ -43,18 +43,18 @@ namespace Cod3rsGrowth.Infra.Repositorio
         {
             var jogos = bancoDeDados.GetTable<Jogo>().ToList();
 
-                if (!string.IsNullOrEmpty(filtro?.Nome))
-                {
-                    jogos = jogos.FindAll(j => j.Nome.StartsWith(filtro.Nome, StringComparison.OrdinalIgnoreCase));
-                }
-                if (filtro?.Genero != null)
-                {
-                    jogos = jogos.FindAll(j => j.Genero == filtro.Genero);
-                }
-                if (filtro?.Preco != null)
-                {
-                    jogos = jogos.FindAll(j => j.Preco == filtro.Preco);
-                }
+            if (!string.IsNullOrEmpty(filtro?.Nome))
+            {
+                jogos = jogos.FindAll(j => j.Nome.StartsWith(filtro.Nome, StringComparison.OrdinalIgnoreCase));
+            }
+            if (filtro?.Genero != null)
+            {
+                jogos = jogos.FindAll(j => j.Genero == filtro.Genero);
+            }
+            if (filtro?.Preco != null)
+            {
+                jogos = jogos.FindAll(j => j.Preco == filtro.Preco);
+            }
 
             return jogos;
         }
