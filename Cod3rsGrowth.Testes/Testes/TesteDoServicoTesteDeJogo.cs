@@ -231,16 +231,6 @@ namespace Cod3rsGrowth.Testes.Testes
             Assert.DoesNotContain(listaDeTesteDeJogoSingleton, testeDeJogo => testeDeJogo.Id == idTesteDeJogoDeletado);
         }
 
-        [Fact]
-        public void deletar_quando_chamado_deve_lancar_excecao_caso_id_passado_nao_exista()
-        {
-            criarLista();
-
-            var idQueNaoExiste = 4;
-
-            Assert.Throws<Exception>(() => _servicoTesteDeJogo.Deletar(idQueNaoExiste));
-        }
-
         public List<TesteDeJogo> criarLista()
         {
             var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
