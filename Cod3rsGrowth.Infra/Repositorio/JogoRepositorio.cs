@@ -24,7 +24,7 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public void Atualizar(Jogo jogo)
         {
-            throw new System.NotImplementedException();
+            bancoDeDados.Update(jogo);
         }
 
         public void Deletar(int id)

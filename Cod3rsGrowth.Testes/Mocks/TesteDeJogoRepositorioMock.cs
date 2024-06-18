@@ -21,8 +21,7 @@ namespace Cod3rsGrowth.Testes.Mocks
 
         public void Atualizar(TesteDeJogo testeDeJogoAtualizado)
         {
-            var testeDeJogoDesatualizado = _instancia.Find(testeDeJogo => testeDeJogo.Id == testeDeJogoAtualizado.Id)
-                ?? throw new Exception($"Erro ao obter teste de jogo com id {testeDeJogoAtualizado.Id}");
+            var testeDeJogoDesatualizado = _instancia.Find(testeDeJogo => testeDeJogo.Id == testeDeJogoAtualizado.Id);
 
             var index = _instancia.IndexOf(testeDeJogoDesatualizado);
 
