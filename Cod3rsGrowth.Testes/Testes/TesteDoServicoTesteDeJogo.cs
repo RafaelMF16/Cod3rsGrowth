@@ -3,6 +3,8 @@ using Cod3rsGrowth.Infra.Repositorio;
 using Cod3rsGrowth.Infra.Singletons;
 using Cod3rsGrowth.Servico.Servicos;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace Cod3rsGrowth.Testes.Testes
 {
@@ -73,6 +75,32 @@ namespace Cod3rsGrowth.Testes.Testes
 
             Assert.Equivalent(listaEsperada, listaDoBanco);
         }
+
+        [Fact]
+        public void obter_todos_quando_chamado_com_filtro_de_data_deve_retornar_teste_de_jogo_com_data_passada()
+        {
+            criarLista();
+
+
+            var ListaEsperada = new List<TesteDeJogo>
+            {
+                new TesteDeJogo
+                {
+                    Id = 2,
+                    NomeResponsavelDoTeste = "Paulo",
+                    Descricao = "Não gostei do jogo",
+                    Nota = 4.5m,
+                    Aprovado = false,
+                    DataRealizacaoTeste = DateTime.Parse("10/04/2024"),
+                    JogoId = 2
+                }
+            };
+
+            var listaDoBanco = _servicoTesteDeJogo.ObterTodos(new FiltroTesteDeJogo { DataRealizacaoTeste = new DateTime(2024, 04, 10)});
+
+            Assert.Equivalent(ListaEsperada, listaDoBanco);
+        }
+
 
         [Theory]
         [InlineData(1)]
@@ -265,6 +293,7 @@ namespace Cod3rsGrowth.Testes.Testes
 
         public List<TesteDeJogo> criarLista()
         {
+
             var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
 
             var listaDeTesteDeJogo = new List<TesteDeJogo>

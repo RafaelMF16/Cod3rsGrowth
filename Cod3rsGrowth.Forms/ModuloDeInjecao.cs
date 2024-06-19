@@ -13,7 +13,7 @@ namespace Cod3rsGrowth.Forms
         {
             servicos.AddLinqToDBContext<DbCod3rsGrowth>((provider, options)
                 => options
-                .UseSqlServer(Configuration.GetConnectionString("Cod3rsGrowth")));
+                .UseSqlServer(Configuration.GetConnectionString(Environment.GetEnvironmentVariable("ConnectionString"))));
         }
     }
 }
