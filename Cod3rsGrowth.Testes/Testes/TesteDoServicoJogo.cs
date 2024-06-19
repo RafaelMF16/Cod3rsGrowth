@@ -21,7 +21,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void obter_todos_quando_chamado_retorna_uma_lista_de_jogo()
         {
-            var listaEsperada = criarLista();
+            var listaEsperada = CriarLista();
 
             var listaDoBanco = _servicoJogo.ObterTodos();
 
@@ -31,11 +31,13 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void obter_todos_quando_chamado_com_filtro_de_nome_deve_retornar_lista_de_jogo_de_acordo_com_filtro_passado()
         {
-            criarLista();
+            CriarLista();
+
+            var filtro = new FiltroJogo { Nome = "mine" };
 
             var listaEsperada = new List<Jogo> { new Jogo { Id = 1, Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 100m} };
 
-            var listaDoBanco = _servicoJogo.ObterTodos(new FiltroJogo { Nome = "mine"});
+            var listaDoBanco = _servicoJogo.ObterTodos(filtro);
 
             Assert.Equivalent(listaEsperada, listaDoBanco);
         }
@@ -43,7 +45,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void obter_todos_quando_chamado_com_filtro_invalido_deve_retornar_lista_de_jogo_vazia()
         {
-            criarLista();
+            CriarLista();
 
             var listaEsperada = new List<Jogo> { };
 
@@ -58,7 +60,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [InlineData(3)]
         public void obter_por_id_quando_chamado_retorna_o_jogo_que_tem_o_id_um_dois_ou_tres(int id)
         {
-            criarLista();
+            CriarLista();
 
             var idEsperado = id;
 
@@ -70,7 +72,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void obter_por_id_quando_chamado_lanca_excecao_caso_o_id_passado_seja_quatro()
         {
-            criarLista();
+            CriarLista();
 
             var idNulo = 4;
 
@@ -100,7 +102,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void adicionar_quando_chamado_nao_deve_adicionar_jogo_caso_nome_seja_repetido()
         {
-            criarLista();
+            CriarLista();
 
             var jogoRepetido = new Jogo { Id = 4, Nome = "Counter Strike 2", Genero = Dominio.EnumGenero.Genero.FPS, Preco = 60m };
 
@@ -122,7 +124,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void atualizar_quando_chamado_deve_atualizar_o_campo_preco_do_jogo_com_id_um()
         {
-            criarLista();
+            CriarLista();
 
             var listaDeJogoSingleton = JogoSingleton.Instancia;
 
@@ -136,7 +138,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void atualizar_quando_chamado_lanca_excecao_caso_id_passado_nao_exista()
         {
-            criarLista();
+            CriarLista();
 
             var jogoAtualizado = new Jogo { Id = 4, Nome = "Terraria", Genero = Dominio.EnumGenero.Genero.RPG, Preco = 150m };
 
@@ -146,7 +148,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void atualizar_quando_chamado_nao_deve_atualizar_jogo_caso_nome_seja_nulo()
         {
-            criarLista();
+            CriarLista();
 
             var jogoAtualizado = new Jogo { Id = 1, Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 150m };
 
@@ -158,7 +160,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void deletar_quando_chamado_deve_remover_o_jogo_com_id_um()
         {
-            criarLista();
+            CriarLista();
 
             var jogoDeletado = new Jogo { Id = 1, Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 100m };
 
@@ -172,7 +174,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void deletar_quando_chamado_nao_deve_remover_jogo_com_id_invalido()
         {
-            var tamanhoDaListaDoBanco = criarLista().Count;
+            var tamanhoDaListaDoBanco = CriarLista().Count;
 
             var tamanhoDaListaEsperado = 3;
 
@@ -183,7 +185,7 @@ namespace Cod3rsGrowth.Testes.Testes
             Assert.Equal(tamanhoDaListaEsperado, tamanhoDaListaDoBanco);
         }
 
-        public List<Jogo> criarLista()
+        public List<Jogo> CriarLista()
         {
             var listaJogoSingleton = JogoSingleton.Instancia;
 
