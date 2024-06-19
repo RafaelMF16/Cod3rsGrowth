@@ -1,18 +1,19 @@
-﻿using Cod3rsGrowth.Dominio.Entidades;
-using Cod3rsGrowth.Infra.Interfaces;
+﻿using Cod3rsGrowth.Dominio;
+using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Infra.Singletons;
+using Cod3rsGrowth.Servico.Servicos;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Testes.Testes
 {
-    public class TesteRepositorioJogoSingleton : TesteBase
+    public class TesteDoServicoJogo : TesteBase
     {
-        private readonly IJogoRepositorio _servicoJogo;
+        private readonly ServicoJogo _servicoJogo;
 
-        public TesteRepositorioJogoSingleton()
+        public TesteDoServicoJogo()
         {
-            _servicoJogo = ServiceProvider.GetService<IJogoRepositorio>()
-                ?? throw new Exception($"Erro ao obter o serviço {nameof(IJogoRepositorio)}");
+            _servicoJogo = ServiceProvider.GetService<ServicoJogo>()
+                ?? throw new Exception($"Erro ao obter o serviço {nameof(ServicoJogo)}");
 
             JogoSingleton.Instancia.Clear();
         }
@@ -20,11 +21,37 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void obter_todos_quando_chamado_retorna_uma_lista_de_jogo()
         {
-            var listaEsperada = criarLista();
+            var listaEsperada = CriarLista();
 
             var listaDoBanco = _servicoJogo.ObterTodos();
 
             Assert.Equivalent(listaEsperada, listaDoBanco, true);
+        }
+
+        [Fact]
+        public void obter_todos_quando_chamado_com_filtro_de_nome_deve_retornar_lista_de_jogo_de_acordo_com_filtro_passado()
+        {
+            CriarLista();
+
+            var filtro = new FiltroJogo { Nome = "mine" };
+
+            var listaEsperada = new List<Jogo> { new Jogo { Id = 1, Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 100m} };
+
+            var listaDoBanco = _servicoJogo.ObterTodos(filtro);
+
+            Assert.Equivalent(listaEsperada, listaDoBanco);
+        }
+
+        [Fact]
+        public void obter_todos_quando_chamado_com_filtro_invalido_deve_retornar_lista_de_jogo_vazia()
+        {
+            CriarLista();
+
+            var listaEsperada = new List<Jogo> { };
+
+            var listaDoBanco = _servicoJogo.ObterTodos(new FiltroJogo { Nome = "Elden Ring"});
+
+            Assert.Equivalent(listaEsperada, listaDoBanco);
         }
 
         [Theory]
@@ -33,7 +60,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [InlineData(3)]
         public void obter_por_id_quando_chamado_retorna_o_jogo_que_tem_o_id_um_dois_ou_tres(int id)
         {
-            criarLista();
+            CriarLista();
 
             var idEsperado = id;
 
@@ -45,7 +72,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void obter_por_id_quando_chamado_lanca_excecao_caso_o_id_passado_seja_quatro()
         {
-            criarLista();
+            CriarLista();
 
             var idNulo = 4;
 
@@ -71,7 +98,19 @@ namespace Cod3rsGrowth.Testes.Testes
 
             Assert.Equal("O campo nome é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
         }
-        
+
+        [Fact]
+        public void adicionar_quando_chamado_nao_deve_adicionar_jogo_caso_nome_seja_repetido()
+        {
+            CriarLista();
+
+            var jogoRepetido = new Jogo { Id = 4, Nome = "Counter Strike 2", Genero = Dominio.EnumGenero.Genero.FPS, Preco = 60m };
+
+            var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Adicionar(jogoRepetido));
+
+            Assert.Equal("Já existe um jogo com esse nome cadastrado", mensagemDeErro.Errors.First().ErrorMessage);
+        }
+
         [Fact]
         public void adicionar_quando_chamado_nao_deve_adicionar_jogo_caso_enum_seja_vazio()
         {
@@ -85,7 +124,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void atualizar_quando_chamado_deve_atualizar_o_campo_preco_do_jogo_com_id_um()
         {
-            criarLista();
+            CriarLista();
 
             var listaDeJogoSingleton = JogoSingleton.Instancia;
 
@@ -99,7 +138,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void atualizar_quando_chamado_lanca_excecao_caso_id_passado_nao_exista()
         {
-            criarLista();
+            CriarLista();
 
             var jogoAtualizado = new Jogo { Id = 4, Nome = "Terraria", Genero = Dominio.EnumGenero.Genero.RPG, Preco = 150m };
 
@@ -109,7 +148,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void atualizar_quando_chamado_nao_deve_atualizar_jogo_caso_nome_seja_nulo()
         {
-            criarLista();
+            CriarLista();
 
             var jogoAtualizado = new Jogo { Id = 1, Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 150m };
 
@@ -121,28 +160,32 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void deletar_quando_chamado_deve_remover_o_jogo_com_id_um()
         {
-            criarLista();
+            CriarLista();
 
-            var idJogoDeletado = 1;
+            var jogoDeletado = new Jogo { Id = 1, Nome = "Minecraft", Genero = Dominio.EnumGenero.Genero.SOBREVIVENCIA, Preco = 100m };
 
             var listaDeJogoSingleton = JogoSingleton.Instancia;
 
-            _servicoJogo.Deletar(idJogoDeletado);
+            _servicoJogo.Deletar(jogoDeletado.Id);
 
-            Assert.DoesNotContain(listaDeJogoSingleton, jogo => jogo.Id == idJogoDeletado);
+            Assert.DoesNotContain(listaDeJogoSingleton, jogo => jogo == jogoDeletado);
         }
 
         [Fact]
-        public void deletar_quando_chamado_deve_lancar_excecao_caso_id_passado_nao_exista()
+        public void deletar_quando_chamado_nao_deve_remover_jogo_com_id_invalido()
         {
-            criarLista();
+            var tamanhoDaListaDoBanco = CriarLista().Count;
 
-            var idQueNaoExiste = 4;
+            var tamanhoDaListaEsperado = 3;
 
-            Assert.Throws<Exception>(() => _servicoJogo.Deletar(idQueNaoExiste));
+            var jogoDeletado = new Jogo { Id = 4, Nome = "Spider Man", Genero = Dominio.EnumGenero.Genero.MMORPG, Preco = 250m };
+
+            _servicoJogo.Deletar(jogoDeletado.Id);
+
+            Assert.Equal(tamanhoDaListaEsperado, tamanhoDaListaDoBanco);
         }
 
-        public List<Jogo> criarLista()
+        public List<Jogo> CriarLista()
         {
             var listaJogoSingleton = JogoSingleton.Instancia;
 
