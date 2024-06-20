@@ -1,5 +1,5 @@
-﻿using Cod3rsGrowth.Dominio;
-using Cod3rsGrowth.Dominio.Entidades;
+﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Dominio.Filtros;
 using Cod3rsGrowth.Infra.Interfaces;
 using LinqToDB;
 using System;

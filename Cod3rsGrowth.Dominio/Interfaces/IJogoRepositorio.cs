@@ -1,5 +1,5 @@
-﻿using Cod3rsGrowth.Dominio;
-using Cod3rsGrowth.Dominio.Entidades;
+﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Dominio.Filtros;
 using System.Collections.Generic;
 
 namespace Cod3rsGrowth.Infra.Interfaces

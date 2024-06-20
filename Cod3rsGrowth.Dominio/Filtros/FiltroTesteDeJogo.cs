@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cod3rsGrowth.Infra.Repositorio
+namespace Cod3rsGrowth.Dominio.Filtros
 {
     public class FiltroTesteDeJogo
     {
