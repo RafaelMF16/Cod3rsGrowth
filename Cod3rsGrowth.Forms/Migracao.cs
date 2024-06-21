@@ -7,8 +7,8 @@ namespace Cod3rsGrowth.Forms
     {
         public void ExecutarMigracao()
         {
-            var executar = ServiceProvider.GetRequiredService<IMigrationRunner>();
-            executar.MigrateUp();
+            var executarMigracao = ServiceProvider.GetRequiredService<IMigrationRunner>();
+            executarMigracao.MigrateUp();
         }
     }
 }
