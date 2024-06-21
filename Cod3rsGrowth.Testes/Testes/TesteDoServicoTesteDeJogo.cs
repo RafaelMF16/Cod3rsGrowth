@@ -1,18 +1,19 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
-using Cod3rsGrowth.Infra.Interfaces;
+using Cod3rsGrowth.Dominio.Filtros;
 using Cod3rsGrowth.Infra.Singletons;
+using Cod3rsGrowth.Servico.Servicos;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Testes.Testes
 {
-    public class TesteRepositorioTesteDeJogoSingleton : TesteBase
+    public class TesteDoServicoTesteDeJogo : TesteBase
     {
-        private readonly ITesteDeJogoRepositorio _servicoTesteDeJogo;
+        private readonly ServicoTesteDeJogo _servicoTesteDeJogo;
 
-        public TesteRepositorioTesteDeJogoSingleton()
+        public TesteDoServicoTesteDeJogo()
         {
-            _servicoTesteDeJogo = ServiceProvider.GetService<ITesteDeJogoRepositorio>()
-                ?? throw new Exception($"Erro ao obter serviço{nameof(ITesteDeJogoRepositorio)}");
+            _servicoTesteDeJogo = ServiceProvider.GetService<ServicoTesteDeJogo>()
+                ?? throw new Exception($"Erro ao obter serviço{nameof(ServicoTesteDeJogo)}");
 
             TesteDeJogoSingleton.Instancia.Clear();
         }
@@ -20,11 +21,85 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void obter_todos_quando_chamado_retorna_uma_lista_de_teste_de_jogo()
         {
-            var listaEsperada = criarLista();
+            var listaEsperada = CriarLista();
 
             var listaDoBanco = _servicoTesteDeJogo.ObterTodos();
 
             Assert.Equivalent(listaEsperada, listaDoBanco);
+        }
+
+        [Fact]
+        public void obter_todos_quando_chamado_com_filtro_de_aprovado_deve_retornar_lista_de_teste_de_jogo_com_os_testes_que_tem_aprovado_igual_true()
+        {
+            CriarLista();
+
+            var filtro = new FiltroTesteDeJogo { Aprovado = true };
+
+            var listaEsperada = new List<TesteDeJogo>
+            { 
+                new TesteDeJogo
+                { 
+                    Id = 1,
+                    NomeResponsavelDoTeste = "Rafael",
+                    Descricao = "O jogo é top",
+                    Nota = 9m,
+                    Aprovado = true,
+                    DataRealizacaoTeste = DateTime.Parse("22/05/2024"),
+                    JogoId = 1
+                },
+                new TesteDeJogo
+                {
+                    Id = 3,
+                    NomeResponsavelDoTeste = "Italo",
+                    Descricao = "Não é um jogo perfeito, mas é jogável",
+                    Nota = 7.4m,
+                    Aprovado = true,
+                    DataRealizacaoTeste = DateTime.Parse("15/06/2024"),
+                    JogoId = 3
+                }
+            };
+
+            var listaDoBanco = _servicoTesteDeJogo.ObterTodos(filtro);
+
+            Assert.Equivalent(listaEsperada, listaDoBanco);
+        }
+
+        [Fact]
+        public void obter_todos_quando_chamado_com_filtro_invalido_deve_retornar_lista_de_teste_de_jogo_vazia()
+        {
+            CriarLista();
+
+            var listaEsperada = new List<TesteDeJogo> { };
+
+            var listaDoBanco = _servicoTesteDeJogo.ObterTodos(new FiltroTesteDeJogo { NomeResponsavelTeste = "Victor"});
+
+            Assert.Equivalent(listaEsperada, listaDoBanco);
+        }
+
+        [Fact]
+        public void obter_todos_quando_chamado_com_filtro_de_data_deve_retornar_teste_de_jogo_com_data_passada()
+        {
+            CriarLista();
+
+            var filtro = new FiltroTesteDeJogo { DataRealizacaoTeste = new DateTime(2024, 04, 10) };
+
+            var ListaEsperada = new List<TesteDeJogo>
+            {
+                new TesteDeJogo
+                {
+                    Id = 2,
+                    NomeResponsavelDoTeste = "Paulo",
+                    Descricao = "Não gostei do jogo",
+                    Nota = 4.5m,
+                    Aprovado = false,
+                    DataRealizacaoTeste = DateTime.Parse("10/04/2024"),
+                    JogoId = 2
+                }
+            };
+
+            var listaDoBanco = _servicoTesteDeJogo.ObterTodos(filtro);
+
+            Assert.Equivalent(ListaEsperada, listaDoBanco);
         }
 
         [Theory]
@@ -33,7 +108,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [InlineData(3)]
         public void obter_por_id_quando_chamado_retorna_o_teste_de_jogo_que_tem_o_id_um_dois_ou_tres(int id)
         {
-            criarLista();
+            CriarLista();
 
             var idEsperado = id;
 
@@ -45,7 +120,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void obter_por_id_quando_chamado_lanca_excecao_caso_o_id_passado_seja_quatro()
         {
-            criarLista();
+            CriarLista();
 
             var idNulo = 4;
 
@@ -111,7 +186,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void atualizar_quando_chamado_deve_atualizar_o_campo_nota_do_teste_de_jogo_com_id_dois()
         {
-            criarLista();
+            CriarLista();
 
             var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
 
@@ -134,7 +209,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void atualizar_quando_chamado_lanca_excecao_caso_id_passado_nao_exista()
         {
-            criarLista();
+            CriarLista();
 
             var testeDeJogoAtualizado = new TesteDeJogo
             {
@@ -153,7 +228,7 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void atualizar_quando_chamado_nao_deve_atualizar_teste_de_jogo_caso_nome_do_responsavel_seja_nulo()
         {
-            criarLista();
+            CriarLista();
 
             var testeDeJogoAtualizado = new TesteDeJogo
             {
@@ -173,29 +248,52 @@ namespace Cod3rsGrowth.Testes.Testes
         [Fact]
         public void deletar_quando_chamado_deve_remover_teste_de_jogo_com_id_um()
         {
-            criarLista();
+            CriarLista();
 
-            var idTesteDeJogoDeletado = 1;
+            var testeDeJogoDeletado = new TesteDeJogo
+            {
+                Id = 1,
+                NomeResponsavelDoTeste = "Rafael",
+                Descricao = "O jogo é top",
+                Nota = 9m,
+                Aprovado = true,
+                DataRealizacaoTeste = DateTime.Parse("22/05/2024"),
+                JogoId = 1
+            };
 
             var listaDeTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
 
-            _servicoTesteDeJogo.Deletar(idTesteDeJogoDeletado);
+            _servicoTesteDeJogo.Deletar(testeDeJogoDeletado.Id);
 
-            Assert.DoesNotContain(listaDeTesteDeJogoSingleton, testeDeJogo => testeDeJogo.Id == idTesteDeJogoDeletado);
+            Assert.DoesNotContain(listaDeTesteDeJogoSingleton, testeDeJogo => testeDeJogo == testeDeJogoDeletado);
         }
 
         [Fact]
-        public void deletar_quando_chamado_deve_lancar_excecao_caso_id_passado_nao_exista()
+        public void deletar_quando_chamado_nao_deve_remover_teste_de_jogo_com_id_invalido()
         {
-            criarLista();
+            var tamanhoDaListaDoBanco = CriarLista().Count;
 
-            var idQueNaoExiste = 4;
+            var tamanhoDaListaEsperado = 3;
 
-            Assert.Throws<Exception>(() => _servicoTesteDeJogo.Deletar(idQueNaoExiste));
+            var testeDeJogoDeletado = new TesteDeJogo
+            {
+                Id = 4,
+                NomeResponsavelDoTeste = "Samuel",
+                Descricao = "O jogo é divertido",
+                Nota = 8m,
+                Aprovado = true,
+                DataRealizacaoTeste = DateTime.Parse("18/06/2024"),
+                JogoId = 4
+            };
+
+            _servicoTesteDeJogo.Deletar(testeDeJogoDeletado.Id);
+
+            Assert.Equal(tamanhoDaListaEsperado, tamanhoDaListaDoBanco);
         }
 
-        public List<TesteDeJogo> criarLista()
+        public List<TesteDeJogo> CriarLista()
         {
+
             var listaTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
 
             var listaDeTesteDeJogo = new List<TesteDeJogo>
