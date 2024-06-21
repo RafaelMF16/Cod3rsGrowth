@@ -1,6 +1,6 @@
 ﻿using Cod3rsGrowth.Dominio.EnumGenero;
 
-namespace Cod3rsGrowth.Dominio
+namespace Cod3rsGrowth.Dominio.Filtros
 {
     public class FiltroJogo
     {

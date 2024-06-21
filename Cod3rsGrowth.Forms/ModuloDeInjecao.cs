@@ -1,4 +1,6 @@
-﻿using Cod3rsGrowth.Infra;
+﻿using Cod3rsGrowth.Dominio.Migracao;
+using Cod3rsGrowth.Infra;
+using FluentMigrator.Runner;
 using LinqToDB;
 using LinqToDB.AspNet;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +21,14 @@ namespace Cod3rsGrowth.Forms
             servicos.AddLinqToDBContext<DbCod3rsGrowth>((provider, options)
                 => options
                 .UseSqlServer(Configuration.GetConnectionString(stringConexao)));
+
+            servicos.AddFluentMigratorCore()
+                .ConfigureRunner(rb => rb
+                .AddSqlServer()
+                .WithGlobalConnectionString(stringConexao)
+                .ScanIn(typeof(_20240620104300_migracao_tabela_jogo).Assembly).For.Migrations())
+                .AddLogging(lb => lb.AddFluentMigratorConsole())
+                .BuildServiceProvider(false);
         }
     }
 }
