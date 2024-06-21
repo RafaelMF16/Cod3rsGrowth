@@ -1,6 +1,6 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Dominio.Filtros;
 using Cod3rsGrowth.Infra.Interfaces;
-using Cod3rsGrowth.Infra.Repositorio;
 using Cod3rsGrowth.Infra.Singletons;
 
 namespace Cod3rsGrowth.Testes.Mocks

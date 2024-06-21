@@ -1,5 +1,5 @@
-﻿using Cod3rsGrowth.Dominio;
-using Cod3rsGrowth.Dominio.Entidades;
+﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Dominio.Filtros;
 using Cod3rsGrowth.Infra.Singletons;
 using Cod3rsGrowth.Servico.Servicos;
 using Microsoft.Extensions.DependencyInjection;
