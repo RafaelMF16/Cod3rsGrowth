@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Cod3rsGrowth.Forms
+namespace Cod3rsGrowth.Forms.Injecao
 {
     public class FormsBase : IDisposable
     {
