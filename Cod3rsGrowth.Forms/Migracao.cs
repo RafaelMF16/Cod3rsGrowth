@@ -1,4 +1,5 @@
-﻿using FluentMigrator.Runner;
+﻿using Cod3rsGrowth.Forms.Injecao;
+using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Forms

@@ -61,16 +61,7 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public bool VerificarSeTemNomeRepetido(Jogo jogo)
         {
-            var jogoComNomeRepetido = bancoDeDados.GetTable<Jogo>().ToList().Find(j => j.Nome == jogo.Nome);
-
-            if (jogoComNomeRepetido != null)
-            {
-                if (jogoComNomeRepetido.Id != jogo.Id)
-                {
-                    return false;
-                }
-            }
-            return true;
+            return !(bancoDeDados.GetTable<Jogo>().Any(j => j.Nome == jogo.Nome && j.Id != jogo.Id));
         }
     }
 }
