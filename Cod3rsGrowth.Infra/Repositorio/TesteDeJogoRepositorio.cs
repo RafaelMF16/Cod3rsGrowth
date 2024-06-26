@@ -43,17 +43,13 @@ namespace Cod3rsGrowth.Infra.Repositorio
             var testesDeJogos = bancoDeDados.GetTable<TesteDeJogo>().AsQueryable();
 
             if (!string.IsNullOrEmpty(filtro?.NomeResponsavelTeste))
-            {
-                testesDeJogos = testesDeJogos.Where(t => t.NomeResponsavelDoTeste.StartsWith(filtro.NomeResponsavelTeste, StringComparison.OrdinalIgnoreCase));
-            }
+                testesDeJogos = testesDeJogos.Where(t => t.NomeResponsavelDoTeste.Contains(filtro.NomeResponsavelTeste, StringComparison.OrdinalIgnoreCase));
+            
             if (filtro?.Aprovado != null)
-            {
                 testesDeJogos = testesDeJogos.Where(t => t.Aprovado == filtro.Aprovado);
-            }
+
             if (filtro?.DataRealizacaoTeste != null)
-            {
                 testesDeJogos = testesDeJogos.Where(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
-            }
 
             return testesDeJogos.ToList();
         }

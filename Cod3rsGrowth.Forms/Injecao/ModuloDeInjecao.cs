@@ -1,9 +1,5 @@
 ﻿using Cod3rsGrowth.Dominio.Migracao;
-using Cod3rsGrowth.Infra;
 using FluentMigrator.Runner;
-using LinqToDB;
-using LinqToDB.AspNet;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Forms.Injecao

@@ -16,7 +16,7 @@ namespace Cod3rsGrowth.Dominio.Migracao
                 .WithColumn("Id").AsInt64().PrimaryKey().Identity()
                 .WithColumn("Nome").AsString().NotNullable()
                 .WithColumn("Genero").AsInt16().NotNullable()
-                .WithColumn("Preco").AsDecimal();
+                .WithColumn("Preco").AsDecimal(6, 2);
         }
     }
 }
