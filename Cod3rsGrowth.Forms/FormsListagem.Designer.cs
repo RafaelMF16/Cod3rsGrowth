@@ -50,20 +50,27 @@
             precoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             jogoBindingSource2 = new BindingSource(components);
             tabTesteDeJogo = new TabPage();
+            buttonResetData = new Button();
+            label2 = new Label();
+            label1 = new Label();
+            dateTimePickerDataInicial = new DateTimePicker();
+            dateTimePickerDataFinal = new DateTimePicker();
+            checkBoxReprovado = new CheckBox();
+            checkBoxAprovado = new CheckBox();
             textBoxTDJ = new TextBox();
             btnDeletarTDJ = new Button();
             btnAtualizarTDJ = new Button();
             btnAdicionarTDJ = new Button();
             tabelaTesteDeJogo = new DataGridView();
+            testeDeJogoBindingSource1 = new BindingSource(components);
+            testeDeJogoBindingSource = new BindingSource(components);
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             nomeResponsavelDoTesteDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             descricaoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             notaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             aprovadoDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             dataRealizacaoTesteDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            idJogoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            testeDeJogoBindingSource1 = new BindingSource(components);
-            testeDeJogoBindingSource = new BindingSource(components);
+            idJogoDataGridViewColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)jogoBindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)jogoBindingSource).BeginInit();
             Abas.SuspendLayout();
@@ -179,13 +186,12 @@
             // 
             // comboBoxEnum
             // 
-            comboBoxEnum.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             comboBoxEnum.BackColor = Color.White;
             comboBoxEnum.DisplayMember = "DSA";
             comboBoxEnum.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxEnum.FlatStyle = FlatStyle.Flat;
             comboBoxEnum.FormattingEnabled = true;
-            comboBoxEnum.Items.AddRange(new object[] { "TODOS", "FPS", "BATTLEROYALE", "MOBA", "RPG", "MMORPG", "FPA", "RTS", "PVP", "SIMULADOR", "SOBREVIVENCIA", "TPS" });
+            comboBoxEnum.Items.AddRange(new object[] { "TODOS", "FPS", "BATTLEROYALE", "MOBA", "RPG", "MMORPG", "FPA", "RTS", "PVP", "SIMULADOR", "SOBREVIVENCIA", "TPS", "MUNDOABERTO" });
             comboBoxEnum.Location = new Point(65, 52);
             comboBoxEnum.Name = "comboBoxEnum";
             comboBoxEnum.Size = new Size(156, 24);
@@ -237,6 +243,7 @@
             tabelaJogo.DataSource = jogoBindingSource2;
             tabelaJogo.Location = new Point(6, 80);
             tabelaJogo.Name = "tabelaJogo";
+            tabelaJogo.ReadOnly = true;
             tabelaJogo.RowHeadersVisible = false;
             tabelaJogo.RowTemplate.Height = 25;
             tabelaJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -248,24 +255,28 @@
             idDataGridViewTextBoxColumn1.DataPropertyName = "Id";
             idDataGridViewTextBoxColumn1.HeaderText = "Id";
             idDataGridViewTextBoxColumn1.Name = "idDataGridViewTextBoxColumn1";
+            idDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // nomeDataGridViewTextBoxColumn
             // 
             nomeDataGridViewTextBoxColumn.DataPropertyName = "Nome";
             nomeDataGridViewTextBoxColumn.HeaderText = "Nome";
             nomeDataGridViewTextBoxColumn.Name = "nomeDataGridViewTextBoxColumn";
+            nomeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // generoDataGridViewTextBoxColumn
             // 
             generoDataGridViewTextBoxColumn.DataPropertyName = "Genero";
             generoDataGridViewTextBoxColumn.HeaderText = "Genero";
             generoDataGridViewTextBoxColumn.Name = "generoDataGridViewTextBoxColumn";
+            generoDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // precoDataGridViewTextBoxColumn
             // 
             precoDataGridViewTextBoxColumn.DataPropertyName = "Preco";
             precoDataGridViewTextBoxColumn.HeaderText = "Preco";
             precoDataGridViewTextBoxColumn.Name = "precoDataGridViewTextBoxColumn";
+            precoDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // jogoBindingSource2
             // 
@@ -274,17 +285,91 @@
             // tabTesteDeJogo
             // 
             tabTesteDeJogo.BackColor = Color.Silver;
+            tabTesteDeJogo.Controls.Add(buttonResetData);
+            tabTesteDeJogo.Controls.Add(label2);
+            tabTesteDeJogo.Controls.Add(label1);
+            tabTesteDeJogo.Controls.Add(dateTimePickerDataInicial);
+            tabTesteDeJogo.Controls.Add(dateTimePickerDataFinal);
+            tabTesteDeJogo.Controls.Add(checkBoxReprovado);
+            tabTesteDeJogo.Controls.Add(checkBoxAprovado);
             tabTesteDeJogo.Controls.Add(textBoxTDJ);
             tabTesteDeJogo.Controls.Add(btnDeletarTDJ);
             tabTesteDeJogo.Controls.Add(btnAtualizarTDJ);
             tabTesteDeJogo.Controls.Add(btnAdicionarTDJ);
             tabTesteDeJogo.Controls.Add(tabelaTesteDeJogo);
-            tabTesteDeJogo.Location = new Point(4, 24);
+            tabTesteDeJogo.Location = new Point(4, 25);
             tabTesteDeJogo.Name = "tabTesteDeJogo";
             tabTesteDeJogo.Padding = new Padding(3);
-            tabTesteDeJogo.Size = new Size(1089, 449);
+            tabTesteDeJogo.Size = new Size(1089, 448);
             tabTesteDeJogo.TabIndex = 1;
             tabTesteDeJogo.Text = "Testes dos jogos";
+            // 
+            // buttonResetData
+            // 
+            buttonResetData.BackColor = Color.White;
+            buttonResetData.Location = new Point(818, 50);
+            buttonResetData.Name = "buttonResetData";
+            buttonResetData.Size = new Size(80, 24);
+            buttonResetData.TabIndex = 14;
+            buttonResetData.Text = "Reset data";
+            buttonResetData.UseVisualStyleBackColor = false;
+            buttonResetData.Click += EventoDeResetDeData;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(536, 55);
+            label2.Name = "label2";
+            label2.Size = new Size(70, 16);
+            label2.TabIndex = 13;
+            label2.Text = "Data Final:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(249, 55);
+            label1.Name = "label1";
+            label1.Size = new Size(75, 16);
+            label1.TabIndex = 12;
+            label1.Text = "Data inicial:";
+            // 
+            // dateTimePickerDataInicial
+            // 
+            dateTimePickerDataInicial.Location = new Point(330, 50);
+            dateTimePickerDataInicial.Name = "dateTimePickerDataInicial";
+            dateTimePickerDataInicial.Size = new Size(200, 22);
+            dateTimePickerDataInicial.TabIndex = 11;
+            dateTimePickerDataInicial.ValueChanged += EventoDeFiltroPorDataMinima;
+            // 
+            // dateTimePickerDataFinal
+            // 
+            dateTimePickerDataFinal.Location = new Point(612, 50);
+            dateTimePickerDataFinal.Name = "dateTimePickerDataFinal";
+            dateTimePickerDataFinal.Size = new Size(200, 22);
+            dateTimePickerDataFinal.TabIndex = 10;
+            dateTimePickerDataFinal.ValueChanged += EventoDeFiltroPorDataMaxima;
+            // 
+            // checkBoxReprovado
+            // 
+            checkBoxReprovado.AutoSize = true;
+            checkBoxReprovado.Location = new Point(103, 54);
+            checkBoxReprovado.Name = "checkBoxReprovado";
+            checkBoxReprovado.Size = new Size(86, 20);
+            checkBoxReprovado.TabIndex = 9;
+            checkBoxReprovado.Text = "Reprovado";
+            checkBoxReprovado.UseVisualStyleBackColor = true;
+            checkBoxReprovado.CheckedChanged += EventoDeFiltroPorReprovado;
+            // 
+            // checkBoxAprovado
+            // 
+            checkBoxAprovado.AutoSize = true;
+            checkBoxAprovado.Location = new Point(6, 54);
+            checkBoxAprovado.Name = "checkBoxAprovado";
+            checkBoxAprovado.Size = new Size(79, 20);
+            checkBoxAprovado.TabIndex = 8;
+            checkBoxAprovado.Text = "Aprovado";
+            checkBoxAprovado.UseVisualStyleBackColor = true;
+            checkBoxAprovado.CheckedChanged += EventoDeFiltroPorAprovado;
             // 
             // textBoxTDJ
             // 
@@ -298,7 +383,7 @@
             // btnDeletarTDJ
             // 
             btnDeletarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnDeletarTDJ.Location = new Point(810, 410);
+            btnDeletarTDJ.Location = new Point(810, 409);
             btnDeletarTDJ.Name = "btnDeletarTDJ";
             btnDeletarTDJ.Size = new Size(87, 30);
             btnDeletarTDJ.TabIndex = 5;
@@ -308,7 +393,7 @@
             // btnAtualizarTDJ
             // 
             btnAtualizarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAtualizarTDJ.Location = new Point(903, 410);
+            btnAtualizarTDJ.Location = new Point(903, 409);
             btnAtualizarTDJ.Name = "btnAtualizarTDJ";
             btnAtualizarTDJ.Size = new Size(87, 30);
             btnAtualizarTDJ.TabIndex = 4;
@@ -318,7 +403,7 @@
             // btnAdicionarTDJ
             // 
             btnAdicionarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAdicionarTDJ.Location = new Point(996, 410);
+            btnAdicionarTDJ.Location = new Point(996, 409);
             btnAdicionarTDJ.Name = "btnAdicionarTDJ";
             btnAdicionarTDJ.Size = new Size(87, 30);
             btnAdicionarTDJ.TabIndex = 3;
@@ -331,63 +416,21 @@
             tabelaTesteDeJogo.AllowUserToDeleteRows = false;
             tabelaTesteDeJogo.AllowUserToResizeColumns = false;
             tabelaTesteDeJogo.AllowUserToResizeRows = false;
-            tabelaTesteDeJogo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabelaTesteDeJogo.AutoGenerateColumns = false;
             tabelaTesteDeJogo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tabelaTesteDeJogo.BackgroundColor = Color.White;
             tabelaTesteDeJogo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tabelaTesteDeJogo.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeResponsavelDoTesteDataGridViewTextBoxColumn, descricaoDataGridViewTextBoxColumn, notaDataGridViewTextBoxColumn, aprovadoDataGridViewCheckBoxColumn, dataRealizacaoTesteDataGridViewTextBoxColumn, idJogoDataGridViewTextBoxColumn });
+            tabelaTesteDeJogo.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeResponsavelDoTesteDataGridViewTextBoxColumn, descricaoDataGridViewTextBoxColumn, notaDataGridViewTextBoxColumn, aprovadoDataGridViewCheckBoxColumn, dataRealizacaoTesteDataGridViewTextBoxColumn, idJogoDataGridViewColumn });
             tabelaTesteDeJogo.DataSource = testeDeJogoBindingSource1;
             tabelaTesteDeJogo.GridColor = Color.Black;
             tabelaTesteDeJogo.Location = new Point(6, 80);
             tabelaTesteDeJogo.Name = "tabelaTesteDeJogo";
+            tabelaTesteDeJogo.ReadOnly = true;
             tabelaTesteDeJogo.RowHeadersVisible = false;
             tabelaTesteDeJogo.RowTemplate.Height = 25;
             tabelaTesteDeJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            tabelaTesteDeJogo.Size = new Size(1077, 324);
+            tabelaTesteDeJogo.Size = new Size(1077, 323);
             tabelaTesteDeJogo.TabIndex = 6;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            idDataGridViewTextBoxColumn.HeaderText = "Id";
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            // 
-            // nomeResponsavelDoTesteDataGridViewTextBoxColumn
-            // 
-            nomeResponsavelDoTesteDataGridViewTextBoxColumn.DataPropertyName = "NomeResponsavelDoTeste";
-            nomeResponsavelDoTesteDataGridViewTextBoxColumn.HeaderText = "NomeResponsavelDoTeste";
-            nomeResponsavelDoTesteDataGridViewTextBoxColumn.Name = "nomeResponsavelDoTesteDataGridViewTextBoxColumn";
-            // 
-            // descricaoDataGridViewTextBoxColumn
-            // 
-            descricaoDataGridViewTextBoxColumn.DataPropertyName = "Descricao";
-            descricaoDataGridViewTextBoxColumn.HeaderText = "Descricao";
-            descricaoDataGridViewTextBoxColumn.Name = "descricaoDataGridViewTextBoxColumn";
-            // 
-            // notaDataGridViewTextBoxColumn
-            // 
-            notaDataGridViewTextBoxColumn.DataPropertyName = "Nota";
-            notaDataGridViewTextBoxColumn.HeaderText = "Nota";
-            notaDataGridViewTextBoxColumn.Name = "notaDataGridViewTextBoxColumn";
-            // 
-            // aprovadoDataGridViewCheckBoxColumn
-            // 
-            aprovadoDataGridViewCheckBoxColumn.DataPropertyName = "Aprovado";
-            aprovadoDataGridViewCheckBoxColumn.HeaderText = "Aprovado";
-            aprovadoDataGridViewCheckBoxColumn.Name = "aprovadoDataGridViewCheckBoxColumn";
-            // 
-            // dataRealizacaoTesteDataGridViewTextBoxColumn
-            // 
-            dataRealizacaoTesteDataGridViewTextBoxColumn.DataPropertyName = "DataRealizacaoTeste";
-            dataRealizacaoTesteDataGridViewTextBoxColumn.HeaderText = "DataRealizacaoTeste";
-            dataRealizacaoTesteDataGridViewTextBoxColumn.Name = "dataRealizacaoTesteDataGridViewTextBoxColumn";
-            // 
-            // idJogoDataGridViewTextBoxColumn
-            // 
-            idJogoDataGridViewTextBoxColumn.DataPropertyName = "IdJogo";
-            idJogoDataGridViewTextBoxColumn.HeaderText = "IdJogo";
-            idJogoDataGridViewTextBoxColumn.Name = "idJogoDataGridViewTextBoxColumn";
             // 
             // testeDeJogoBindingSource1
             // 
@@ -396,6 +439,56 @@
             // testeDeJogoBindingSource
             // 
             testeDeJogoBindingSource.DataSource = typeof(Dominio.Entidades.TesteDeJogo);
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            idDataGridViewTextBoxColumn.HeaderText = "Id";
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // nomeResponsavelDoTesteDataGridViewTextBoxColumn
+            // 
+            nomeResponsavelDoTesteDataGridViewTextBoxColumn.DataPropertyName = "NomeResponsavelDoTeste";
+            nomeResponsavelDoTesteDataGridViewTextBoxColumn.HeaderText = "NomeResponsavel";
+            nomeResponsavelDoTesteDataGridViewTextBoxColumn.Name = "nomeResponsavelDoTesteDataGridViewTextBoxColumn";
+            nomeResponsavelDoTesteDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // descricaoDataGridViewTextBoxColumn
+            // 
+            descricaoDataGridViewTextBoxColumn.DataPropertyName = "Descricao";
+            descricaoDataGridViewTextBoxColumn.HeaderText = "Descricao";
+            descricaoDataGridViewTextBoxColumn.Name = "descricaoDataGridViewTextBoxColumn";
+            descricaoDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // notaDataGridViewTextBoxColumn
+            // 
+            notaDataGridViewTextBoxColumn.DataPropertyName = "Nota";
+            notaDataGridViewTextBoxColumn.HeaderText = "Nota";
+            notaDataGridViewTextBoxColumn.Name = "notaDataGridViewTextBoxColumn";
+            notaDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // aprovadoDataGridViewCheckBoxColumn
+            // 
+            aprovadoDataGridViewCheckBoxColumn.DataPropertyName = "Aprovado";
+            aprovadoDataGridViewCheckBoxColumn.HeaderText = "Aprovado";
+            aprovadoDataGridViewCheckBoxColumn.Name = "aprovadoDataGridViewCheckBoxColumn";
+            aprovadoDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // dataRealizacaoTesteDataGridViewTextBoxColumn
+            // 
+            dataRealizacaoTesteDataGridViewTextBoxColumn.DataPropertyName = "DataRealizacaoTeste";
+            dataRealizacaoTesteDataGridViewTextBoxColumn.HeaderText = "DataRealizacaoTeste";
+            dataRealizacaoTesteDataGridViewTextBoxColumn.Name = "dataRealizacaoTesteDataGridViewTextBoxColumn";
+            dataRealizacaoTesteDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // idJogoDataGridViewColumn
+            // 
+            idJogoDataGridViewColumn.DataPropertyName = "IdJogo";
+            idJogoDataGridViewColumn.HeaderText = "Jogo";
+            idJogoDataGridViewColumn.Name = "idJogoDataGridViewColumn";
+            idJogoDataGridViewColumn.ReadOnly = true;
+            idJogoDataGridViewColumn.Resizable = DataGridViewTriState.True;
             // 
             // FormsListagem
             // 
@@ -440,13 +533,6 @@
         private Button btnAtualizarTDJ;
         private Button btnAdicionarTDJ;
         private DataGridView tabelaTesteDeJogo;
-        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn nomeResponsavelDoTesteDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn descricaoDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn notaDataGridViewTextBoxColumn;
-        private DataGridViewCheckBoxColumn aprovadoDataGridViewCheckBoxColumn;
-        private DataGridViewTextBoxColumn dataRealizacaoTesteDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn idJogoDataGridViewTextBoxColumn;
         private BindingSource testeDeJogoBindingSource1;
         private DataGridView tabelaJogo;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn1;
@@ -462,5 +548,19 @@
         private NumericUpDown numericUpDownPrecoMax;
         private Label labelPrecoMin;
         private NumericUpDown numericUpDownPrecoMin;
+        private CheckBox checkBoxReprovado;
+        private CheckBox checkBoxAprovado;
+        private Label label2;
+        private Label label1;
+        private DateTimePicker dateTimePickerDataInicial;
+        private DateTimePicker dateTimePickerDataFinal;
+        private Button buttonResetData;
+        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn nomeResponsavelDoTesteDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn descricaoDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn notaDataGridViewTextBoxColumn;
+        private DataGridViewCheckBoxColumn aprovadoDataGridViewCheckBoxColumn;
+        private DataGridViewTextBoxColumn dataRealizacaoTesteDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn idJogoDataGridViewColumn;
     }
 }

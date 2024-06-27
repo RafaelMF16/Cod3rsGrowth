@@ -81,7 +81,7 @@ namespace Cod3rsGrowth.Testes.Testes
         {
             CriarLista();
 
-            var filtro = new FiltroTesteDeJogo { DataRealizacaoTeste = new DateTime(2024, 04, 10) };
+            var filtro = new FiltroTesteDeJogo { DataMinRealizacaoTeste = new DateTime(2024, 04, 10) };
 
             var ListaEsperada = new List<TesteDeJogo>
             {

@@ -6,6 +6,8 @@ namespace Cod3rsGrowth.Dominio.Filtros
     {
         public string? NomeResponsavelTeste { get; set; }
         public bool? Aprovado { get; set; }
-        public DateTime? DataRealizacaoTeste { get; set; }
+        public bool? Reprovado { get; set; }
+        public DateTime? DataMinRealizacaoTeste { get; set; }
+        public DateTime? DataMaxRealizacaoTeste { get; set; }
     }
 }

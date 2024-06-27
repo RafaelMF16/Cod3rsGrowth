@@ -45,11 +45,20 @@ namespace Cod3rsGrowth.Infra.Repositorio
             if (!string.IsNullOrEmpty(filtro?.NomeResponsavelTeste))
                 testesDeJogos = testesDeJogos.Where(t => t.NomeResponsavelDoTeste.Contains(filtro.NomeResponsavelTeste, StringComparison.OrdinalIgnoreCase));
             
-            if (filtro?.Aprovado != null)
-                testesDeJogos = testesDeJogos.Where(t => t.Aprovado == filtro.Aprovado);
+            if (filtro?.Aprovado != null || filtro?.Reprovado != null)
+            {
+                if (filtro?.Reprovado == true)
+                    testesDeJogos = testesDeJogos.Where(t => t.Aprovado != filtro.Reprovado);
 
-            if (filtro?.DataRealizacaoTeste != null)
-                testesDeJogos = testesDeJogos.Where(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
+                if (filtro?.Aprovado == true)
+                    testesDeJogos = testesDeJogos.Where(t => t.Aprovado == filtro.Aprovado);
+            }
+
+            if (filtro?.DataMinRealizacaoTeste != null)
+                testesDeJogos = testesDeJogos.Where(t => t.DataRealizacaoTeste >= filtro.DataMinRealizacaoTeste);
+
+            if (filtro?.DataMaxRealizacaoTeste != null)
+                testesDeJogos = testesDeJogos.Where(t => t.DataRealizacaoTeste <= filtro.DataMaxRealizacaoTeste);
 
             return testesDeJogos.ToList();
         }
