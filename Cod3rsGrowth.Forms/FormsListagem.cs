@@ -125,5 +125,11 @@ namespace Cod3rsGrowth.Forms
                 }
             }
         }
+
+        private void EventoParaAbrirTelaDeCadastro(object sender, EventArgs e)
+        {
+            var cadastroJogo = new CadastroJogo();
+            cadastroJogo.Show();
+        }
     }
 }

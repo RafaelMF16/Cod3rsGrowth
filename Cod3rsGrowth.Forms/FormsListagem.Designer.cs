@@ -207,6 +207,7 @@
             btnAdicionarJ.TabIndex = 2;
             btnAdicionarJ.Text = "Adicionar";
             btnAdicionarJ.UseVisualStyleBackColor = true;
+            btnAdicionarJ.Click += EventoParaAbrirTelaDeCadastro;
             // 
             // btnAtualizarJ
             // 
@@ -383,7 +384,7 @@
             // btnDeletarTDJ
             // 
             btnDeletarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnDeletarTDJ.Location = new Point(811, 410);
+            btnDeletarTDJ.Location = new Point(811, 407);
             btnDeletarTDJ.Name = "btnDeletarTDJ";
             btnDeletarTDJ.Size = new Size(87, 30);
             btnDeletarTDJ.TabIndex = 5;
@@ -393,7 +394,7 @@
             // btnAtualizarTDJ
             // 
             btnAtualizarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAtualizarTDJ.Location = new Point(903, 410);
+            btnAtualizarTDJ.Location = new Point(903, 407);
             btnAtualizarTDJ.Name = "btnAtualizarTDJ";
             btnAtualizarTDJ.Size = new Size(87, 30);
             btnAtualizarTDJ.TabIndex = 4;
@@ -403,7 +404,7 @@
             // btnAdicionarTDJ
             // 
             btnAdicionarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAdicionarTDJ.Location = new Point(996, 410);
+            btnAdicionarTDJ.Location = new Point(996, 407);
             btnAdicionarTDJ.Name = "btnAdicionarTDJ";
             btnAdicionarTDJ.Size = new Size(87, 30);
             btnAdicionarTDJ.TabIndex = 3;
@@ -430,7 +431,7 @@
             tabelaTesteDeJogo.RowHeadersVisible = false;
             tabelaTesteDeJogo.RowTemplate.Height = 25;
             tabelaTesteDeJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            tabelaTesteDeJogo.Size = new Size(1077, 324);
+            tabelaTesteDeJogo.Size = new Size(1077, 321);
             tabelaTesteDeJogo.TabIndex = 6;
             tabelaTesteDeJogo.CellFormatting += EventoDeFormatacaoDaCelulaIdJogo;
             // 
