@@ -36,7 +36,7 @@ namespace Cod3rsGrowth.Servico.Validadores
                 .Must(x => x == DateTime.Today)
                 .WithMessage("Data de realização do teste deve ser a data atual");
 
-            RuleFor(testeDeJogo => testeDeJogo.JogoId)
+            RuleFor(testeDeJogo => testeDeJogo.IdJogo)
                 .NotEmpty()
                 .WithMessage("O campo JogoId é obrigatório");
         }

@@ -38,6 +38,9 @@ namespace Cod3rsGrowth.Dominio.EnumGenero
         SOBREVIVENCIA,
 
         [Description("Jogo de tiro em terceira pessoa")]
-        TPS
+        TPS,
+
+        [Description("Jogo que permite ao jogador explorar um mundo virtual aberto")]
+        MUNDOABERTO
     }
 }

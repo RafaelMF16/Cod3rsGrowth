@@ -45,7 +45,7 @@ namespace Cod3rsGrowth.Testes.Testes
                     Nota = 9m,
                     Aprovado = true,
                     DataRealizacaoTeste = DateTime.Parse("22/05/2024"),
-                    JogoId = 1
+                    IdJogo = 1
                 },
                 new TesteDeJogo
                 {
@@ -55,7 +55,7 @@ namespace Cod3rsGrowth.Testes.Testes
                     Nota = 7.4m,
                     Aprovado = true,
                     DataRealizacaoTeste = DateTime.Parse("15/06/2024"),
-                    JogoId = 3
+                    IdJogo = 3
                 }
             };
 
@@ -81,7 +81,7 @@ namespace Cod3rsGrowth.Testes.Testes
         {
             CriarLista();
 
-            var filtro = new FiltroTesteDeJogo { DataRealizacaoTeste = new DateTime(2024, 04, 10) };
+            var filtro = new FiltroTesteDeJogo { DataMinRealizacaoTeste = new DateTime(2024, 04, 10) };
 
             var ListaEsperada = new List<TesteDeJogo>
             {
@@ -93,7 +93,7 @@ namespace Cod3rsGrowth.Testes.Testes
                     Nota = 4.5m,
                     Aprovado = false,
                     DataRealizacaoTeste = DateTime.Parse("10/04/2024"),
-                    JogoId = 2
+                    IdJogo = 2
                 }
             };
 
@@ -137,7 +137,7 @@ namespace Cod3rsGrowth.Testes.Testes
                 Nota = 8m,
                 Aprovado = true,
                 DataRealizacaoTeste = DateTime.Today,
-                JogoId = 4
+                IdJogo = 4
             };
 
             _servicoTesteDeJogo.Adicionar(testeDeJogo);
@@ -156,7 +156,7 @@ namespace Cod3rsGrowth.Testes.Testes
                 Nota = 12m,
                 Aprovado = true,
                 DataRealizacaoTeste = DateTime.Today,
-                JogoId = 4
+                IdJogo = 4
             };
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoTesteDeJogo.Adicionar(testeDeJogo));
@@ -175,7 +175,7 @@ namespace Cod3rsGrowth.Testes.Testes
                 Nota = 8m,
                 Aprovado = true,
                 DataRealizacaoTeste = DateTime.Parse("30/05/2024"),
-                JogoId = 4
+                IdJogo = 4
             };
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoTesteDeJogo.Adicionar(testeDeJogo));
@@ -198,7 +198,7 @@ namespace Cod3rsGrowth.Testes.Testes
                 Nota = 2m,
                 Aprovado = false,
                 DataRealizacaoTeste = DateTime.Today,
-                JogoId = 1
+                IdJogo = 1
             };
 
             _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado);
@@ -219,7 +219,7 @@ namespace Cod3rsGrowth.Testes.Testes
                 Nota = 2m,
                 Aprovado = false,
                 DataRealizacaoTeste = DateTime.Today,
-                JogoId = 1
+                IdJogo = 1
             };
 
             Assert.Throws<Exception>(() => _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado));
@@ -237,7 +237,7 @@ namespace Cod3rsGrowth.Testes.Testes
                 Nota = 2m,
                 Aprovado = false,
                 DataRealizacaoTeste = DateTime.Today,
-                JogoId = 1
+                IdJogo = 1
             };
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado));
@@ -258,7 +258,7 @@ namespace Cod3rsGrowth.Testes.Testes
                 Nota = 9m,
                 Aprovado = true,
                 DataRealizacaoTeste = DateTime.Parse("22/05/2024"),
-                JogoId = 1
+                IdJogo = 1
             };
 
             var listaDeTesteDeJogoSingleton = TesteDeJogoSingleton.Instancia;
@@ -283,7 +283,7 @@ namespace Cod3rsGrowth.Testes.Testes
                 Nota = 8m,
                 Aprovado = true,
                 DataRealizacaoTeste = DateTime.Parse("18/06/2024"),
-                JogoId = 4
+                IdJogo = 4
             };
 
             _servicoTesteDeJogo.Deletar(testeDeJogoDeletado.Id);
@@ -306,7 +306,7 @@ namespace Cod3rsGrowth.Testes.Testes
                     Nota = 9m,
                     Aprovado = true,
                     DataRealizacaoTeste = DateTime.Parse("22/05/2024"),
-                    JogoId = 1
+                    IdJogo = 1
                 },
                 new TesteDeJogo
                 {
@@ -316,7 +316,7 @@ namespace Cod3rsGrowth.Testes.Testes
                     Nota = 4.5m,
                     Aprovado = false,
                     DataRealizacaoTeste = DateTime.Parse("10/04/2024"),
-                    JogoId = 2
+                    IdJogo = 2
                 },
                 new TesteDeJogo
                 {
@@ -326,7 +326,7 @@ namespace Cod3rsGrowth.Testes.Testes
                     Nota = 7.4m,
                     Aprovado = true,
                     DataRealizacaoTeste = DateTime.Parse("15/06/2024"),
-                    JogoId = 3
+                    IdJogo = 3
                 }
             };
 

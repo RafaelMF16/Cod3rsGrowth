@@ -41,20 +41,21 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public List<Jogo> ObterTodos(FiltroJogo? filtro = null)
         {
+            const int valorPadrao = 0;
+
             var jogos = bancoDeDados.GetTable<Jogo>().AsQueryable();
 
             if (!string.IsNullOrEmpty(filtro?.Nome))
-            {
-                jogos = jogos.Where(j => j.Nome.StartsWith(filtro.Nome, StringComparison.OrdinalIgnoreCase));
-            }
-            if (filtro?.Genero != null)
-            {
+                jogos = jogos.Where(j => j.Nome.Contains(filtro.Nome, StringComparison.OrdinalIgnoreCase));
+
+            if (filtro?.Genero != null && filtro?.Genero > valorPadrao)
                 jogos = jogos.Where(j => j.Genero == filtro.Genero);
-            }
-            if (filtro?.Preco != null)
-            {
-                jogos = jogos.Where(j => j.Preco == filtro.Preco);
-            }
+           
+            if (filtro?.PrecoMin != null && filtro?.PrecoMin > valorPadrao)
+                jogos = jogos.Where(j => j.Preco >= filtro.PrecoMin);
+
+            if (filtro?.PrecoMax != null && filtro?.PrecoMax > valorPadrao)
+                jogos = jogos.Where(j => j.Preco <= filtro.PrecoMax);
 
             return jogos.ToList();
         }

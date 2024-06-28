@@ -19,6 +19,6 @@ namespace Cod3rsGrowth.Dominio.Entidades
         [Column]
         public DateTime DataRealizacaoTeste { get; set; }
         [Column]
-        public int JogoId { get; set; }
+        public int IdJogo { get; set; }
     }
 }

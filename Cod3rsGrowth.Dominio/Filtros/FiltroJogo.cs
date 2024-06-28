@@ -6,6 +6,7 @@ namespace Cod3rsGrowth.Dominio.Filtros
     {
         public string? Nome { get; set; }
         public Genero? Genero { get; set; }
-        public  decimal? Preco { get; set; }
+        public  decimal? PrecoMin { get; set; }
+        public  decimal? PrecoMax { get; set; }
     }
 }
