@@ -9,16 +9,14 @@ namespace Cod3rsGrowth.Forms
     {
         private readonly ServicoJogo _servicoJogo;
         private readonly ServicoTesteDeJogo _servicoTesteDeJogo;
-        private FiltroJogo _filtroJogo;
-        private FiltroTesteDeJogo _filtroTesteDejogo;
+        private FiltroJogo _filtroJogo = new FiltroJogo();
+        private FiltroTesteDeJogo _filtroTesteDejogo = new FiltroTesteDeJogo();
 
         public FormsListagem(ServicoJogo servicoJogo, ServicoTesteDeJogo servicoTesteDeJogo)
         {
             InitializeComponent();
             _servicoJogo = servicoJogo;
             _servicoTesteDeJogo = servicoTesteDeJogo;
-            _filtroJogo = new FiltroJogo();
-            _filtroTesteDejogo = new FiltroTesteDeJogo();
         }
 
         private void CarregarPrimeiraTela(object sender, EventArgs e)
@@ -114,7 +112,9 @@ namespace Cod3rsGrowth.Forms
 
         private void EventoDeFormatacaoDaCelulaIdJogo(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (tabelaTesteDeJogo.Columns[e.ColumnIndex].HeaderText == "Jogo")
+            const string NomeDaColunaJogo = "Jogo";
+
+            if (tabelaTesteDeJogo.Columns[e.ColumnIndex].HeaderText == NomeDaColunaJogo)
             {
                 var testeDeJogo = tabelaTesteDeJogo.Rows[e.RowIndex].DataBoundItem as TesteDeJogo;
                 if (testeDeJogo != null)
