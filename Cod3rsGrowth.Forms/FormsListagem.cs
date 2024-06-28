@@ -1,3 +1,4 @@
+using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Dominio.EnumGenero;
 using Cod3rsGrowth.Dominio.Filtros;
 using Cod3rsGrowth.Servico.Servicos;
@@ -102,13 +103,27 @@ namespace Cod3rsGrowth.Forms
         private void EventoDeResetDeData(object sender, EventArgs e)
         {
             LimparFiltroDeData(_filtroTesteDejogo);
-            tabelaTesteDeJogo.DataSource=  _servicoTesteDeJogo.ObterTodos(_filtroTesteDejogo);
+            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos(_filtroTesteDejogo);
         }
 
         private void LimparFiltroDeData(FiltroTesteDeJogo filtroTesteDeJogo)
         {
             filtroTesteDeJogo.DataMinRealizacaoTeste = null;
             filtroTesteDeJogo.DataMaxRealizacaoTeste = null;
+        }
+
+        private void EventoDeFormatacaoDaCelulaIdJogo(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (tabelaTesteDeJogo.Columns[e.ColumnIndex].HeaderText == "Jogo")
+            {
+                var testeDeJogo = tabelaTesteDeJogo.Rows[e.RowIndex].DataBoundItem as TesteDeJogo;
+                if (testeDeJogo != null)
+                {
+                    var jogo = _servicoJogo.ObterPorId(testeDeJogo.Id);
+                    if (jogo != null)
+                        e.Value = jogo.Nome;
+                }
+            }
         }
     }
 }

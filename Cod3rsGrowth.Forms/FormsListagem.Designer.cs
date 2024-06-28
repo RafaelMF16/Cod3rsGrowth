@@ -62,8 +62,6 @@
             btnAtualizarTDJ = new Button();
             btnAdicionarTDJ = new Button();
             tabelaTesteDeJogo = new DataGridView();
-            testeDeJogoBindingSource1 = new BindingSource(components);
-            testeDeJogoBindingSource = new BindingSource(components);
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             nomeResponsavelDoTesteDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             descricaoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -71,6 +69,8 @@
             aprovadoDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             dataRealizacaoTesteDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             idJogoDataGridViewColumn = new DataGridViewTextBoxColumn();
+            testeDeJogoBindingSource1 = new BindingSource(components);
+            testeDeJogoBindingSource = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)jogoBindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)jogoBindingSource).BeginInit();
             Abas.SuspendLayout();
@@ -383,7 +383,7 @@
             // btnDeletarTDJ
             // 
             btnDeletarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnDeletarTDJ.Location = new Point(810, 409);
+            btnDeletarTDJ.Location = new Point(811, 410);
             btnDeletarTDJ.Name = "btnDeletarTDJ";
             btnDeletarTDJ.Size = new Size(87, 30);
             btnDeletarTDJ.TabIndex = 5;
@@ -393,7 +393,7 @@
             // btnAtualizarTDJ
             // 
             btnAtualizarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAtualizarTDJ.Location = new Point(903, 409);
+            btnAtualizarTDJ.Location = new Point(903, 410);
             btnAtualizarTDJ.Name = "btnAtualizarTDJ";
             btnAtualizarTDJ.Size = new Size(87, 30);
             btnAtualizarTDJ.TabIndex = 4;
@@ -403,7 +403,7 @@
             // btnAdicionarTDJ
             // 
             btnAdicionarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAdicionarTDJ.Location = new Point(996, 409);
+            btnAdicionarTDJ.Location = new Point(996, 410);
             btnAdicionarTDJ.Name = "btnAdicionarTDJ";
             btnAdicionarTDJ.Size = new Size(87, 30);
             btnAdicionarTDJ.TabIndex = 3;
@@ -416,6 +416,7 @@
             tabelaTesteDeJogo.AllowUserToDeleteRows = false;
             tabelaTesteDeJogo.AllowUserToResizeColumns = false;
             tabelaTesteDeJogo.AllowUserToResizeRows = false;
+            tabelaTesteDeJogo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabelaTesteDeJogo.AutoGenerateColumns = false;
             tabelaTesteDeJogo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tabelaTesteDeJogo.BackgroundColor = Color.White;
@@ -429,16 +430,9 @@
             tabelaTesteDeJogo.RowHeadersVisible = false;
             tabelaTesteDeJogo.RowTemplate.Height = 25;
             tabelaTesteDeJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            tabelaTesteDeJogo.Size = new Size(1077, 323);
+            tabelaTesteDeJogo.Size = new Size(1077, 324);
             tabelaTesteDeJogo.TabIndex = 6;
-            // 
-            // testeDeJogoBindingSource1
-            // 
-            testeDeJogoBindingSource1.DataSource = typeof(Dominio.Entidades.TesteDeJogo);
-            // 
-            // testeDeJogoBindingSource
-            // 
-            testeDeJogoBindingSource.DataSource = typeof(Dominio.Entidades.TesteDeJogo);
+            tabelaTesteDeJogo.CellFormatting += EventoDeFormatacaoDaCelulaIdJogo;
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -489,6 +483,14 @@
             idJogoDataGridViewColumn.Name = "idJogoDataGridViewColumn";
             idJogoDataGridViewColumn.ReadOnly = true;
             idJogoDataGridViewColumn.Resizable = DataGridViewTriState.True;
+            // 
+            // testeDeJogoBindingSource1
+            // 
+            testeDeJogoBindingSource1.DataSource = typeof(Dominio.Entidades.TesteDeJogo);
+            // 
+            // testeDeJogoBindingSource
+            // 
+            testeDeJogoBindingSource.DataSource = typeof(Dominio.Entidades.TesteDeJogo);
             // 
             // FormsListagem
             // 
