@@ -53,7 +53,14 @@ namespace Cod3rsGrowth.Servico.Servicos
 
         public void Deletar(int id)
         {
-            _jogoRepositorio.Deletar(id);
+            try
+            {
+                _jogoRepositorio.Deletar(id);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
         }
 
         public Jogo ObterPorId(int id)
