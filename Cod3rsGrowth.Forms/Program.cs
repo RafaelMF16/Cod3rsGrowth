@@ -19,7 +19,7 @@ namespace Cod3rsGrowth.Forms
 
             ApplicationConfiguration.Initialize();
 
-            Application.Run(_serviceProvider.GetRequiredService<FormsListagem>());
+            Application.Run(_serviceProvider.GetRequiredService<TelaListagem>());
         }
 
         public static void ExecutarMigracao()

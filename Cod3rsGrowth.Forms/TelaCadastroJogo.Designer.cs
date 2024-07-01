@@ -1,6 +1,6 @@
 ﻿namespace Cod3rsGrowth.Forms
 {
-    partial class CadastroJogo
+    partial class TelaCadastroJogo
     {
         /// <summary>
         /// Required designer variable.
@@ -28,68 +28,68 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBoxNome = new TextBox();
+            textBoxCadastroNome = new TextBox();
             label1 = new Label();
             groupBoxJogo = new GroupBox();
-            numericUpDownPreco = new NumericUpDown();
+            numericUpDownCadastroPreco = new NumericUpDown();
             buttonCancelar = new Button();
-            buttonAdicionarJogo = new Button();
+            buttonSalvarJogo = new Button();
             label3 = new Label();
             label2 = new Label();
             comboBoxEnumCadastro = new ComboBox();
             groupBoxJogo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownPreco).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownCadastroPreco).BeginInit();
             SuspendLayout();
             // 
-            // textBoxNome
+            // textBoxCadastroNome
             // 
-            textBoxNome.Location = new Point(6, 37);
-            textBoxNome.Name = "textBoxNome";
-            textBoxNome.Size = new Size(327, 23);
-            textBoxNome.TabIndex = 0;
+            textBoxCadastroNome.Location = new Point(6, 37);
+            textBoxCadastroNome.Name = "textBoxCadastroNome";
+            textBoxCadastroNome.Size = new Size(310, 23);
+            textBoxCadastroNome.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 19);
+            label1.Location = new Point(6, 19);
             label1.Name = "label1";
-            label1.Size = new Size(40, 15);
+            label1.Size = new Size(48, 15);
             label1.TabIndex = 1;
-            label1.Text = "Nome";
+            label1.Text = "Nome *";
             // 
             // groupBoxJogo
             // 
             groupBoxJogo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             groupBoxJogo.BackColor = Color.Silver;
-            groupBoxJogo.Controls.Add(numericUpDownPreco);
+            groupBoxJogo.Controls.Add(numericUpDownCadastroPreco);
             groupBoxJogo.Controls.Add(buttonCancelar);
-            groupBoxJogo.Controls.Add(buttonAdicionarJogo);
+            groupBoxJogo.Controls.Add(buttonSalvarJogo);
             groupBoxJogo.Controls.Add(label3);
             groupBoxJogo.Controls.Add(label2);
             groupBoxJogo.Controls.Add(comboBoxEnumCadastro);
             groupBoxJogo.Controls.Add(label1);
-            groupBoxJogo.Controls.Add(textBoxNome);
+            groupBoxJogo.Controls.Add(textBoxCadastroNome);
             groupBoxJogo.ForeColor = Color.Black;
-            groupBoxJogo.Location = new Point(3, 4);
+            groupBoxJogo.Location = new Point(12, 12);
             groupBoxJogo.Name = "groupBoxJogo";
-            groupBoxJogo.Size = new Size(339, 334);
+            groupBoxJogo.Size = new Size(322, 248);
             groupBoxJogo.TabIndex = 2;
             groupBoxJogo.TabStop = false;
             groupBoxJogo.Text = "Cadastro de jogo";
             // 
-            // numericUpDownPreco
+            // numericUpDownCadastroPreco
             // 
-            numericUpDownPreco.DecimalPlaces = 2;
-            numericUpDownPreco.Location = new Point(6, 144);
-            numericUpDownPreco.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-            numericUpDownPreco.Name = "numericUpDownPreco";
-            numericUpDownPreco.Size = new Size(327, 23);
-            numericUpDownPreco.TabIndex = 14;
+            numericUpDownCadastroPreco.DecimalPlaces = 2;
+            numericUpDownCadastroPreco.Location = new Point(6, 144);
+            numericUpDownCadastroPreco.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDownCadastroPreco.Name = "numericUpDownCadastroPreco";
+            numericUpDownCadastroPreco.Size = new Size(310, 23);
+            numericUpDownCadastroPreco.TabIndex = 14;
             // 
             // buttonCancelar
             // 
             buttonCancelar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonCancelar.Location = new Point(196, 302);
+            buttonCancelar.Location = new Point(181, 216);
             buttonCancelar.Name = "buttonCancelar";
             buttonCancelar.Size = new Size(70, 26);
             buttonCancelar.TabIndex = 12;
@@ -97,33 +97,34 @@
             buttonCancelar.UseVisualStyleBackColor = true;
             buttonCancelar.Click += EventoDeCancelarCadastro;
             // 
-            // buttonAdicionarJogo
+            // buttonSalvarJogo
             // 
-            buttonAdicionarJogo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            buttonAdicionarJogo.Location = new Point(272, 302);
-            buttonAdicionarJogo.Name = "buttonAdicionarJogo";
-            buttonAdicionarJogo.Size = new Size(59, 26);
-            buttonAdicionarJogo.TabIndex = 11;
-            buttonAdicionarJogo.Text = "Salvar";
-            buttonAdicionarJogo.UseVisualStyleBackColor = true;
+            buttonSalvarJogo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            buttonSalvarJogo.Location = new Point(257, 216);
+            buttonSalvarJogo.Name = "buttonSalvarJogo";
+            buttonSalvarJogo.Size = new Size(59, 26);
+            buttonSalvarJogo.TabIndex = 11;
+            buttonSalvarJogo.Text = "Salvar";
+            buttonSalvarJogo.UseVisualStyleBackColor = true;
+            buttonSalvarJogo.Click += EventoQueSalvaJogoNoBancoDeDados;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(12, 126);
+            label3.Location = new Point(6, 126);
             label3.Name = "label3";
-            label3.Size = new Size(37, 15);
+            label3.Size = new Size(45, 15);
             label3.TabIndex = 9;
-            label3.Text = "Preço";
+            label3.Text = "Preço *";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 72);
+            label2.Location = new Point(6, 72);
             label2.Name = "label2";
-            label2.Size = new Size(45, 15);
+            label2.Size = new Size(53, 15);
             label2.TabIndex = 8;
-            label2.Text = "Gênero";
+            label2.Text = "Gênero *";
             // 
             // comboBoxEnumCadastro
             // 
@@ -132,39 +133,39 @@
             comboBoxEnumCadastro.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxEnumCadastro.FlatStyle = FlatStyle.Flat;
             comboBoxEnumCadastro.FormattingEnabled = true;
-            comboBoxEnumCadastro.Items.AddRange(new object[] { "TODOS", "FPS", "BATTLEROYALE", "MOBA", "RPG", "MMORPG", "FPA", "RTS", "PVP", "SIMULADOR", "SOBREVIVENCIA", "TPS", "MUNDOABERTO" });
+            comboBoxEnumCadastro.Items.AddRange(new object[] { "TODOS", "FPS", "BATTLEROYALE", "MOBA", "RPG", "MMORPG", "FPA", "RTS", "PVP", "SIMULADOR", "SOBREVIVENCIA", "TPS", "MUNDOABERTO", "LUTA" });
             comboBoxEnumCadastro.Location = new Point(6, 90);
             comboBoxEnumCadastro.Name = "comboBoxEnumCadastro";
-            comboBoxEnumCadastro.Size = new Size(327, 23);
+            comboBoxEnumCadastro.Size = new Size(310, 23);
             comboBoxEnumCadastro.TabIndex = 7;
             // 
-            // CadastroJogo
+            // TelaCadastroJogo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(346, 344);
+            ClientSize = new Size(346, 272);
             Controls.Add(groupBoxJogo);
             MaximizeBox = false;
-            Name = "CadastroJogo";
+            Name = "TelaCadastroJogo";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Cadastro Jogo";
             TopMost = true;
             groupBoxJogo.ResumeLayout(false);
             groupBoxJogo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownPreco).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownCadastroPreco).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private TextBox textBoxNome;
+        private TextBox textBoxCadastroNome;
         private Label label1;
         private GroupBox groupBoxJogo;
         private Label label2;
         private ComboBox comboBoxEnumCadastro;
         private Label label3;
         private Button buttonCancelar;
-        private Button buttonAdicionarJogo;
-        private NumericUpDown numericUpDownPreco;
+        private Button buttonSalvarJogo;
+        private NumericUpDown numericUpDownCadastroPreco;
     }
 }

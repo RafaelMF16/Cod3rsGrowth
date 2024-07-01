@@ -5,14 +5,14 @@ using Cod3rsGrowth.Servico.Servicos;
 
 namespace Cod3rsGrowth.Forms
 {
-    public partial class FormsListagem : Form
+    public partial class TelaListagem : Form
     {
         private readonly ServicoJogo _servicoJogo;
         private readonly ServicoTesteDeJogo _servicoTesteDeJogo;
         private FiltroJogo _filtroJogo = new FiltroJogo();
         private FiltroTesteDeJogo _filtroTesteDejogo = new FiltroTesteDeJogo();
 
-        public FormsListagem(ServicoJogo servicoJogo, ServicoTesteDeJogo servicoTesteDeJogo)
+        public TelaListagem(ServicoJogo servicoJogo, ServicoTesteDeJogo servicoTesteDeJogo)
         {
             InitializeComponent();
             _servicoJogo = servicoJogo;
@@ -27,6 +27,8 @@ namespace Cod3rsGrowth.Forms
 
             const int valorPadraoGenero = 0;
             comboBoxEnum.SelectedIndex = valorPadraoGenero;
+
+            FormatarColunaIdJogo();
         }
 
         private void EventoDePesquisaPorNomeDoJogo(object sender, EventArgs e)
@@ -110,6 +112,12 @@ namespace Cod3rsGrowth.Forms
             filtroTesteDeJogo.DataMaxRealizacaoTeste = null;
         }
 
+        private void FormatarColunaIdJogo()
+        {
+            tabelaTesteDeJogo.AutoGenerateColumns = false;
+            tabelaTesteDeJogo.CellFormatting += EventoDeFormatacaoDaCelulaIdJogo;
+        }
+
         private void EventoDeFormatacaoDaCelulaIdJogo(object sender, DataGridViewCellFormattingEventArgs e)
         {
             const string NomeDaColunaJogo = "Jogo";
@@ -117,19 +125,29 @@ namespace Cod3rsGrowth.Forms
             if (tabelaTesteDeJogo.Columns[e.ColumnIndex].HeaderText == NomeDaColunaJogo)
             {
                 var testeDeJogo = tabelaTesteDeJogo.Rows[e.RowIndex].DataBoundItem as TesteDeJogo;
+
                 if (testeDeJogo != null)
                 {
-                    var jogo = _servicoJogo.ObterPorId(testeDeJogo.Id);
+                    var jogo = _servicoJogo.ObterPorId(testeDeJogo.IdJogo);
+
                     if (jogo != null)
-                        e.Value = jogo.Nome;
+                            e.Value = jogo.Nome;
                 }
             }
         }
 
-        private void EventoParaAbrirTelaDeCadastro(object sender, EventArgs e)
+        private void EventoParaAbrirTelaDeCadastroDeJogo(object sender, EventArgs e)
         {
-            var cadastroJogo = new CadastroJogo();
-            cadastroJogo.Show();
+            var telaCadastroJogo = new TelaCadastroJogo(_servicoJogo);
+            telaCadastroJogo.ShowDialog();
+            tabelaJogo.DataSource = _servicoJogo.ObterTodos();
+        }
+
+        private void EventoParaAbrirTelaDeCadastroDeTesteDeJogo(object sender, EventArgs e)
+        {
+            var telaCadastroDeTesteDeJogo = new TelaCadastroTesteDeJogo(_servicoTesteDeJogo, _servicoJogo);
+            telaCadastroDeTesteDeJogo.ShowDialog();
+            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
         }
     }
 }

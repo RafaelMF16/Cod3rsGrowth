@@ -41,6 +41,9 @@ namespace Cod3rsGrowth.Dominio.EnumGenero
         TPS,
 
         [Description("Jogo que permite ao jogador explorar um mundo virtual aberto")]
-        MUNDOABERTO
+        MUNDOABERTO,
+
+        [Description("Jogo de luta")]
+        LUTA
     }
 }
