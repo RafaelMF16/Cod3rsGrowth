@@ -1,6 +1,6 @@
 ﻿namespace Cod3rsGrowth.Forms
 {
-    partial class FormsListagem
+    partial class TelaListagem
     {
         /// <summary>
         ///  Required designer variable.
@@ -191,7 +191,7 @@
             comboBoxEnum.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxEnum.FlatStyle = FlatStyle.Flat;
             comboBoxEnum.FormattingEnabled = true;
-            comboBoxEnum.Items.AddRange(new object[] { "TODOS", "FPS", "BATTLEROYALE", "MOBA", "RPG", "MMORPG", "FPA", "RTS", "PVP", "SIMULADOR", "SOBREVIVENCIA", "TPS", "MUNDOABERTO" });
+            comboBoxEnum.Items.AddRange(new object[] { "TODOS", "FPS", "BATTLEROYALE", "MOBA", "RPG", "MMORPG", "FPA", "RTS", "PVP", "SIMULADOR", "SOBREVIVENCIA", "TPS", "MUNDOABERTO", "LUTA" });
             comboBoxEnum.Location = new Point(65, 52);
             comboBoxEnum.Name = "comboBoxEnum";
             comboBoxEnum.Size = new Size(156, 24);
@@ -207,6 +207,7 @@
             btnAdicionarJ.TabIndex = 2;
             btnAdicionarJ.Text = "Adicionar";
             btnAdicionarJ.UseVisualStyleBackColor = true;
+            btnAdicionarJ.Click += EventoParaAbrirTelaDeCadastroDeJogo;
             // 
             // btnAtualizarJ
             // 
@@ -267,14 +268,14 @@
             // generoDataGridViewTextBoxColumn
             // 
             generoDataGridViewTextBoxColumn.DataPropertyName = "Genero";
-            generoDataGridViewTextBoxColumn.HeaderText = "Genero";
+            generoDataGridViewTextBoxColumn.HeaderText = "Gênero";
             generoDataGridViewTextBoxColumn.Name = "generoDataGridViewTextBoxColumn";
             generoDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // precoDataGridViewTextBoxColumn
             // 
             precoDataGridViewTextBoxColumn.DataPropertyName = "Preco";
-            precoDataGridViewTextBoxColumn.HeaderText = "Preco";
+            precoDataGridViewTextBoxColumn.HeaderText = "Preço";
             precoDataGridViewTextBoxColumn.Name = "precoDataGridViewTextBoxColumn";
             precoDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -383,7 +384,7 @@
             // btnDeletarTDJ
             // 
             btnDeletarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnDeletarTDJ.Location = new Point(811, 410);
+            btnDeletarTDJ.Location = new Point(810, 411);
             btnDeletarTDJ.Name = "btnDeletarTDJ";
             btnDeletarTDJ.Size = new Size(87, 30);
             btnDeletarTDJ.TabIndex = 5;
@@ -393,7 +394,7 @@
             // btnAtualizarTDJ
             // 
             btnAtualizarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAtualizarTDJ.Location = new Point(903, 410);
+            btnAtualizarTDJ.Location = new Point(903, 411);
             btnAtualizarTDJ.Name = "btnAtualizarTDJ";
             btnAtualizarTDJ.Size = new Size(87, 30);
             btnAtualizarTDJ.TabIndex = 4;
@@ -403,12 +404,13 @@
             // btnAdicionarTDJ
             // 
             btnAdicionarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAdicionarTDJ.Location = new Point(996, 410);
+            btnAdicionarTDJ.Location = new Point(996, 411);
             btnAdicionarTDJ.Name = "btnAdicionarTDJ";
             btnAdicionarTDJ.Size = new Size(87, 30);
             btnAdicionarTDJ.TabIndex = 3;
             btnAdicionarTDJ.Text = "Adicionar";
             btnAdicionarTDJ.UseVisualStyleBackColor = true;
+            btnAdicionarTDJ.Click += EventoParaAbrirTelaDeCadastroDeTesteDeJogo;
             // 
             // tabelaTesteDeJogo
             // 
@@ -430,9 +432,8 @@
             tabelaTesteDeJogo.RowHeadersVisible = false;
             tabelaTesteDeJogo.RowTemplate.Height = 25;
             tabelaTesteDeJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            tabelaTesteDeJogo.Size = new Size(1077, 324);
+            tabelaTesteDeJogo.Size = new Size(1077, 325);
             tabelaTesteDeJogo.TabIndex = 6;
-            tabelaTesteDeJogo.CellFormatting += EventoDeFormatacaoDaCelulaIdJogo;
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -444,14 +445,14 @@
             // nomeResponsavelDoTesteDataGridViewTextBoxColumn
             // 
             nomeResponsavelDoTesteDataGridViewTextBoxColumn.DataPropertyName = "NomeResponsavelDoTeste";
-            nomeResponsavelDoTesteDataGridViewTextBoxColumn.HeaderText = "NomeResponsavel";
+            nomeResponsavelDoTesteDataGridViewTextBoxColumn.HeaderText = "Responsável";
             nomeResponsavelDoTesteDataGridViewTextBoxColumn.Name = "nomeResponsavelDoTesteDataGridViewTextBoxColumn";
             nomeResponsavelDoTesteDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // descricaoDataGridViewTextBoxColumn
             // 
             descricaoDataGridViewTextBoxColumn.DataPropertyName = "Descricao";
-            descricaoDataGridViewTextBoxColumn.HeaderText = "Descricao";
+            descricaoDataGridViewTextBoxColumn.HeaderText = "Descrição";
             descricaoDataGridViewTextBoxColumn.Name = "descricaoDataGridViewTextBoxColumn";
             descricaoDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -472,7 +473,7 @@
             // dataRealizacaoTesteDataGridViewTextBoxColumn
             // 
             dataRealizacaoTesteDataGridViewTextBoxColumn.DataPropertyName = "DataRealizacaoTeste";
-            dataRealizacaoTesteDataGridViewTextBoxColumn.HeaderText = "DataRealizacaoTeste";
+            dataRealizacaoTesteDataGridViewTextBoxColumn.HeaderText = "Data de Cadastro";
             dataRealizacaoTesteDataGridViewTextBoxColumn.Name = "dataRealizacaoTesteDataGridViewTextBoxColumn";
             dataRealizacaoTesteDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -492,7 +493,7 @@
             // 
             testeDeJogoBindingSource.DataSource = typeof(Dominio.Entidades.TesteDeJogo);
             // 
-            // FormsListagem
+            // TelaListagem
             // 
             AutoScaleDimensions = new SizeF(7F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -500,7 +501,7 @@
             ClientSize = new Size(1097, 477);
             Controls.Add(Abas);
             Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Name = "FormsListagem";
+            Name = "TelaListagem";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormsListagem";
             Load += CarregarPrimeiraTela;
@@ -537,10 +538,6 @@
         private DataGridView tabelaTesteDeJogo;
         private BindingSource testeDeJogoBindingSource1;
         private DataGridView tabelaJogo;
-        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn nomeDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn generoDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn precoDataGridViewTextBoxColumn;
         private BindingSource jogoBindingSource2;
         private ComboBox comboBoxEnum;
         private TextBox textBoxJogo;
@@ -557,6 +554,10 @@
         private DateTimePicker dateTimePickerDataInicial;
         private DateTimePicker dateTimePickerDataFinal;
         private Button buttonResetData;
+        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn nomeDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn generoDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn precoDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn nomeResponsavelDoTesteDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descricaoDataGridViewTextBoxColumn;
