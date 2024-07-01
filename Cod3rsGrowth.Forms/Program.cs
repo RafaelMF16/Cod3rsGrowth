@@ -15,11 +15,14 @@ namespace Cod3rsGrowth.Forms
             ExecutarMigracao();
 
             _serviceProvider = PegarServicos() 
-                ?? throw new Exception($"Erro ao obter o serviço");
+                ?? throw new Exception($"Erro ao obter os serviços");
 
             ApplicationConfiguration.Initialize();
 
-            Application.Run(_serviceProvider.GetRequiredService<TelaListagem>());
+            Application.Run(new TelaListagem(
+                _serviceProvider.GetRequiredService<ServicoJogo>(),
+                _serviceProvider.GetRequiredService<ServicoTesteDeJogo>()
+                ));
         }
 
         public static void ExecutarMigracao()
