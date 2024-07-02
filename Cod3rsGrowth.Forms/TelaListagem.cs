@@ -166,7 +166,28 @@ namespace Cod3rsGrowth.Forms
                     _servicoJogo.Deletar(idJogoQueVaiSerRemovido);
 
                 tabelaJogo.DataSource = _servicoJogo.ObterTodos();
-;            }
+                ;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        private void EventoQueDeletaTesteDeJogoDoBancoDeDados(object sender, EventArgs e)
+        {
+            const int colunaId = 0;
+
+            try
+            {
+                var idTesteDeJogoQueVaiSerRemovido = (int)tabelaTesteDeJogo.CurrentRow.Cells[colunaId].Value;
+                var mensagemDeAviso = MessageBox.Show($"Deseja remover o teste de jogo?", "Remover Teste de Jogo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (mensagemDeAviso == DialogResult.Yes)
+                    _servicoTesteDeJogo.Deletar(idTesteDeJogoQueVaiSerRemovido);
+
+                tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+            }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
