@@ -29,8 +29,8 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public void Deletar(int id)
         {
-            bancoDeDados.Jogo
-                .Delete(j => j.Id == id);
+            bancoDeDados.Jogo.
+                Delete(j => j.Id == id);
         }
 
         public Jogo ObterPorId(int id)

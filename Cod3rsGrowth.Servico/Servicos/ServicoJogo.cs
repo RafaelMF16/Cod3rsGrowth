@@ -11,11 +11,13 @@ namespace Cod3rsGrowth.Servico.Servicos
     {
         private readonly IValidator<Jogo> _jogoValidador;
         private readonly IJogoRepositorio _jogoRepositorio;
+        private readonly ServicoTesteDeJogo _servicoTesteDeJogo;
 
-        public ServicoJogo(IValidator<Jogo> jogoValidador, IJogoRepositorio jogoRepositorio)
+        public ServicoJogo(IValidator<Jogo> jogoValidador, IJogoRepositorio jogoRepositorio, ServicoTesteDeJogo servicoTesteDeJogo)
         {
             _jogoRepositorio = jogoRepositorio;
             _jogoValidador = jogoValidador;
+            _servicoTesteDeJogo = servicoTesteDeJogo;
         }
         public void Adicionar(Jogo jogo)
         {
@@ -65,8 +67,7 @@ namespace Cod3rsGrowth.Servico.Servicos
 
         public Jogo ObterPorId(int id)
         {
-            return _jogoRepositorio.ObterPorId(id)
-                ?? throw new Exception($"Erro ao obter jogo com id {id}");
+            return _jogoRepositorio.ObterPorId(id);
         }
 
         public List<Jogo> ObterTodos(FiltroJogo? filtro = null)

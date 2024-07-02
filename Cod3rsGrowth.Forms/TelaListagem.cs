@@ -157,16 +157,17 @@ namespace Cod3rsGrowth.Forms
 
             try
             {
-                var idJogoQueVaiSerRemovido = (int)tabelaJogo.CurrentRow.Cells[colunaId].Value;
+                var idJogoQueVaiSerRemovido = (int)tabelaJogo.CurrentRow.Cells[colunaId].Value; 
                 var nomeJogoQueVaiSerRemovido = tabelaJogo.CurrentRow.Cells[colunaNome].Value;
-
-                var mensagemDeAviso = MessageBox.Show($"Deseja remover o jogo {nomeJogoQueVaiSerRemovido}?", "Remover Jogo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var mensagemDeAviso = MessageBox.Show($"Todos os testes sobre o jogo {nomeJogoQueVaiSerRemovido} serão removidos. Deseja remover o jogo {nomeJogoQueVaiSerRemovido}?",
+                    "Remover Jogo", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (mensagemDeAviso == DialogResult.Yes)
                     _servicoJogo.Deletar(idJogoQueVaiSerRemovido);
 
                 tabelaJogo.DataSource = _servicoJogo.ObterTodos();
-                ;
+                tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
             }
             catch (Exception exception)
             {
