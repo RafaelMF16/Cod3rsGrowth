@@ -205,7 +205,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CadastrarTesteDeJogo";
             TopMost = true;
-            Load += EventoDeCarregamentoDaTelaDeCadastroDeJogo;
             groupBoxJogo.ResumeLayout(false);
             groupBoxJogo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownCadastroNota).EndInit();

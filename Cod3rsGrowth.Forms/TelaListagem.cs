@@ -157,7 +157,7 @@ namespace Cod3rsGrowth.Forms
 
             try
             {
-                var idJogoQueVaiSerRemovido = (int)tabelaJogo.CurrentRow.Cells[colunaId].Value; 
+                var idJogoQueVaiSerRemovido = (int)tabelaJogo.CurrentRow.Cells[colunaId].Value;
                 var nomeJogoQueVaiSerRemovido = tabelaJogo.CurrentRow.Cells[colunaNome].Value;
                 var mensagemDeAviso = MessageBox.Show($"Todos os testes sobre o jogo {nomeJogoQueVaiSerRemovido} serão removidos. Deseja remover o jogo {nomeJogoQueVaiSerRemovido}?",
                     "Remover Jogo", MessageBoxButtons.YesNo,
@@ -197,6 +197,30 @@ namespace Cod3rsGrowth.Forms
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        private void EventoQueAbreTelaDeAtualizacaoDeJogo(object sender, EventArgs e)
+        {
+            const int colunaId = 0;
+            var idJogoQueVaiSerAtualizado = (int)tabelaJogo.CurrentRow.Cells[colunaId].Value;
+            var jogoSelecionado = _servicoJogo.ObterPorId(idJogoQueVaiSerAtualizado);
+            var telaDeAtualizacao = new TelaCadastroJogo(_servicoJogo, jogoSelecionado);
+
+            telaDeAtualizacao.ShowDialog();
+
+            tabelaJogo.DataSource = _servicoJogo.ObterTodos();
+        }
+
+        private void EventoQueAbreTelaDeAtualizacaoDeTesteDeJogo(object sender, EventArgs e)
+        {
+            const int colunaId = 0;
+            var idTesteDeJogoQueVaiSerAtualizado = (int)tabelaTesteDeJogo.CurrentRow.Cells[colunaId].Value;
+            var testeDeJogoSelecionado = _servicoTesteDeJogo.ObterPorId(idTesteDeJogoQueVaiSerAtualizado);
+            var telaDeAtualizacao = new TelaCadastroTesteDeJogo(_servicoTesteDeJogo, _servicoJogo, testeDeJogoSelecionado);
+
+            telaDeAtualizacao.ShowDialog();
+
+            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
         }
     }
 }
