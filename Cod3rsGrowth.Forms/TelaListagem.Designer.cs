@@ -30,7 +30,10 @@
         {
             components = new System.ComponentModel.Container();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             jogoBindingSource1 = new BindingSource(components);
             jogoBindingSource = new BindingSource(components);
             Abas = new TabControl();
@@ -64,8 +67,6 @@
             btnAtualizarTDJ = new Button();
             btnAdicionarTDJ = new Button();
             tabelaTesteDeJogo = new DataGridView();
-            testeDeJogoBindingSource1 = new BindingSource(components);
-            testeDeJogoBindingSource = new BindingSource(components);
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             nomeResponsavelDoTesteDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             descricaoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -73,6 +74,8 @@
             aprovadoDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             dataRealizacaoTesteDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             idJogoDataGridViewColumn = new DataGridViewTextBoxColumn();
+            testeDeJogoBindingSource1 = new BindingSource(components);
+            testeDeJogoBindingSource = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)jogoBindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)jogoBindingSource).BeginInit();
             Abas.SuspendLayout();
@@ -243,12 +246,28 @@
             tabelaJogo.AutoGenerateColumns = false;
             tabelaJogo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tabelaJogo.BackgroundColor = Color.White;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            tabelaJogo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             tabelaJogo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tabelaJogo.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn1, nomeDataGridViewTextBoxColumn, generoDataGridViewTextBoxColumn, precoDataGridViewTextBoxColumn });
             tabelaJogo.DataSource = jogoBindingSource2;
             tabelaJogo.Location = new Point(6, 80);
             tabelaJogo.Name = "tabelaJogo";
             tabelaJogo.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            tabelaJogo.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             tabelaJogo.RowHeadersVisible = false;
             tabelaJogo.RowTemplate.Height = 25;
             tabelaJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -257,7 +276,7 @@
             // 
             // idDataGridViewTextBoxColumn1
             // 
-            idDataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            idDataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             idDataGridViewTextBoxColumn1.DataPropertyName = "Id";
             idDataGridViewTextBoxColumn1.HeaderText = "Id";
             idDataGridViewTextBoxColumn1.Name = "idDataGridViewTextBoxColumn1";
@@ -280,13 +299,16 @@
             // 
             // precoDataGridViewTextBoxColumn
             // 
+            precoDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             precoDataGridViewTextBoxColumn.DataPropertyName = "Preco";
-            dataGridViewCellStyle1.Format = "C2";
-            dataGridViewCellStyle1.NullValue = "R$";
-            precoDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Format = "C2";
+            dataGridViewCellStyle2.NullValue = "R$";
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            precoDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             precoDataGridViewTextBoxColumn.HeaderText = "Preço";
             precoDataGridViewTextBoxColumn.Name = "precoDataGridViewTextBoxColumn";
             precoDataGridViewTextBoxColumn.ReadOnly = true;
+            precoDataGridViewTextBoxColumn.Width = 66;
             // 
             // jogoBindingSource2
             // 
@@ -393,7 +415,7 @@
             // btnDeletarTDJ
             // 
             btnDeletarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnDeletarTDJ.Location = new Point(810, 383);
+            btnDeletarTDJ.Location = new Point(810, 373);
             btnDeletarTDJ.Name = "btnDeletarTDJ";
             btnDeletarTDJ.Size = new Size(87, 30);
             btnDeletarTDJ.TabIndex = 5;
@@ -404,7 +426,7 @@
             // btnAtualizarTDJ
             // 
             btnAtualizarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAtualizarTDJ.Location = new Point(903, 383);
+            btnAtualizarTDJ.Location = new Point(903, 373);
             btnAtualizarTDJ.Name = "btnAtualizarTDJ";
             btnAtualizarTDJ.Size = new Size(87, 30);
             btnAtualizarTDJ.TabIndex = 4;
@@ -415,7 +437,7 @@
             // btnAdicionarTDJ
             // 
             btnAdicionarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAdicionarTDJ.Location = new Point(996, 383);
+            btnAdicionarTDJ.Location = new Point(996, 373);
             btnAdicionarTDJ.Name = "btnAdicionarTDJ";
             btnAdicionarTDJ.Size = new Size(87, 30);
             btnAdicionarTDJ.TabIndex = 3;
@@ -433,6 +455,14 @@
             tabelaTesteDeJogo.AutoGenerateColumns = false;
             tabelaTesteDeJogo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tabelaTesteDeJogo.BackgroundColor = Color.White;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            tabelaTesteDeJogo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             tabelaTesteDeJogo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tabelaTesteDeJogo.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeResponsavelDoTesteDataGridViewTextBoxColumn, descricaoDataGridViewTextBoxColumn, notaDataGridViewTextBoxColumn, aprovadoDataGridViewCheckBoxColumn, dataRealizacaoTesteDataGridViewTextBoxColumn, idJogoDataGridViewColumn });
             tabelaTesteDeJogo.DataSource = testeDeJogoBindingSource1;
@@ -443,16 +473,8 @@
             tabelaTesteDeJogo.RowHeadersVisible = false;
             tabelaTesteDeJogo.RowTemplate.Height = 25;
             tabelaTesteDeJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            tabelaTesteDeJogo.Size = new Size(1077, 297);
+            tabelaTesteDeJogo.Size = new Size(1077, 287);
             tabelaTesteDeJogo.TabIndex = 6;
-            // 
-            // testeDeJogoBindingSource1
-            // 
-            testeDeJogoBindingSource1.DataSource = typeof(Dominio.Entidades.TesteDeJogo);
-            // 
-            // testeDeJogoBindingSource
-            // 
-            testeDeJogoBindingSource.DataSource = typeof(Dominio.Entidades.TesteDeJogo);
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -479,11 +501,11 @@
             // 
             // notaDataGridViewTextBoxColumn
             // 
-            notaDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            notaDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             notaDataGridViewTextBoxColumn.DataPropertyName = "Nota";
-            dataGridViewCellStyle2.Format = "N1";
-            dataGridViewCellStyle2.NullValue = null;
-            notaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Format = "N1";
+            dataGridViewCellStyle5.NullValue = null;
+            notaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
             notaDataGridViewTextBoxColumn.HeaderText = "Nota";
             notaDataGridViewTextBoxColumn.Name = "notaDataGridViewTextBoxColumn";
             notaDataGridViewTextBoxColumn.ReadOnly = true;
@@ -491,7 +513,7 @@
             // 
             // aprovadoDataGridViewCheckBoxColumn
             // 
-            aprovadoDataGridViewCheckBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            aprovadoDataGridViewCheckBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             aprovadoDataGridViewCheckBoxColumn.DataPropertyName = "Aprovado";
             aprovadoDataGridViewCheckBoxColumn.HeaderText = "Aprovado";
             aprovadoDataGridViewCheckBoxColumn.Name = "aprovadoDataGridViewCheckBoxColumn";
@@ -512,6 +534,14 @@
             idJogoDataGridViewColumn.Name = "idJogoDataGridViewColumn";
             idJogoDataGridViewColumn.ReadOnly = true;
             idJogoDataGridViewColumn.Resizable = DataGridViewTriState.True;
+            // 
+            // testeDeJogoBindingSource1
+            // 
+            testeDeJogoBindingSource1.DataSource = typeof(Dominio.Entidades.TesteDeJogo);
+            // 
+            // testeDeJogoBindingSource
+            // 
+            testeDeJogoBindingSource.DataSource = typeof(Dominio.Entidades.TesteDeJogo);
             // 
             // TelaListagem
             // 
