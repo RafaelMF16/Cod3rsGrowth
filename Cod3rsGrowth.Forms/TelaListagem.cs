@@ -131,7 +131,7 @@ namespace Cod3rsGrowth.Forms
                     var jogo = _servicoJogo.ObterPorId(testeDeJogo.IdJogo);
 
                     if (jogo != null)
-                            e.Value = jogo.Nome;
+                        e.Value = jogo.Nome;
                 }
             }
         }
@@ -148,6 +148,55 @@ namespace Cod3rsGrowth.Forms
             var telaCadastroDeTesteDeJogo = new TelaCadastroTesteDeJogo(_servicoTesteDeJogo, _servicoJogo);
             telaCadastroDeTesteDeJogo.ShowDialog();
             tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+        }
+
+        private void EventoQueDeletaJogoDoBancoDeDados(object sender, EventArgs e)
+        {
+            const int colunaId = 0;
+            const int colunaNome = 1;
+
+            try
+            {
+                var idJogoQueVaiSerRemovido = (int)tabelaJogo.CurrentRow.Cells[colunaId].Value; 
+                var nomeJogoQueVaiSerRemovido = tabelaJogo.CurrentRow.Cells[colunaNome].Value;
+                var mensagemDeAviso = MessageBox.Show($"Todos os testes sobre o jogo {nomeJogoQueVaiSerRemovido} serão removidos. Deseja remover o jogo {nomeJogoQueVaiSerRemovido}?",
+                    "Remover Jogo", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (mensagemDeAviso == DialogResult.Yes)
+                {
+                    _servicoJogo.Deletar(idJogoQueVaiSerRemovido);
+
+                    tabelaJogo.DataSource = _servicoJogo.ObterTodos();
+                    tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        private void EventoQueDeletaTesteDeJogoDoBancoDeDados(object sender, EventArgs e)
+        {
+            const int colunaId = 0;
+
+            try
+            {
+                var idTesteDeJogoQueVaiSerRemovido = (int)tabelaTesteDeJogo.CurrentRow.Cells[colunaId].Value;
+                var mensagemDeAviso = MessageBox.Show($"Deseja remover o teste de jogo?", "Remover Teste de Jogo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (mensagemDeAviso == DialogResult.Yes)
+                {
+                    _servicoTesteDeJogo.Deletar(idTesteDeJogoQueVaiSerRemovido);
+
+                    tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
     }
 }

@@ -43,7 +43,10 @@ namespace Cod3rsGrowth.Dominio.EnumGenero
         [Description("Jogo que permite ao jogador explorar um mundo virtual aberto")]
         MUNDOABERTO,
 
-        [Description("Jogo de luta")]
-        LUTA
+        [Description("Jogo de combate entre personagens")]
+        LUTA,
+
+        [Description("Jogo de corrida entre meios de transporte")]
+        CORRIDA
     }
 }

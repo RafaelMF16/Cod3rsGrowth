@@ -191,7 +191,7 @@
             comboBoxEnum.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxEnum.FlatStyle = FlatStyle.Flat;
             comboBoxEnum.FormattingEnabled = true;
-            comboBoxEnum.Items.AddRange(new object[] { "TODOS", "FPS", "BATTLEROYALE", "MOBA", "RPG", "MMORPG", "FPA", "RTS", "PVP", "SIMULADOR", "SOBREVIVENCIA", "TPS", "MUNDOABERTO", "LUTA" });
+            comboBoxEnum.Items.AddRange(new object[] { "TODOS", "FPS", "BATTLEROYALE", "MOBA", "RPG", "MMORPG", "FPA", "RTS", "PVP", "SIMULADOR", "SOBREVIVENCIA", "TPS", "MUNDOABERTO", "LUTA", "CORRIDA" });
             comboBoxEnum.Location = new Point(65, 52);
             comboBoxEnum.Name = "comboBoxEnum";
             comboBoxEnum.Size = new Size(156, 24);
@@ -228,6 +228,7 @@
             btnDeletarJ.TabIndex = 4;
             btnDeletarJ.Text = "Deletar";
             btnDeletarJ.UseVisualStyleBackColor = true;
+            btnDeletarJ.Click += EventoQueDeletaJogoDoBancoDeDados;
             // 
             // tabelaJogo
             // 
@@ -384,17 +385,18 @@
             // btnDeletarTDJ
             // 
             btnDeletarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnDeletarTDJ.Location = new Point(810, 411);
+            btnDeletarTDJ.Location = new Point(810, 406);
             btnDeletarTDJ.Name = "btnDeletarTDJ";
             btnDeletarTDJ.Size = new Size(87, 30);
             btnDeletarTDJ.TabIndex = 5;
             btnDeletarTDJ.Text = "Deletar";
             btnDeletarTDJ.UseVisualStyleBackColor = true;
+            btnDeletarTDJ.Click += EventoQueDeletaTesteDeJogoDoBancoDeDados;
             // 
             // btnAtualizarTDJ
             // 
             btnAtualizarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAtualizarTDJ.Location = new Point(903, 411);
+            btnAtualizarTDJ.Location = new Point(903, 406);
             btnAtualizarTDJ.Name = "btnAtualizarTDJ";
             btnAtualizarTDJ.Size = new Size(87, 30);
             btnAtualizarTDJ.TabIndex = 4;
@@ -404,7 +406,7 @@
             // btnAdicionarTDJ
             // 
             btnAdicionarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAdicionarTDJ.Location = new Point(996, 411);
+            btnAdicionarTDJ.Location = new Point(996, 406);
             btnAdicionarTDJ.Name = "btnAdicionarTDJ";
             btnAdicionarTDJ.Size = new Size(87, 30);
             btnAdicionarTDJ.TabIndex = 3;
@@ -432,7 +434,7 @@
             tabelaTesteDeJogo.RowHeadersVisible = false;
             tabelaTesteDeJogo.RowTemplate.Height = 25;
             tabelaTesteDeJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            tabelaTesteDeJogo.Size = new Size(1077, 325);
+            tabelaTesteDeJogo.Size = new Size(1077, 320);
             tabelaTesteDeJogo.TabIndex = 6;
             // 
             // idDataGridViewTextBoxColumn
