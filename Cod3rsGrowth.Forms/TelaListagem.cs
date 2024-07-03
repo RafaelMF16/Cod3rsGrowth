@@ -164,10 +164,12 @@ namespace Cod3rsGrowth.Forms
                     MessageBoxIcon.Question);
 
                 if (mensagemDeAviso == DialogResult.Yes)
+                {
                     _servicoJogo.Deletar(idJogoQueVaiSerRemovido);
 
-                tabelaJogo.DataSource = _servicoJogo.ObterTodos();
-                tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+                    tabelaJogo.DataSource = _servicoJogo.ObterTodos();
+                    tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+                }
             }
             catch (Exception exception)
             {
@@ -185,9 +187,11 @@ namespace Cod3rsGrowth.Forms
                 var mensagemDeAviso = MessageBox.Show($"Deseja remover o teste de jogo?", "Remover Teste de Jogo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (mensagemDeAviso == DialogResult.Yes)
+                {
                     _servicoTesteDeJogo.Deletar(idTesteDeJogoQueVaiSerRemovido);
 
-                tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+                    tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+                }
             }
             catch (Exception exception)
             {
