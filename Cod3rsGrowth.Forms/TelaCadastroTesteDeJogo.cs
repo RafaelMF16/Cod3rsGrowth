@@ -1,5 +1,6 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Servico.Servicos;
+using FluentValidation;
 
 namespace Cod3rsGrowth.Forms
 {
@@ -77,10 +78,25 @@ namespace Cod3rsGrowth.Forms
 
                 this.Dispose();
             }
-            catch (Exception exception)
+            catch (ValidationException validationException)
             {
-                MessageBox.Show(exception.Message);
+                var listaDeErros = validationException.Errors.ToList();
+                var mensagemDeErro = "";
+
+                listaDeErros.ForEach(erro => mensagemDeErro += $"{erro.ToString()} \n");
+                const string tituloDoErro = "Erro de validação";
+
+                MostrarMensagemErro(tituloDoErro, mensagemDeErro);
             }
+            catch (Exception ex)
+            {
+                const string tituloDoErro = "Erro inesperado";
+                MostrarMensagemErro(tituloDoErro, ex.Message);
+            }
+        }
+        private static void MostrarMensagemErro(string tituloErro, string mensagemDeErro)
+        {
+            MessageBox.Show(mensagemDeErro, tituloErro, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

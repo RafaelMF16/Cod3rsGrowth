@@ -107,7 +107,7 @@
             Abas.Multiline = true;
             Abas.Name = "Abas";
             Abas.SelectedIndex = 0;
-            Abas.Size = new Size(1097, 477);
+            Abas.Size = new Size(723, 413);
             Abas.TabIndex = 1;
             // 
             // tabJogos
@@ -127,14 +127,14 @@
             tabJogos.Location = new Point(4, 25);
             tabJogos.Name = "tabJogos";
             tabJogos.Padding = new Padding(3);
-            tabJogos.Size = new Size(1089, 448);
+            tabJogos.Size = new Size(715, 384);
             tabJogos.TabIndex = 0;
             tabJogos.Text = "Jogos";
             // 
             // labelPrecoMax
             // 
             labelPrecoMax.AutoSize = true;
-            labelPrecoMax.Location = new Point(456, 55);
+            labelPrecoMax.Location = new Point(438, 55);
             labelPrecoMax.Name = "labelPrecoMax";
             labelPrecoMax.Size = new Size(74, 16);
             labelPrecoMax.TabIndex = 13;
@@ -144,7 +144,7 @@
             // 
             numericUpDownPrecoMax.DecimalPlaces = 2;
             numericUpDownPrecoMax.Increment = new decimal(new int[] { 50, 0, 0, 0 });
-            numericUpDownPrecoMax.Location = new Point(532, 53);
+            numericUpDownPrecoMax.Location = new Point(518, 52);
             numericUpDownPrecoMax.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             numericUpDownPrecoMax.Name = "numericUpDownPrecoMax";
             numericUpDownPrecoMax.Size = new Size(120, 22);
@@ -154,7 +154,7 @@
             // labelPrecoMin
             // 
             labelPrecoMin.AutoSize = true;
-            labelPrecoMin.Location = new Point(254, 55);
+            labelPrecoMin.Location = new Point(236, 55);
             labelPrecoMin.Name = "labelPrecoMin";
             labelPrecoMin.Size = new Size(70, 16);
             labelPrecoMin.TabIndex = 11;
@@ -164,7 +164,7 @@
             // 
             numericUpDownPrecoMin.DecimalPlaces = 2;
             numericUpDownPrecoMin.Increment = new decimal(new int[] { 50, 0, 0, 0 });
-            numericUpDownPrecoMin.Location = new Point(330, 53);
+            numericUpDownPrecoMin.Location = new Point(312, 52);
             numericUpDownPrecoMin.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             numericUpDownPrecoMin.Name = "numericUpDownPrecoMin";
             numericUpDownPrecoMin.Size = new Size(120, 22);
@@ -206,7 +206,7 @@
             // btnAdicionarJ
             // 
             btnAdicionarJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAdicionarJ.Location = new Point(996, 412);
+            btnAdicionarJ.Location = new Point(622, 348);
             btnAdicionarJ.Name = "btnAdicionarJ";
             btnAdicionarJ.Size = new Size(87, 30);
             btnAdicionarJ.TabIndex = 2;
@@ -217,7 +217,7 @@
             // btnAtualizarJ
             // 
             btnAtualizarJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAtualizarJ.Location = new Point(903, 412);
+            btnAtualizarJ.Location = new Point(529, 348);
             btnAtualizarJ.Name = "btnAtualizarJ";
             btnAtualizarJ.Size = new Size(87, 30);
             btnAtualizarJ.TabIndex = 3;
@@ -228,7 +228,7 @@
             // btnDeletarJ
             // 
             btnDeletarJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnDeletarJ.Location = new Point(810, 412);
+            btnDeletarJ.Location = new Point(436, 348);
             btnDeletarJ.Name = "btnDeletarJ";
             btnDeletarJ.Size = new Size(87, 30);
             btnDeletarJ.TabIndex = 4;
@@ -271,7 +271,7 @@
             tabelaJogo.RowHeadersVisible = false;
             tabelaJogo.RowTemplate.Height = 25;
             tabelaJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            tabelaJogo.Size = new Size(1077, 326);
+            tabelaJogo.Size = new Size(703, 262);
             tabelaJogo.TabIndex = 5;
             // 
             // idDataGridViewTextBoxColumn1
@@ -332,25 +332,25 @@
             tabTesteDeJogo.Location = new Point(4, 25);
             tabTesteDeJogo.Name = "tabTesteDeJogo";
             tabTesteDeJogo.Padding = new Padding(3);
-            tabTesteDeJogo.Size = new Size(1089, 448);
+            tabTesteDeJogo.Size = new Size(715, 384);
             tabTesteDeJogo.TabIndex = 1;
             tabTesteDeJogo.Text = "Testes dos jogos";
             // 
             // buttonResetData
             // 
             buttonResetData.BackColor = Color.White;
-            buttonResetData.Location = new Point(818, 50);
+            buttonResetData.Location = new Point(575, 52);
             buttonResetData.Name = "buttonResetData";
-            buttonResetData.Size = new Size(80, 24);
+            buttonResetData.Size = new Size(92, 24);
             buttonResetData.TabIndex = 14;
-            buttonResetData.Text = "Reset data";
+            buttonResetData.Text = "Resetar data";
             buttonResetData.UseVisualStyleBackColor = false;
             buttonResetData.Click += EventoDeResetDeData;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(536, 55);
+            label2.Location = new Point(392, 55);
             label2.Name = "label2";
             label2.Size = new Size(70, 16);
             label2.TabIndex = 13;
@@ -359,7 +359,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(249, 55);
+            label1.Location = new Point(204, 55);
             label1.Name = "label1";
             label1.Size = new Size(75, 16);
             label1.TabIndex = 12;
@@ -367,17 +367,19 @@
             // 
             // dateTimePickerDataInicial
             // 
-            dateTimePickerDataInicial.Location = new Point(330, 50);
+            dateTimePickerDataInicial.Format = DateTimePickerFormat.Short;
+            dateTimePickerDataInicial.Location = new Point(285, 52);
             dateTimePickerDataInicial.Name = "dateTimePickerDataInicial";
-            dateTimePickerDataInicial.Size = new Size(200, 22);
+            dateTimePickerDataInicial.Size = new Size(101, 22);
             dateTimePickerDataInicial.TabIndex = 11;
             dateTimePickerDataInicial.ValueChanged += EventoDeFiltroPorDataMinima;
             // 
             // dateTimePickerDataFinal
             // 
-            dateTimePickerDataFinal.Location = new Point(612, 50);
+            dateTimePickerDataFinal.Format = DateTimePickerFormat.Short;
+            dateTimePickerDataFinal.Location = new Point(468, 52);
             dateTimePickerDataFinal.Name = "dateTimePickerDataFinal";
-            dateTimePickerDataFinal.Size = new Size(200, 22);
+            dateTimePickerDataFinal.Size = new Size(101, 22);
             dateTimePickerDataFinal.TabIndex = 10;
             dateTimePickerDataFinal.ValueChanged += EventoDeFiltroPorDataMaxima;
             // 
@@ -415,7 +417,7 @@
             // btnDeletarTDJ
             // 
             btnDeletarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnDeletarTDJ.Location = new Point(810, 373);
+            btnDeletarTDJ.Location = new Point(436, 344);
             btnDeletarTDJ.Name = "btnDeletarTDJ";
             btnDeletarTDJ.Size = new Size(87, 30);
             btnDeletarTDJ.TabIndex = 5;
@@ -426,7 +428,7 @@
             // btnAtualizarTDJ
             // 
             btnAtualizarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAtualizarTDJ.Location = new Point(903, 373);
+            btnAtualizarTDJ.Location = new Point(529, 344);
             btnAtualizarTDJ.Name = "btnAtualizarTDJ";
             btnAtualizarTDJ.Size = new Size(87, 30);
             btnAtualizarTDJ.TabIndex = 4;
@@ -437,7 +439,7 @@
             // btnAdicionarTDJ
             // 
             btnAdicionarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAdicionarTDJ.Location = new Point(996, 373);
+            btnAdicionarTDJ.Location = new Point(622, 344);
             btnAdicionarTDJ.Name = "btnAdicionarTDJ";
             btnAdicionarTDJ.Size = new Size(87, 30);
             btnAdicionarTDJ.TabIndex = 3;
@@ -473,7 +475,7 @@
             tabelaTesteDeJogo.RowHeadersVisible = false;
             tabelaTesteDeJogo.RowTemplate.Height = 25;
             tabelaTesteDeJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            tabelaTesteDeJogo.Size = new Size(1077, 287);
+            tabelaTesteDeJogo.Size = new Size(703, 258);
             tabelaTesteDeJogo.TabIndex = 6;
             // 
             // idDataGridViewTextBoxColumn
@@ -548,7 +550,7 @@
             AutoScaleDimensions = new SizeF(7F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1097, 477);
+            ClientSize = new Size(723, 413);
             Controls.Add(Abas);
             Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Name = "TelaListagem";
