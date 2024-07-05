@@ -74,9 +74,9 @@ namespace Cod3rsGrowth.Testes.Testes
         {
             CriarLista();
 
-            var idNulo = 4;
+            const int idNulo = 0;
 
-            Assert.Throws<Exception>(() => _servicoJogo.ObterPorId(idNulo));
+            Assert.Throws<ArgumentNullException>(() => _servicoJogo.ObterPorId(idNulo));
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace Cod3rsGrowth.Testes.Testes
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Adicionar(jogo));
 
-            Assert.Equal("O campo nome é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
+            Assert.Equal("O campo nome é obrigatório.", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace Cod3rsGrowth.Testes.Testes
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Adicionar(jogoRepetido));
 
-            Assert.Equal("Já existe um jogo com esse nome cadastrado", mensagemDeErro.Errors.First().ErrorMessage);
+            Assert.Equal("Já existe um jogo com esse nome cadastrado.", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
         [Fact]
@@ -118,7 +118,7 @@ namespace Cod3rsGrowth.Testes.Testes
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Adicionar(jogo));
 
-            Assert.Equal("O Gênero não é válido", mensagemDeErro.Errors.First().ErrorMessage);
+            Assert.Equal("O Gênero não é válido.", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
         [Fact]
@@ -154,7 +154,7 @@ namespace Cod3rsGrowth.Testes.Testes
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoJogo.Atualizar(jogoAtualizado));
 
-            Assert.Equal("O campo nome é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
+            Assert.Equal("O campo nome é obrigatório.", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
         [Fact]

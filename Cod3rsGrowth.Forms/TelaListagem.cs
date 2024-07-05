@@ -11,6 +11,9 @@ namespace Cod3rsGrowth.Forms
         private readonly ServicoTesteDeJogo _servicoTesteDeJogo;
         private FiltroJogo _filtroJogo = new FiltroJogo();
         private FiltroTesteDeJogo _filtroTesteDejogo = new FiltroTesteDeJogo();
+        const string tituloDaCaixaDeMensagem = "Erro";
+        const MessageBoxButtons botaoDaCaixaDeMensagem = MessageBoxButtons.OK;
+        const MessageBoxIcon iconeDaCaixaDeMensagem = MessageBoxIcon.Warning;
 
         public TelaListagem(ServicoJogo servicoJogo, ServicoTesteDeJogo servicoTesteDeJogo)
         {
@@ -154,18 +157,10 @@ namespace Cod3rsGrowth.Forms
             const int colunaId = 0;
             const int colunaNome = 1;
 
-            if (tabelaJogo.SelectedRows.Count == decimal.Zero)
-            {
-                MessageBox.Show("Nenhum jogo foi selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            var mensagemMostrada = MostrarMensagemDeErroTabelaJogo(tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
 
+            if (mensagemMostrada == true)
                 return;
-            }
-            if (tabelaJogo.SelectedRows.Count > decimal.One)
-            {
-                MessageBox.Show("Selecione apenas um jogo", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                return;
-            }
 
             try
             {
@@ -193,18 +188,10 @@ namespace Cod3rsGrowth.Forms
         {
             const int colunaId = 0;
 
-            if (tabelaTesteDeJogo.SelectedRows.Count == decimal.Zero)
-            {
-                MessageBox.Show("Nenhum teste foi selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            var mensagemMostrada = MostrarMensagemDeErroTabelaTesteDeJogo(tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
 
+            if (mensagemMostrada == true)
                 return;
-            }
-            if (tabelaTesteDeJogo.SelectedRows.Count > decimal.One)
-            {
-                MessageBox.Show("Selecione apenas um teste", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                return;
-            }
 
             try
             {
@@ -226,18 +213,10 @@ namespace Cod3rsGrowth.Forms
 
         private void EventoQueAbreTelaDeAtualizacaoDeJogo(object sender, EventArgs e)
         {
-            if (tabelaJogo.SelectedRows.Count == decimal.Zero)
-            {
-                MessageBox.Show("Nenhum jogo foi selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            var mensagemMostrada = MostrarMensagemDeErroTabelaJogo(tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
 
+            if (mensagemMostrada == true)
                 return;
-            }
-            if (tabelaJogo.SelectedRows.Count > decimal.One)
-            {
-                MessageBox.Show("Selecione apenas um jogo", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                return;
-            }
 
             const int colunaId = 0;
             var idJogoQueVaiSerAtualizado = (int)tabelaJogo.CurrentRow.Cells[colunaId].Value;
@@ -251,18 +230,10 @@ namespace Cod3rsGrowth.Forms
 
         private void EventoQueAbreTelaDeAtualizacaoDeTesteDeJogo(object sender, EventArgs e)
         {
-            if (tabelaTesteDeJogo.SelectedRows.Count == decimal.Zero)
-            {
-                MessageBox.Show("Nenhum teste foi selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            var mensagemMostrada = MostrarMensagemDeErroTabelaTesteDeJogo(tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
 
+            if (mensagemMostrada == true)
                 return;
-            }
-            if (tabelaTesteDeJogo.SelectedRows.Count > decimal.One)
-            {
-                MessageBox.Show("Selecione apenas um teste", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                return;
-            }
 
             const int colunaId = 0;
             var idTesteDeJogoQueVaiSerAtualizado = (int)tabelaTesteDeJogo.CurrentRow.Cells[colunaId].Value;
@@ -282,6 +253,54 @@ namespace Cod3rsGrowth.Forms
         private void ObterTestesDeJogo(FiltroTesteDeJogo filtroTesteDeJogo)
         {
             tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos(filtroTesteDeJogo);
+        }
+
+        private bool MostrarMensagemDeErroTabelaJogo(string tituloDaCaixaDeMensagem, MessageBoxButtons botaoDaCaixaDeMensagem, MessageBoxIcon iconeDaCaixaDeMensagem)
+        {
+            var mensagemDeErro = "";
+
+            if (tabelaJogo.SelectedRows.Count == decimal.Zero)
+            {
+                mensagemDeErro = "Nenhum jogo foi selecionado";
+
+                MessageBox.Show(mensagemDeErro, tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
+
+                return true;
+            }
+            if (tabelaJogo.SelectedRows.Count > decimal.One)
+            {
+                mensagemDeErro = "Selecione apenas um jogo";
+
+                MessageBox.Show(mensagemDeErro, tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool MostrarMensagemDeErroTabelaTesteDeJogo(string tituloDaCaixaDeMensagem, MessageBoxButtons botaoDaCaixaDeMensagem, MessageBoxIcon iconeDaCaixaDeMensagem)
+        {
+            var mensagemDeErro = "";
+
+            if (tabelaTesteDeJogo.SelectedRows.Count == decimal.Zero)
+            {
+                mensagemDeErro = "Nenhum teste de jogo foi selecionado";
+
+                MessageBox.Show(mensagemDeErro, tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
+
+                return true;
+            }
+            if (tabelaTesteDeJogo.SelectedRows.Count > decimal.One)
+            {
+                mensagemDeErro = "Selecione apenas um teste de jogo";
+
+                MessageBox.Show(mensagemDeErro, tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

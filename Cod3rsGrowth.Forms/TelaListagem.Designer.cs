@@ -417,7 +417,7 @@
             // btnDeletarTDJ
             // 
             btnDeletarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnDeletarTDJ.Location = new Point(436, 344);
+            btnDeletarTDJ.Location = new Point(436, 338);
             btnDeletarTDJ.Name = "btnDeletarTDJ";
             btnDeletarTDJ.Size = new Size(87, 30);
             btnDeletarTDJ.TabIndex = 5;
@@ -428,7 +428,7 @@
             // btnAtualizarTDJ
             // 
             btnAtualizarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAtualizarTDJ.Location = new Point(529, 344);
+            btnAtualizarTDJ.Location = new Point(529, 338);
             btnAtualizarTDJ.Name = "btnAtualizarTDJ";
             btnAtualizarTDJ.Size = new Size(87, 30);
             btnAtualizarTDJ.TabIndex = 4;
@@ -439,7 +439,7 @@
             // btnAdicionarTDJ
             // 
             btnAdicionarTDJ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAdicionarTDJ.Location = new Point(622, 344);
+            btnAdicionarTDJ.Location = new Point(622, 338);
             btnAdicionarTDJ.Name = "btnAdicionarTDJ";
             btnAdicionarTDJ.Size = new Size(87, 30);
             btnAdicionarTDJ.TabIndex = 3;
@@ -475,7 +475,7 @@
             tabelaTesteDeJogo.RowHeadersVisible = false;
             tabelaTesteDeJogo.RowTemplate.Height = 25;
             tabelaTesteDeJogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            tabelaTesteDeJogo.Size = new Size(703, 258);
+            tabelaTesteDeJogo.Size = new Size(703, 252);
             tabelaTesteDeJogo.TabIndex = 6;
             // 
             // idDataGridViewTextBoxColumn

@@ -2,6 +2,7 @@
 using Cod3rsGrowth.Dominio.EnumGenero;
 using Cod3rsGrowth.Servico.Servicos;
 using FluentValidation;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cod3rsGrowth.Forms
 {
@@ -35,56 +36,69 @@ namespace Cod3rsGrowth.Forms
 
         private void EventoQueSalvaJogoNoBancoDeDados(object sender, EventArgs e)
         {
-            try
+            const MessageBoxButtons botaoOkDaCaixaDeMensagem = MessageBoxButtons.OK;
+            const MessageBoxIcon iconeDeErroDaCaixaDeMensagem = MessageBoxIcon.Error;
+            const string tituloDoErroDeValidacao = "Erro de validação";
+
+            if (textBoxCadastroNome.Text.IsNullOrEmpty() || comboBoxEnumCadastro.SelectedIndex != decimal.Zero)
             {
-                if (_jogoQueVaiSerAtualizado != null)
+                const string mensagemDeErroDaValidacaoDeTela = "Preencha o campo obrigatório";
+
+                MostrarMensagemErro(mensagemDeErroDaValidacaoDeTela, tituloDoErroDeValidacao, botaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
+            } 
+            else
+            {
+                try
                 {
-                    var jogoAtualizado = new Jogo
+                    if (_jogoQueVaiSerAtualizado != null)
                     {
-                        Id = _jogoQueVaiSerAtualizado.Id,
+                        var jogoAtualizado = new Jogo
+                        {
+                            Id = _jogoQueVaiSerAtualizado.Id,
+                            Nome = textBoxCadastroNome.Text,
+                            Genero = (Genero)comboBoxEnumCadastro.SelectedIndex,
+                            Preco = numericUpDownCadastroPreco.Value
+                        };
+
+                        _servicoJogo.Atualizar(jogoAtualizado);
+
+                        this.Dispose();
+
+                        return;
+                    }
+
+                    var novoJogo = new Jogo
+                    {
                         Nome = textBoxCadastroNome.Text,
                         Genero = (Genero)comboBoxEnumCadastro.SelectedIndex,
                         Preco = numericUpDownCadastroPreco.Value
                     };
 
-                    _servicoJogo.Atualizar(jogoAtualizado);
+                    _servicoJogo.Adicionar(novoJogo);
 
                     this.Dispose();
-
-                    return;
                 }
-
-                var novoJogo = new Jogo
+                catch (ValidationException validationException)
                 {
-                    Nome = textBoxCadastroNome.Text,
-                    Genero = (Genero)comboBoxEnumCadastro.SelectedIndex,
-                    Preco = numericUpDownCadastroPreco.Value
-                };
 
-                _servicoJogo.Adicionar(novoJogo);
+                    var listaDeErros = validationException.Errors.ToList();
+                    var mensagemDeErro = "";
 
-                this.Dispose();
-            }
-            catch (ValidationException validationException)
-            {
-                var listaDeErros = validationException.Errors.ToList();
-                var mensagemDeErro = "";
+                    listaDeErros.ForEach(erro => mensagemDeErro += $"{erro.ToString()} \n");
 
-                listaDeErros.ForEach(erro => mensagemDeErro += $"{erro.ToString()} \n");
-                const string tituloDoErro = "Erro de validação";
-
-                MostrarMensagemErro(tituloDoErro, mensagemDeErro);
-            }
-            catch(Exception ex)
-            {
-                const string tituloDoErro = "Erro inesperado";
-                MostrarMensagemErro(tituloDoErro, ex.Message);
+                    MostrarMensagemErro(mensagemDeErro, tituloDoErroDeValidacao, botaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
+                }
+                catch (Exception ex)
+                {
+                    const string tituloDoErro = "Erro inesperado";
+                    MostrarMensagemErro(ex.Message, tituloDoErro, botaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
+                }
             }
         }
 
-        private static void MostrarMensagemErro(string tituloErro, string mensagemDeErro)
+        private static void MostrarMensagemErro(string mensagemDeErro, string tituloErro, MessageBoxButtons botaoDaCaixaDeMensagem, MessageBoxIcon iconeDaCaixaDeMensagem)
         {
-            MessageBox.Show(mensagemDeErro, tituloErro, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(mensagemDeErro, tituloErro, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
         }
     }
 }

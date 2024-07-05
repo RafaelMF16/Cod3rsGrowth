@@ -118,13 +118,13 @@ namespace Cod3rsGrowth.Testes.Testes
         }
 
         [Fact]
-        public void obter_por_id_quando_chamado_lanca_excecao_caso_o_id_passado_seja_quatro()
+        public void obter_por_id_quando_chamado_lanca_excecao_caso_o_id_passado_seja_zero()
         {
             CriarLista();
 
-            var idNulo = 4;
+            const int idNulo = 0;
 
-            Assert.Throws<Exception>(() => _servicoTesteDeJogo.ObterPorId(idNulo));
+            Assert.Throws<ArgumentNullException>(() => _servicoTesteDeJogo.ObterPorId(idNulo));
         }
 
         [Fact]

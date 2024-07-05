@@ -29,7 +29,6 @@ namespace Cod3rsGrowth.Forms.Injecao
             servicos.AddScoped<IValidator<TesteDeJogo>, TesteDeJogoValidador>();
             servicos.AddScoped<IJogoRepositorio, JogoRepositorio>();
             servicos.AddScoped<ITesteDeJogoRepositorio, TesteDeJogoRepositorio>();
-            servicos.AddScoped<TelaListagem>();
         }
     }
 }

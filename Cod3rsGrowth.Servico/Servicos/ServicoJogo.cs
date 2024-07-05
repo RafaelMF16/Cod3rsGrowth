@@ -67,7 +67,11 @@ namespace Cod3rsGrowth.Servico.Servicos
 
         public Jogo ObterPorId(int id)
         {
-            return _jogoRepositorio.ObterPorId(id);
+            var jogo = _jogoRepositorio.ObterPorId(id)
+                ?? throw new ArgumentNullException($"Erro ao obter jogo com id {id}");
+
+
+            return jogo;
         }
 
         public List<Jogo> ObterTodos(FiltroJogo? filtro = null)

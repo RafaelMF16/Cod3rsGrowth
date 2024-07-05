@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Forms.Injecao
 {
-    public static class ModuloDeInjecao
+    public static class ModuloDeInjecaoMigracoes
     {
         public static void AdicionarMigracoesEBancoDeDadosAoEscopo(this ServiceCollection servicos)
         {
