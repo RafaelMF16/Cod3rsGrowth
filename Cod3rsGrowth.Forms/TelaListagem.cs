@@ -21,9 +21,9 @@ namespace Cod3rsGrowth.Forms
 
         private void CarregarPrimeiraTela(object sender, EventArgs e)
         {
-            tabelaJogo.DataSource = _servicoJogo.ObterTodos();
+            Obterjogos(_filtroJogo);
 
-            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+            ObterTestesDeJogo(_filtroTesteDejogo);
 
             const int valorPadraoGenero = 0;
             comboBoxEnum.SelectedIndex = valorPadraoGenero;
@@ -34,30 +34,31 @@ namespace Cod3rsGrowth.Forms
         private void EventoDePesquisaPorNomeDoJogo(object sender, EventArgs e)
         {
             _filtroJogo.Nome = textBoxJogo.Text;
-            tabelaJogo.DataSource = _servicoJogo.ObterTodos(_filtroJogo);
+            Obterjogos(_filtroJogo);
         }
+
 
         private void EventoDeFiltroPorGenero(object sender, EventArgs e)
         {
             _filtroJogo.Genero = (Genero)comboBoxEnum.SelectedIndex;
-            tabelaJogo.DataSource = _servicoJogo.ObterTodos(_filtroJogo);
+            Obterjogos(_filtroJogo);
         }
 
         private void EventoDeFiltroPorPrecoMin(object sender, EventArgs e)
         {
             _filtroJogo.PrecoMin = numericUpDownPrecoMin.Value;
-            tabelaJogo.DataSource = _servicoJogo.ObterTodos(_filtroJogo);
+            Obterjogos(_filtroJogo);
         }
         private void EventoDeFiltroPorPrecoMax(object sender, EventArgs e)
         {
             _filtroJogo.PrecoMax = numericUpDownPrecoMax.Value;
-            tabelaJogo.DataSource = _servicoJogo.ObterTodos(_filtroJogo);
+            Obterjogos(_filtroJogo);
         }
 
         private void EventoDePesquisaPorNomeDoResponsavel(object sender, EventArgs e)
         {
             _filtroTesteDejogo.NomeResponsavelTeste = textBoxTDJ.Text;
-            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos(_filtroTesteDejogo);
+            ObterTestesDeJogo(_filtroTesteDejogo);
         }
 
         private void EventoDeFiltroPorAprovado(object sender, EventArgs e)
@@ -70,7 +71,7 @@ namespace Cod3rsGrowth.Forms
 
             _filtroTesteDejogo.Aprovado = checkBoxAprovado.Checked;
 
-            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos(_filtroTesteDejogo);
+            ObterTestesDeJogo(_filtroTesteDejogo);
         }
 
         private void EventoDeFiltroPorReprovado(object sender, EventArgs e)
@@ -83,25 +84,25 @@ namespace Cod3rsGrowth.Forms
 
             _filtroTesteDejogo.Reprovado = checkBoxReprovado.Checked;
 
-            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos(_filtroTesteDejogo);
+            ObterTestesDeJogo(_filtroTesteDejogo);
         }
 
         private void EventoDeFiltroPorDataMinima(object sender, EventArgs e)
         {
             _filtroTesteDejogo.DataMinRealizacaoTeste = dateTimePickerDataInicial.Value.Date;
-            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos(_filtroTesteDejogo);
+            ObterTestesDeJogo(_filtroTesteDejogo);
         }
 
         private void EventoDeFiltroPorDataMaxima(object sender, EventArgs e)
         {
             _filtroTesteDejogo.DataMaxRealizacaoTeste = dateTimePickerDataFinal.Value.Date;
-            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos(_filtroTesteDejogo);
+            ObterTestesDeJogo(_filtroTesteDejogo);
         }
 
         private void EventoDeResetDeData(object sender, EventArgs e)
         {
             LimparFiltroDeData(_filtroTesteDejogo);
-            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos(_filtroTesteDejogo);
+            ObterTestesDeJogo(_filtroTesteDejogo);
         }
 
         private void LimparFiltroDeData(FiltroTesteDeJogo filtroTesteDeJogo)
@@ -138,14 +139,14 @@ namespace Cod3rsGrowth.Forms
         {
             var telaCadastroJogo = new TelaCadastroJogo(_servicoJogo);
             telaCadastroJogo.ShowDialog();
-            tabelaJogo.DataSource = _servicoJogo.ObterTodos();
+            Obterjogos(_filtroJogo);
         }
 
         private void EventoParaAbrirTelaDeCadastroDeTesteDeJogo(object sender, EventArgs e)
         {
             var telaCadastroDeTesteDeJogo = new TelaCadastroTesteDeJogo(_servicoTesteDeJogo, _servicoJogo);
             telaCadastroDeTesteDeJogo.ShowDialog();
-            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+            ObterTestesDeJogo(_filtroTesteDejogo);
         }
 
         private void EventoQueDeletaJogoDoBancoDeDados(object sender, EventArgs e)
@@ -178,8 +179,8 @@ namespace Cod3rsGrowth.Forms
                 {
                     _servicoJogo.Deletar(idJogoQueVaiSerRemovido);
 
-                    tabelaJogo.DataSource = _servicoJogo.ObterTodos();
-                    tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+                    Obterjogos(_filtroJogo);
+                    ObterTestesDeJogo(_filtroTesteDejogo);
                 }
             }
             catch (Exception exception)
@@ -214,7 +215,7 @@ namespace Cod3rsGrowth.Forms
                 {
                     _servicoTesteDeJogo.Deletar(idTesteDeJogoQueVaiSerRemovido);
 
-                    tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+                    ObterTestesDeJogo(_filtroTesteDejogo);
                 }
             }
             catch (Exception exception)
@@ -270,7 +271,17 @@ namespace Cod3rsGrowth.Forms
 
             telaDeAtualizacao.ShowDialog();
 
-            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
+            ObterTestesDeJogo(_filtroTesteDejogo);
+        }
+
+        private void Obterjogos(FiltroJogo filtroJogo)
+        {
+            tabelaJogo.DataSource = _servicoJogo.ObterTodos(filtroJogo);
+        }
+
+        private void ObterTestesDeJogo(FiltroTesteDeJogo filtroTesteDeJogo)
+        {
+            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos(filtroTesteDeJogo);
         }
     }
 }
