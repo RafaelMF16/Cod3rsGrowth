@@ -62,12 +62,11 @@ namespace Cod3rsGrowth.Forms
 
         private void EventoDeFiltroPorAprovado(object sender, EventArgs e)
         {
-            if (checkBoxAprovado.CheckState == CheckState.Checked)
-                if (checkBoxReprovado.CheckState == CheckState.Checked)
-                {
-                    checkBoxReprovado.Checked = false;
-                    checkBoxAprovado.Checked = true;
-                }
+            if (checkBoxAprovado.CheckState == CheckState.Checked && checkBoxReprovado.CheckState == CheckState.Checked)
+            {
+                checkBoxReprovado.Checked = false;
+                checkBoxAprovado.Checked = true;
+            }
 
             _filtroTesteDejogo.Aprovado = checkBoxAprovado.Checked;
 
@@ -76,12 +75,11 @@ namespace Cod3rsGrowth.Forms
 
         private void EventoDeFiltroPorReprovado(object sender, EventArgs e)
         {
-            if (checkBoxReprovado.CheckState == CheckState.Checked)
-                if (checkBoxAprovado.CheckState == CheckState.Checked)
-                {
-                    checkBoxAprovado.Checked = false;
-                    checkBoxReprovado.Checked = true;
-                }
+            if (checkBoxReprovado.CheckState == CheckState.Checked && checkBoxAprovado.CheckState == CheckState.Checked)
+            {
+                checkBoxAprovado.Checked = false;
+                checkBoxReprovado.Checked = true;
+            }
 
             _filtroTesteDejogo.Reprovado = checkBoxReprovado.Checked;
 
@@ -155,11 +153,24 @@ namespace Cod3rsGrowth.Forms
             const int colunaId = 0;
             const int colunaNome = 1;
 
+            if (tabelaJogo.SelectedRows.Count == decimal.Zero)
+            {
+                MessageBox.Show("Nenhum jogo foi selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+            if (tabelaJogo.SelectedRows.Count > decimal.One)
+            {
+                MessageBox.Show("Selecione apenas um jogo", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
             try
             {
-                var idJogoQueVaiSerRemovido = (int)tabelaJogo.CurrentRow.Cells[colunaId].Value; 
+                var idJogoQueVaiSerRemovido = (int)tabelaJogo.CurrentRow.Cells[colunaId].Value;
                 var nomeJogoQueVaiSerRemovido = tabelaJogo.CurrentRow.Cells[colunaNome].Value;
-                var mensagemDeAviso = MessageBox.Show($"Todos os testes sobre o jogo {nomeJogoQueVaiSerRemovido} serão removidos. Deseja remover o jogo {nomeJogoQueVaiSerRemovido}?",
+                var mensagemDeAviso = MessageBox.Show($"Todos os testes relacionados com {nomeJogoQueVaiSerRemovido} serão removidos. Deseja remover o jogo {nomeJogoQueVaiSerRemovido}?",
                     "Remover Jogo", MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 
@@ -181,6 +192,19 @@ namespace Cod3rsGrowth.Forms
         {
             const int colunaId = 0;
 
+            if (tabelaTesteDeJogo.SelectedRows.Count == decimal.Zero)
+            {
+                MessageBox.Show("Nenhum teste foi selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+            if (tabelaTesteDeJogo.SelectedRows.Count > decimal.One)
+            {
+                MessageBox.Show("Selecione apenas um teste", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
             try
             {
                 var idTesteDeJogoQueVaiSerRemovido = (int)tabelaTesteDeJogo.CurrentRow.Cells[colunaId].Value;
@@ -197,6 +221,56 @@ namespace Cod3rsGrowth.Forms
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        private void EventoQueAbreTelaDeAtualizacaoDeJogo(object sender, EventArgs e)
+        {
+            if (tabelaJogo.SelectedRows.Count == decimal.Zero)
+            {
+                MessageBox.Show("Nenhum jogo foi selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+            if (tabelaJogo.SelectedRows.Count > decimal.One)
+            {
+                MessageBox.Show("Selecione apenas um jogo", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            const int colunaId = 0;
+            var idJogoQueVaiSerAtualizado = (int)tabelaJogo.CurrentRow.Cells[colunaId].Value;
+            var jogoSelecionado = _servicoJogo.ObterPorId(idJogoQueVaiSerAtualizado);
+            var telaDeAtualizacao = new TelaCadastroJogo(_servicoJogo, jogoSelecionado);
+
+            telaDeAtualizacao.ShowDialog();
+
+            tabelaJogo.DataSource = _servicoJogo.ObterTodos();
+        }
+
+        private void EventoQueAbreTelaDeAtualizacaoDeTesteDeJogo(object sender, EventArgs e)
+        {
+            if (tabelaTesteDeJogo.SelectedRows.Count == decimal.Zero)
+            {
+                MessageBox.Show("Nenhum teste foi selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+            if (tabelaTesteDeJogo.SelectedRows.Count > decimal.One)
+            {
+                MessageBox.Show("Selecione apenas um teste", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            const int colunaId = 0;
+            var idTesteDeJogoQueVaiSerAtualizado = (int)tabelaTesteDeJogo.CurrentRow.Cells[colunaId].Value;
+            var testeDeJogoSelecionado = _servicoTesteDeJogo.ObterPorId(idTesteDeJogoQueVaiSerAtualizado);
+            var telaDeAtualizacao = new TelaCadastroTesteDeJogo(_servicoTesteDeJogo, _servicoJogo, testeDeJogoSelecionado);
+
+            telaDeAtualizacao.ShowDialog();
+
+            tabelaTesteDeJogo.DataSource = _servicoTesteDeJogo.ObterTodos();
         }
     }
 }

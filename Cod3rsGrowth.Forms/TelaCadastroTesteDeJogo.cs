@@ -1,5 +1,6 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
 using Cod3rsGrowth.Servico.Servicos;
+using FluentValidation;
 
 namespace Cod3rsGrowth.Forms
 {
@@ -7,13 +8,29 @@ namespace Cod3rsGrowth.Forms
     {
         private readonly ServicoTesteDeJogo _servicoTesteDeJogo;
         private readonly ServicoJogo _servicoJogo;
-        private TesteDeJogo _testeDeJogo = new TesteDeJogo();
-        public TelaCadastroTesteDeJogo(ServicoTesteDeJogo servicoTesteDeJogo, ServicoJogo servicoJogo)
+        private TesteDeJogo _testeDeJogoQueVaiSerAtualizado;
+        public TelaCadastroTesteDeJogo(ServicoTesteDeJogo servicoTesteDeJogo, ServicoJogo servicoJogo, TesteDeJogo testeDeJogo = null)
         {
+            InitializeComponent();
+
             _servicoTesteDeJogo = servicoTesteDeJogo;
             _servicoJogo = servicoJogo;
+            _testeDeJogoQueVaiSerAtualizado = testeDeJogo;
 
-            InitializeComponent();
+            var comboBoxJogos = _servicoJogo.ObterTodos().Select(j => j.Nome).ToList();
+            comboBoxJogoCadastro.DataSource = comboBoxJogos;
+
+            if (testeDeJogo != null)
+                MostrarPropriedadesDoTesteDeJogoQueVaiSerAtualizado();
+        }
+
+        public void MostrarPropriedadesDoTesteDeJogoQueVaiSerAtualizado()
+        {
+            textBoxCadastroNomeResponsavel.Text = _testeDeJogoQueVaiSerAtualizado.NomeResponsavelDoTeste;
+            textBoxCadastroDescricao.Text = _testeDeJogoQueVaiSerAtualizado.Descricao;
+            numericUpDownCadastroNota.Value = _testeDeJogoQueVaiSerAtualizado.Nota;
+            comboBoxJogoCadastro.SelectedItem = _servicoJogo.ObterPorId(_testeDeJogoQueVaiSerAtualizado.IdJogo).Nome;
+            checkBoxCadastroAprovado.Checked = _testeDeJogoQueVaiSerAtualizado.Aprovado;
         }
 
         private void EventoCancelaCadastroDeTesteDeJogo(object sender, EventArgs e)
@@ -27,27 +44,59 @@ namespace Cod3rsGrowth.Forms
 
             try
             {
-                _testeDeJogo.NomeResponsavelDoTeste = textBoxCadastroNomeResponsavel.Text;
-                _testeDeJogo.Descricao = textBoxCadastroDescricao.Text;
-                _testeDeJogo.Nota = numericUpDownCadastroNota.Value;
-                _testeDeJogo.DataRealizacaoTeste = DateTime.Today;
-                _testeDeJogo.Aprovado = checkBoxCadastroAprovado.Checked;
-                _testeDeJogo.IdJogo = idJogo;
+                if (_testeDeJogoQueVaiSerAtualizado != null)
+                {
+                    var testeDeJogoAtualizado = new TesteDeJogo
+                    {
+                        Id = _testeDeJogoQueVaiSerAtualizado.Id,
+                        NomeResponsavelDoTeste = textBoxCadastroNomeResponsavel.Text,
+                        Descricao = textBoxCadastroDescricao.Text,
+                        Nota = numericUpDownCadastroNota.Value,
+                        DataRealizacaoTeste = DateTime.Today,
+                        IdJogo = idJogo,
+                        Aprovado = checkBoxCadastroAprovado.Checked
+                    };
 
-                _servicoTesteDeJogo.Adicionar(_testeDeJogo);
+                    _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado);
+
+                    this.Dispose();
+
+                    return;
+                }
+
+                var novoTesteDeJogo = new TesteDeJogo
+                {
+                    NomeResponsavelDoTeste = textBoxCadastroNomeResponsavel.Text,
+                    Descricao = textBoxCadastroDescricao.Text,
+                    Nota = numericUpDownCadastroNota.Value,
+                    DataRealizacaoTeste = DateTime.Today,
+                    Aprovado = checkBoxCadastroAprovado.Checked,
+                    IdJogo = idJogo
+                };
+
+                _servicoTesteDeJogo.Adicionar(novoTesteDeJogo);
 
                 this.Dispose();
             }
-            catch (Exception exception)
+            catch (ValidationException validationException)
             {
-                MessageBox.Show(exception.Message);
+                var listaDeErros = validationException.Errors.ToList();
+                var mensagemDeErro = "";
+
+                listaDeErros.ForEach(erro => mensagemDeErro += $"{erro.ToString()} \n");
+                const string tituloDoErro = "Erro de validação";
+
+                MostrarMensagemErro(tituloDoErro, mensagemDeErro);
+            }
+            catch (Exception ex)
+            {
+                const string tituloDoErro = "Erro inesperado";
+                MostrarMensagemErro(tituloDoErro, ex.Message);
             }
         }
-
-        private void EventoDeCarregamentoDaTelaDeCadastroDeJogo(object sender, EventArgs e)
+        private static void MostrarMensagemErro(string tituloErro, string mensagemDeErro)
         {
-            var comboBoxJogos = _servicoJogo.ObterTodos().Select(j => j.Nome).ToList();
-            comboBoxJogoCadastro.DataSource = comboBoxJogos;
+            MessageBox.Show(mensagemDeErro, tituloErro, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
