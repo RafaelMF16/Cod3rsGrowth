@@ -10,6 +10,8 @@ namespace Cod3rsGrowth.Forms
         private readonly ServicoTesteDeJogo _servicoTesteDeJogo;
         private readonly ServicoJogo _servicoJogo;
         private TesteDeJogo _testeDeJogoQueVaiSerAtualizado;
+        private const MessageBoxButtons BotaoOkDaCaixaDeMensagem = MessageBoxButtons.OK;
+
         public TelaCadastroTesteDeJogo(ServicoTesteDeJogo servicoTesteDeJogo, ServicoJogo servicoJogo, TesteDeJogo testeDeJogo = null)
         {
             InitializeComponent();
@@ -42,74 +44,87 @@ namespace Cod3rsGrowth.Forms
         private void EventoQueSalvaTesteDeJogo(object sender, EventArgs e)
         {
             var idJogo = _servicoJogo.ObterTodos().Where(j => j.Nome == comboBoxJogoCadastro.SelectedItem.ToString()).Select(j => j.Id).FirstOrDefault();
-            const string tituloDoErroDeValidacao = "Erro de validação";
-            const MessageBoxButtons botaoOkDaCaixaDeMensagem = MessageBoxButtons.OK;
+            const string tituloDaCaixaDeMensagem = "Erro de validação";
             const MessageBoxIcon iconeDeErroDaCaixaDeMensagem = MessageBoxIcon.Error;
 
-            if (textBoxCadastroNomeResponsavel.Text.IsNullOrEmpty())
-            {
-                const string mensagemDeErroDeValidacaoDeTela = "Preencha o campo Nome";
+            var validacaoDeTelaPassou = ValidarTela();
 
-                MostrarMensagemErro(mensagemDeErroDeValidacaoDeTela, tituloDoErroDeValidacao, botaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
-            }
-            else
+            if (validacaoDeTelaPassou == false)
+                return;
+
+            try
             {
-                try
+                if (_testeDeJogoQueVaiSerAtualizado != null)
                 {
-                    if (_testeDeJogoQueVaiSerAtualizado != null)
+                    var testeDeJogoAtualizado = new TesteDeJogo
                     {
-                        var testeDeJogoAtualizado = new TesteDeJogo
-                        {
-                            Id = _testeDeJogoQueVaiSerAtualizado.Id,
-                            NomeResponsavelDoTeste = textBoxCadastroNomeResponsavel.Text,
-                            Descricao = textBoxCadastroDescricao.Text,
-                            Nota = numericUpDownCadastroNota.Value,
-                            DataRealizacaoTeste = DateTime.Today,
-                            IdJogo = idJogo,
-                            Aprovado = checkBoxCadastroAprovado.Checked
-                        };
-
-                        _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado);
-
-                        this.Dispose();
-
-                        return;
-                    }
-
-                    var novoTesteDeJogo = new TesteDeJogo
-                    {
+                        Id = _testeDeJogoQueVaiSerAtualizado.Id,
                         NomeResponsavelDoTeste = textBoxCadastroNomeResponsavel.Text,
                         Descricao = textBoxCadastroDescricao.Text,
                         Nota = numericUpDownCadastroNota.Value,
                         DataRealizacaoTeste = DateTime.Today,
-                        Aprovado = checkBoxCadastroAprovado.Checked,
-                        IdJogo = idJogo
+                        IdJogo = idJogo,
+                        Aprovado = checkBoxCadastroAprovado.Checked
                     };
 
-                    _servicoTesteDeJogo.Adicionar(novoTesteDeJogo);
+                    _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado);
 
                     this.Dispose();
-                }
-                catch (ValidationException validationException)
-                {
-                    var listaDeErros = validationException.Errors.ToList();
-                    var mensagemDeErro = "";
 
-                    listaDeErros.ForEach(erro => mensagemDeErro += $"{erro.ToString()} \n");
-                    
+                    return;
+                }
 
-                    MostrarMensagemErro(mensagemDeErro, tituloDoErroDeValidacao, botaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
-                }
-                catch (Exception ex)
+                var novoTesteDeJogo = new TesteDeJogo
                 {
-                    const string tituloDoErro = "Erro inesperado";
-                    MostrarMensagemErro(ex.Message, tituloDoErro, botaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
-                }
+                    NomeResponsavelDoTeste = textBoxCadastroNomeResponsavel.Text,
+                    Descricao = textBoxCadastroDescricao.Text,
+                    Nota = numericUpDownCadastroNota.Value,
+                    DataRealizacaoTeste = DateTime.Today,
+                    Aprovado = checkBoxCadastroAprovado.Checked,
+                    IdJogo = idJogo
+                };
+
+                _servicoTesteDeJogo.Adicionar(novoTesteDeJogo);
+
+                this.Dispose();
+            }
+            catch (ValidationException validationException)
+            {
+                var listaDeErros = validationException.Errors.ToList();
+                var mensagemDeErro = "";
+
+                listaDeErros.ForEach(erro => mensagemDeErro += $"{erro.ToString()} \n");
+
+
+                MostrarMensagemErro(mensagemDeErro, tituloDaCaixaDeMensagem, BotaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
+            }
+            catch (Exception ex)
+            {
+                const string tituloDoErro = "Erro inesperado";
+                MostrarMensagemErro(ex.Message, tituloDoErro, BotaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
             }
         }
+
         private static void MostrarMensagemErro(string mensagemDeErro, string tituloErro, MessageBoxButtons botaoCaixaDeMensagem, MessageBoxIcon iconeCaixaDeMensagem)
         {
             MessageBox.Show(mensagemDeErro, tituloErro, botaoCaixaDeMensagem, iconeCaixaDeMensagem);
+        }
+
+        private bool ValidarTela()
+        {
+            const string tituloDaCaixaDeMensagem = "Campo não preenchido";
+            const MessageBoxIcon iconeDaCaixaDeMensagem = MessageBoxIcon.Warning;
+
+            if (textBoxCadastroNomeResponsavel.Text.IsNullOrEmpty())
+            {
+                const string mensagemDeErroDeValidacaoDeTela = "Preencha o campo nome do responsável";
+
+                MostrarMensagemErro(mensagemDeErroDeValidacaoDeTela, tituloDaCaixaDeMensagem, BotaoOkDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
+
+                return false;
+            }
+
+            return true;
         }
     }
 }

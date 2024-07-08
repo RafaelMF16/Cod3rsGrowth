@@ -12,7 +12,7 @@ namespace Cod3rsGrowth.Servico.Validadores
 
             RuleFor(testeDeJogo => testeDeJogo.NomeResponsavelDoTeste)
                 .NotEmpty()
-                .WithMessage("O campo Nome do responsável do teste é obrigatório")
+                .WithMessage("O campo nome do responsável do teste é obrigatório")
                 .MaximumLength(50)
                 .WithMessage("Nome do responsável do teste dever ter 50 caracteres ou menos");
 

@@ -242,7 +242,7 @@ namespace Cod3rsGrowth.Testes.Testes
 
             var mensagemDeErro = Assert.Throws<FluentValidation.ValidationException>(() => _servicoTesteDeJogo.Atualizar(testeDeJogoAtualizado));
 
-            Assert.Equal("O campo Nome do responsável do teste é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
+            Assert.Equal("O campo nome do responsável do teste é obrigatório", mensagemDeErro.Errors.First().ErrorMessage);
         }
 
         [Fact]

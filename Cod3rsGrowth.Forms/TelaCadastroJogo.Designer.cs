@@ -133,7 +133,7 @@
             comboBoxEnumCadastro.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxEnumCadastro.FlatStyle = FlatStyle.Flat;
             comboBoxEnumCadastro.FormattingEnabled = true;
-            comboBoxEnumCadastro.Items.AddRange(new object[] { "TODOS", "FPS", "BATTLEROYALE", "MOBA", "RPG", "MMORPG", "FPA", "RTS", "PVP", "SIMULADOR", "SOBREVIVENCIA", "TPS", "MUNDOABERTO", "LUTA", "CORRIDA" });
+            comboBoxEnumCadastro.Items.AddRange(new object[] { "", "FPS", "BATTLEROYALE", "MOBA", "RPG", "MMORPG", "FPA", "RTS", "PVP", "SIMULADOR", "SOBREVIVENCIA", "TPS", "MUNDOABERTO", "LUTA", "CORRIDA" });
             comboBoxEnumCadastro.Location = new Point(6, 90);
             comboBoxEnumCadastro.Name = "comboBoxEnumCadastro";
             comboBoxEnumCadastro.Size = new Size(310, 23);
