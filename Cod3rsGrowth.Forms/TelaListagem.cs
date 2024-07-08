@@ -40,7 +40,6 @@ namespace Cod3rsGrowth.Forms
             Obterjogos(_filtroJogo);
         }
 
-
         private void EventoDeFiltroPorGenero(object sender, EventArgs e)
         {
             _filtroJogo.Genero = (Genero)comboBoxEnum.SelectedIndex;
@@ -52,6 +51,7 @@ namespace Cod3rsGrowth.Forms
             _filtroJogo.PrecoMin = numericUpDownPrecoMin.Value;
             Obterjogos(_filtroJogo);
         }
+
         private void EventoDeFiltroPorPrecoMax(object sender, EventArgs e)
         {
             _filtroJogo.PrecoMax = numericUpDownPrecoMax.Value;
@@ -267,6 +267,7 @@ namespace Cod3rsGrowth.Forms
 
                 return true;
             }
+
             if (tabelaJogo.SelectedRows.Count > decimal.One)
             {
                 mensagemDeErro = "Selecione apenas um jogo";
@@ -291,6 +292,7 @@ namespace Cod3rsGrowth.Forms
 
                 return true;
             }
+
             if (tabelaTesteDeJogo.SelectedRows.Count > decimal.One)
             {
                 mensagemDeErro = "Selecione apenas um teste de jogo";
