@@ -107,8 +107,7 @@ namespace Cod3rsGrowth.Forms
                 }
             }
         }
-        private static void MostrarMensagemErro(string mensagemDeErro, string tituloErro, MessageBoxButtons botaoCaixaDeMensagem, MessageBoxIcon iconeCaixaDeMensagem
-            )
+        private static void MostrarMensagemErro(string mensagemDeErro, string tituloErro, MessageBoxButtons botaoCaixaDeMensagem, MessageBoxIcon iconeCaixaDeMensagem)
         {
             MessageBox.Show(mensagemDeErro, tituloErro, botaoCaixaDeMensagem, iconeCaixaDeMensagem);
         }
