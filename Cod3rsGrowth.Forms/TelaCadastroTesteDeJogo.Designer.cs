@@ -153,18 +153,18 @@
             label3.AutoSize = true;
             label3.Location = new Point(6, 125);
             label3.Name = "label3";
-            label3.Size = new Size(41, 15);
+            label3.Size = new Size(36, 15);
             label3.TabIndex = 9;
-            label3.Text = "Nota *";
+            label3.Text = "Nota ";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new Point(6, 178);
             label2.Name = "label2";
-            label2.Size = new Size(40, 15);
+            label2.Size = new Size(35, 15);
             label2.TabIndex = 8;
-            label2.Text = "Jogo *";
+            label2.Text = "Jogo ";
             // 
             // comboBoxJogoCadastro
             // 

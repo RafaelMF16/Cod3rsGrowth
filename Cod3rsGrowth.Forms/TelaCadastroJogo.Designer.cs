@@ -113,9 +113,9 @@
             label3.AutoSize = true;
             label3.Location = new Point(6, 126);
             label3.Name = "label3";
-            label3.Size = new Size(45, 15);
+            label3.Size = new Size(40, 15);
             label3.TabIndex = 9;
-            label3.Text = "Preço *";
+            label3.Text = "Preço ";
             // 
             // label2
             // 

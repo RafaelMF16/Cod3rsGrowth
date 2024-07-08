@@ -40,12 +40,18 @@ namespace Cod3rsGrowth.Forms
             const MessageBoxIcon iconeDeErroDaCaixaDeMensagem = MessageBoxIcon.Error;
             const string tituloDoErroDeValidacao = "Erro de validação";
 
-            if (textBoxCadastroNome.Text.IsNullOrEmpty() || comboBoxEnumCadastro.SelectedIndex != decimal.Zero)
+            if (textBoxCadastroNome.Text.IsNullOrEmpty())
             {
-                const string mensagemDeErroDaValidacaoDeTela = "Preencha o campo obrigatório";
+                const string mensagemDeErroDaValidacaoDeTelaNome = "Preencha o campo nome";
 
-                MostrarMensagemErro(mensagemDeErroDaValidacaoDeTela, tituloDoErroDeValidacao, botaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
-            } 
+                MostrarMensagemErro(mensagemDeErroDaValidacaoDeTelaNome, tituloDoErroDeValidacao, botaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
+            }
+            else if (comboBoxEnumCadastro.SelectedIndex == decimal.Zero)
+            {
+                const string mensagemDeErroDaValidacaoDeTelaGenero = "Preencha o campo Gênero";
+
+                MostrarMensagemErro(mensagemDeErroDaValidacaoDeTelaGenero, tituloDoErroDeValidacao, botaoOkDaCaixaDeMensagem, iconeDeErroDaCaixaDeMensagem);
+            }
             else
             {
                 try
