@@ -12,7 +12,7 @@ namespace Cod3rsGrowth.Servico.Servicos
         private readonly IValidator<Jogo> _jogoValidador;
         private readonly IJogoRepositorio _jogoRepositorio;
 
-        public ServicoJogo(IValidator<Jogo> jogoValidador, IJogoRepositorio jogoRepositorio)
+        public ServicoJogo(IValidator<Jogo> jogoValidador, IJogoRepositorio jogoRepositorio, ServicoTesteDeJogo servicoTesteDeJogo)
         {
             _jogoRepositorio = jogoRepositorio;
             _jogoValidador = jogoValidador;
@@ -53,13 +53,22 @@ namespace Cod3rsGrowth.Servico.Servicos
 
         public void Deletar(int id)
         {
-            _jogoRepositorio.Deletar(id);
+            try
+            {
+                _jogoRepositorio.Deletar(id);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
         }
 
         public Jogo ObterPorId(int id)
         {
-            return _jogoRepositorio.ObterPorId(id)
-                ?? throw new Exception($"Erro ao obter jogo com id {id}");
+            var jogo = _jogoRepositorio.ObterPorId(id)
+                ?? throw new ArgumentNullException($"Erro ao obter jogo com id {id}");
+
+            return jogo;
         }
 
         public List<Jogo> ObterTodos(FiltroJogo? filtro = null)

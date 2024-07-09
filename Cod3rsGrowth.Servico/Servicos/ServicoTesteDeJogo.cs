@@ -59,8 +59,10 @@ namespace Cod3rsGrowth.Servico.Servicos
 
         public TesteDeJogo ObterPorId(int id)
         {
-            return _testeDeJogoRepositorio.ObterPorId(id)
-                ?? throw new Exception($"Erro ao obter teste de jogo com id {id}");
+            var testeDeJogo = _testeDeJogoRepositorio.ObterPorId(id)
+                ?? throw new ArgumentNullException($"Erro ao obter teste de jogo com id {id}");
+
+            return testeDeJogo;
         }
 
         public List<TesteDeJogo> ObterTodos(FiltroTesteDeJogo? filtro = null)
