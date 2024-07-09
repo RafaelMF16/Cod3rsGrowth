@@ -11,9 +11,9 @@ namespace Cod3rsGrowth.Forms
         private readonly ServicoTesteDeJogo _servicoTesteDeJogo;
         private FiltroJogo _filtroJogo = new FiltroJogo();
         private FiltroTesteDeJogo _filtroTesteDejogo = new FiltroTesteDeJogo();
-        const string tituloDaCaixaDeMensagem = "Erro";
-        const MessageBoxButtons botaoDaCaixaDeMensagem = MessageBoxButtons.OK;
-        const MessageBoxIcon iconeDaCaixaDeMensagem = MessageBoxIcon.Warning;
+        private const string TituloDaCaixaDeMensagem = "Erro";
+        private const MessageBoxButtons BotaoDaCaixaDeMensagem = MessageBoxButtons.OK;
+        private const MessageBoxIcon IconeDaCaixaDeMensagem = MessageBoxIcon.Warning;
 
         public TelaListagem(ServicoJogo servicoJogo, ServicoTesteDeJogo servicoTesteDeJogo)
         {
@@ -157,7 +157,7 @@ namespace Cod3rsGrowth.Forms
             const int colunaId = 0;
             const int colunaNome = 1;
 
-            var mensagemMostrada = MostrarMensagemDeErroTabelaJogo(tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
+            var mensagemMostrada = MostrarMensagemDeErroTabelaJogo(TituloDaCaixaDeMensagem, BotaoDaCaixaDeMensagem, IconeDaCaixaDeMensagem);
 
             if (mensagemMostrada == true)
                 return;
@@ -188,7 +188,7 @@ namespace Cod3rsGrowth.Forms
         {
             const int colunaId = 0;
 
-            var mensagemMostrada = MostrarMensagemDeErroTabelaTesteDeJogo(tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
+            var mensagemMostrada = MostrarMensagemDeErroTabelaTesteDeJogo(TituloDaCaixaDeMensagem, BotaoDaCaixaDeMensagem, IconeDaCaixaDeMensagem);
 
             if (mensagemMostrada == true)
                 return;
@@ -213,7 +213,7 @@ namespace Cod3rsGrowth.Forms
 
         private void EventoQueAbreTelaDeAtualizacaoDeJogo(object sender, EventArgs e)
         {
-            var mensagemMostrada = MostrarMensagemDeErroTabelaJogo(tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
+            var mensagemMostrada = MostrarMensagemDeErroTabelaJogo(TituloDaCaixaDeMensagem, BotaoDaCaixaDeMensagem, IconeDaCaixaDeMensagem);
 
             if (mensagemMostrada == true)
                 return;
@@ -230,7 +230,7 @@ namespace Cod3rsGrowth.Forms
 
         private void EventoQueAbreTelaDeAtualizacaoDeTesteDeJogo(object sender, EventArgs e)
         {
-            var mensagemMostrada = MostrarMensagemDeErroTabelaTesteDeJogo(tituloDaCaixaDeMensagem, botaoDaCaixaDeMensagem, iconeDaCaixaDeMensagem);
+            var mensagemMostrada = MostrarMensagemDeErroTabelaTesteDeJogo(TituloDaCaixaDeMensagem, BotaoDaCaixaDeMensagem, IconeDaCaixaDeMensagem);
 
             if (mensagemMostrada == true)
                 return;
