@@ -52,9 +52,9 @@ namespace Cod3rsGrowth.Testes.Mocks
             {
                 testesDeJogo = testesDeJogo.FindAll(t => t.Aprovado == filtro.Aprovado);
             }
-            if (filtro?.DataRealizacaoTeste != null)
+            if (filtro?.DataMinRealizacaoTeste != null)
             {
-                testesDeJogo = testesDeJogo.FindAll(t => t.DataRealizacaoTeste == filtro.DataRealizacaoTeste);
+                testesDeJogo = testesDeJogo.FindAll(t => t.DataRealizacaoTeste == filtro.DataMinRealizacaoTeste);
             }
 
             return testesDeJogo;

@@ -12,27 +12,27 @@ namespace Cod3rsGrowth.Servico.Validadores
         {
             _jogoRepositorio = jogoRepositorio;
 
-            ClassLevelCascadeMode = CascadeMode.Stop;
+            ClassLevelCascadeMode = CascadeMode.Continue;
 
             RuleFor(jogo => jogo.Nome)
                 .NotEmpty()
-                .WithMessage("O campo nome é obrigatório")
+                .WithMessage("O campo nome é obrigatório.")
                 .MaximumLength(100)
-                .WithMessage("Nome dever ter 100 caracteres ou menos");
+                .WithMessage("Nome dever ter 100 caracteres ou menos.");
 
             RuleFor(jogo => jogo)
                 .Must(jogo => _jogoRepositorio.VerificarSeTemNomeRepetido(jogo))
-                .WithMessage("Já existe um jogo com esse nome cadastrado");
+                .WithMessage("Já existe um jogo com esse nome cadastrado.");
 
             RuleFor(jogo => jogo.Genero)
                 .IsInEnum()
-                .WithMessage("O Gênero não é válido")
+                .WithMessage("O Gênero não é válido.")
                 .Must((jogo, genero) => validaEnum(jogo.Genero))
-                .WithMessage("O Gênero não é válido");
+                .WithMessage("O Gênero não é válido.");
 
             RuleFor(jogo => jogo.Preco)
                 .PrecisionScale(6, 2, true)
-                .WithMessage("Preco deve ter 4 digitos e duas casas decimais");
+                .WithMessage("Preco deve ter 4 digitos e duas casas decimais.");
         }
 
         private bool validaEnum(Genero genero)

@@ -16,10 +16,10 @@ namespace Cod3rsGrowth.Dominio.Migracao
                 .WithColumn("Id").AsInt64().PrimaryKey().Identity()
                 .WithColumn("NomeResponsavelDoTeste").AsString().NotNullable()
                 .WithColumn("Descricao").AsString()
-                .WithColumn("Nota").AsDecimal().NotNullable()
+                .WithColumn("Nota").AsDecimal(3, 1).NotNullable()
                 .WithColumn("Aprovado").AsBoolean().NotNullable()
                 .WithColumn("DataRealizacaoTeste").AsDateTime().NotNullable()
-                .WithColumn("IdJogo").AsInt64().ForeignKey();
+                .WithColumn("IdJogo").AsInt64().ForeignKey("Jogo", "Id").OnDeleteOrUpdate(System.Data.Rule.Cascade);
         }
     }
 }

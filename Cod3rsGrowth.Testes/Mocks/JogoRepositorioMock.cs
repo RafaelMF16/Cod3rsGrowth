@@ -52,9 +52,9 @@ namespace Cod3rsGrowth.Testes.Mocks
             {
                 jogos = jogos.FindAll(j => j.Genero == filtro.Genero);
             }
-            if (filtro?.Preco != null)
+            if (filtro?.PrecoMin != null)
             {
-                jogos = jogos.FindAll(j => j.Preco == filtro.Preco);
+                jogos = jogos.FindAll(j => j.Preco == filtro.PrecoMin);
             }
 
             return jogos;
@@ -62,16 +62,7 @@ namespace Cod3rsGrowth.Testes.Mocks
 
         public bool VerificarSeTemNomeRepetido(Jogo jogo)
         {
-            var jogoComNomeRepetido = _instancia.Find(j => j.Nome == jogo.Nome);
-
-            if (jogoComNomeRepetido != null)
-            {
-                if (jogoComNomeRepetido.Id != jogo.Id)
-                {
-                    return false;
-                }
-            }
-            return true;
+            return !(_instancia.Exists(j => j.Nome == jogo.Nome && j.Id != jogo.Id));
         }
     }
 }

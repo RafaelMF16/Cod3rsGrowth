@@ -1,26 +1,16 @@
 ﻿using Cod3rsGrowth.Dominio.Migracao;
-using Cod3rsGrowth.Infra;
 using FluentMigrator.Runner;
-using LinqToDB;
-using LinqToDB.AspNet;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cod3rsGrowth.Forms
+namespace Cod3rsGrowth.Forms.Injecao
 {
-    public static class ModuloDeInjecao
+    public static class ModuloDeInjecaoMigracoes
     {
-        public static IConfiguration? Configuration { get; }
-
-        public static void AdicionarServicosAoEscopo(ServiceCollection servicos)
+        public static void AdicionarMigracoesEBancoDeDadosAoEscopo(this ServiceCollection servicos)
         {
             const string nomeVariavelAmbiente = "ConnectionString";
             var stringConexao = Environment.GetEnvironmentVariable(nomeVariavelAmbiente)
                 ?? throw new Exception($"Variavel de ambiente [{nomeVariavelAmbiente}] não encontrada");
-
-            servicos.AddLinqToDBContext<DbCod3rsGrowth>((provider, options)
-                => options
-                .UseSqlServer(Configuration.GetConnectionString(stringConexao)));
 
             servicos.AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
