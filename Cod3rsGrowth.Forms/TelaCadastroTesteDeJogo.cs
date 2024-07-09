@@ -47,7 +47,7 @@ namespace Cod3rsGrowth.Forms
             const string tituloDaCaixaDeMensagem = "Erro de validação";
             const MessageBoxIcon iconeDeErroDaCaixaDeMensagem = MessageBoxIcon.Error;
 
-            if (ValidarTela() == false)
+            if (!ValidarTela())
                 return;
 
             try
