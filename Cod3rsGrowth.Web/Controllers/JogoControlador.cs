@@ -1,4 +1,5 @@
-﻿using Cod3rsGrowth.Servico.Servicos;
+﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Servico.Servicos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cod3rsGrowth.Web.Controllers
@@ -28,9 +29,11 @@ namespace Cod3rsGrowth.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar()
+        public IActionResult Criar([FromBody] Jogo jogo)
         {
-            throw new NotImplementedException();
+            _servicoJogo.Adicionar(jogo);
+
+            return Ok();
         }
 
         [HttpPatch]
