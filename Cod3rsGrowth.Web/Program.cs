@@ -1,19 +1,27 @@
+using Cod3rsGrowth.Web.Injecao;
+using FluentMigrator.Runner;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var servicos = new ServiceCollection();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.AdicionarServicosAoEscopo();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var escopo = app.Services.CreateScope())
+{
+    var executarMigracao = escopo.ServiceProvider.GetRequiredService<IMigrationRunner>();
+    executarMigracao.MigrateUp();
 }
 
 app.UseHttpsRedirection();
