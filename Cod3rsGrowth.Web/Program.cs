@@ -3,6 +3,8 @@ using FluentMigrator.Runner;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var loggerFactory = new LoggerFactory();
+
 var servicos = new ServiceCollection();
 
 builder.Services.AddControllers();
@@ -17,6 +19,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UsarManipuladorDeExcecoes(app.Services.GetRequiredService<ILoggerFactory>());
 
 using (var escopo = app.Services.CreateScope())
 {
