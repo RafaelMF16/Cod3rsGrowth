@@ -17,7 +17,7 @@ namespace Cod3rsGrowth.Web.Controllers
                 ?? throw new Exception($"Erro ao obter o serviço {typeof(ServicoJogo)}");
         }
 
-        [HttpGet("FiltroJogo")]
+        [HttpGet]
         public IActionResult ObterTodos([FromQuery] FiltroJogo filtroJogo)
         {
             var listaDeJogosDoBanco = _servicoJogo.ObterTodos(filtroJogo);
