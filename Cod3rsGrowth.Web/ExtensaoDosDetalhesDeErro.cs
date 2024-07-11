@@ -5,18 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
-public static class ProblemDetailsExtensions
+public static class ExtensaoDosDetalhesDeErro
 {
-    public static void UseProblemDetailsExceptionHandler(this IApplicationBuilder app, ILoggerFactory loggerFactory)
+    public static void TratarExcecoes(this IApplicationBuilder app, ILoggerFactory loggerFactory)
     {
         app.UseExceptionHandler(builder =>
         {
             builder.Run(async context =>
             {
-                var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
-                if (exceptionHandlerFeature != null)
+                var TratadorDeExcecoes = context.Features.Get<IExceptionHandlerFeature>();
+                if (TratadorDeExcecoes != null)
                 {
-                    var exception = exceptionHandlerFeature.Error;
+                    var exception = TratadorDeExcecoes.Error;
                     var problemDetails = new ProblemDetails
                     {
                         Instance = context.Request.HttpContext.Request.Path
@@ -43,7 +43,7 @@ public static class ProblemDetailsExtensions
                     else
                     {
                         var logger = loggerFactory.CreateLogger("GlobalExceptionHandler");
-                        logger.LogError($"Erro inesperado: {exceptionHandlerFeature.Error}");
+                        logger.LogError($"Erro inesperado: {TratadorDeExcecoes.Error}");
                         problemDetails.Title = "Erro inesperado";
                         problemDetails.Status = StatusCodes.Status500InternalServerError;
                         problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1";
