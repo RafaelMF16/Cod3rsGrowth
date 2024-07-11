@@ -7,22 +7,22 @@ using System.Diagnostics;
 
 public static class ExtensaoDosDetalhesDeErro
 {
-    public static void TratarExcecoes(this IApplicationBuilder app, ILoggerFactory loggerFactory)
+    public static void UsarManipuladorDeExcecoes(this IApplicationBuilder app, ILoggerFactory loggerFactory)
     {
         app.UseExceptionHandler(builder =>
         {
             builder.Run(async context =>
             {
-                var tratadorDeExcecoes = context.Features.Get<IExceptionHandlerFeature>();
-                if (tratadorDeExcecoes != null)
+                var manipuladorDeExcecoes = context.Features.Get<IExceptionHandlerFeature>();
+                if (manipuladorDeExcecoes != null)
                 {
-                    var excecao = tratadorDeExcecoes.Error;
+                    var erroDoManipuladorDaExcecao = manipuladorDeExcecoes.Error;
                     var detalhesDeErro = new ProblemDetails
                     {
                         Instance = context.Request.HttpContext.Request.Path
                     };
 
-                    if (excecao is ValidationException validationException)
+                    if (erroDoManipuladorDaExcecao is ValidationException validationException)
                     {
                         detalhesDeErro.Title = "Erro de validação";
                         detalhesDeErro.Status = StatusCodes.Status400BadRequest;
@@ -32,7 +32,7 @@ public static class ExtensaoDosDetalhesDeErro
                         .GroupBy(nomePropriedade => nomePropriedade.PropertyName, mensagemErro => mensagemErro.ErrorMessage)
                         .ToDictionary(x => x.Key, x => x.ToList());
                     }
-                    else if (excecao is SqlException sqlException)
+                    else if (erroDoManipuladorDaExcecao is SqlException sqlException)
                     {
                         detalhesDeErro.Title = "Erro no banco de dados";
                         detalhesDeErro.Status = StatusCodes.Status500InternalServerError;
@@ -43,12 +43,12 @@ public static class ExtensaoDosDetalhesDeErro
                     else
                     {
                         var logger = loggerFactory.CreateLogger("GlobalExceptionHandler");
-                        logger.LogError($"Erro inesperado: {tratadorDeExcecoes.Error}");
+                        logger.LogError($"Erro inesperado: {manipuladorDeExcecoes.Error}");
                         detalhesDeErro.Title = "Erro inesperado";
                         detalhesDeErro.Status = StatusCodes.Status500InternalServerError;
                         detalhesDeErro.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1";
-                        detalhesDeErro.Detail = excecao.Demystify().ToString();
-                        detalhesDeErro.Extensions["Erro inesperado"] = excecao.Message;
+                        detalhesDeErro.Detail = erroDoManipuladorDaExcecao.Demystify().ToString();
+                        detalhesDeErro.Extensions["Erro inesperado"] = erroDoManipuladorDaExcecao.Message;
                     }
                     context.Response.StatusCode = detalhesDeErro.Status.Value;
                     context.Response.ContentType = "application/problem+json";

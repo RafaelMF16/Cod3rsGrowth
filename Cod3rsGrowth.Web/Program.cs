@@ -20,7 +20,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.TratarExcecoes(app.Services.GetRequiredService<ILoggerFactory>());
+app.UsarManipuladorDeExcecoes(app.Services.GetRequiredService<ILoggerFactory>());
 
 using (var escopo = app.Services.CreateScope())
 {
