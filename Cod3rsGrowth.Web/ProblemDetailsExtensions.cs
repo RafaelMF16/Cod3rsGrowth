@@ -44,10 +44,11 @@ public static class ProblemDetailsExtensions
                     {
                         var logger = loggerFactory.CreateLogger("GlobalExceptionHandler");
                         logger.LogError($"Erro inesperado: {exceptionHandlerFeature.Error}");
-                        problemDetails.Title = exception.Message;
+                        problemDetails.Title = "Erro inesperado";
                         problemDetails.Status = StatusCodes.Status500InternalServerError;
                         problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1";
                         problemDetails.Detail = exception.Demystify().ToString();
+                        problemDetails.Extensions["Erro inesperado"] = exception.Message;
                     }
                     context.Response.StatusCode = problemDetails.Status.Value;
                     context.Response.ContentType = "application/problem+json";
