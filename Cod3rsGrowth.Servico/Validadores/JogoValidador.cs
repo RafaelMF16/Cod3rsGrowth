@@ -17,7 +17,7 @@ namespace Cod3rsGrowth.Servico.Validadores
             RuleFor(jogo => jogo.Nome)
                 .NotEmpty()
                 .WithMessage("O campo nome é obrigatório.")
-                .MaximumLength(10)
+                .MaximumLength(100)
                 .WithMessage("Nome dever ter 100 caracteres ou menos.");
 
             RuleFor(jogo => jogo)

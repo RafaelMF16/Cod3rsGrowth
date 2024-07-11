@@ -26,6 +26,7 @@ public static class ProblemDetailsExtensions
                     {
                         problemDetails.Title = "Erro de validação";
                         problemDetails.Status = StatusCodes.Status400BadRequest;
+                        problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1";
                         problemDetails.Detail = validationException.StackTrace;
                         problemDetails.Extensions["Erros de validação"] = validationException.Errors
                         .GroupBy(nomePropriedade => nomePropriedade.PropertyName, mensagemErro => mensagemErro.ErrorMessage)
@@ -35,6 +36,7 @@ public static class ProblemDetailsExtensions
                     {
                         problemDetails.Title = "Erro no banco de dados";
                         problemDetails.Status = StatusCodes.Status500InternalServerError;
+                        problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1";
                         problemDetails.Detail = sqlException.StackTrace;
                         problemDetails.Extensions["Erro no banco de dados"] = sqlException.Message;
                     }
@@ -44,6 +46,7 @@ public static class ProblemDetailsExtensions
                         logger.LogError($"Erro inesperado: {exceptionHandlerFeature.Error}");
                         problemDetails.Title = exception.Message;
                         problemDetails.Status = StatusCodes.Status500InternalServerError;
+                        problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1";
                         problemDetails.Detail = exception.Demystify().ToString();
                     }
                     context.Response.StatusCode = problemDetails.Status.Value;
