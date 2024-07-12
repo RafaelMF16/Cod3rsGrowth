@@ -43,9 +43,11 @@ namespace Cod3rsGrowth.Web.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Editar()
+        public IActionResult Editar([FromBody] TesteDeJogo testeDeJogo)
         {
-            throw new NotImplementedException();
+            _servicoTesteDeJogo.Atualizar(testeDeJogo);
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
