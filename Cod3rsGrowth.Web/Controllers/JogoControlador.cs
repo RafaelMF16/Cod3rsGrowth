@@ -36,7 +36,9 @@ namespace Cod3rsGrowth.Web.Controllers
         [HttpPost]
         public IActionResult Criar([FromBody] Jogo jogo)
         {
-            throw new NotImplementedException();
+            _servicoJogo.Adicionar(jogo);
+
+            return Ok();
         }
 
         [HttpPatch]
