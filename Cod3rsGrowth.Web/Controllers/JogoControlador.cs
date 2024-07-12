@@ -42,9 +42,11 @@ namespace Cod3rsGrowth.Web.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Editar()
+        public IActionResult Editar([FromBody] Jogo jogo)
         {
-            throw new NotImplementedException();
+            _servicoJogo.Atualizar(jogo);
+
+            return Ok();
         }
 
         [HttpDelete("{id}")]
