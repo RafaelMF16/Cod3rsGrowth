@@ -1,4 +1,5 @@
-﻿using Cod3rsGrowth.Dominio.Filtros;
+﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Dominio.Filtros;
 using Cod3rsGrowth.Servico.Servicos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,9 +35,11 @@ namespace Cod3rsGrowth.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar()
+        public IActionResult Criar([FromBody] TesteDeJogo testeDeJogo)
         {
-            throw new NotImplementedException();
+            _servicoTesteDeJogo.Adicionar(testeDeJogo);
+
+            return Ok();
         }
 
         [HttpPatch]
