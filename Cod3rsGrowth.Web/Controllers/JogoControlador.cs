@@ -46,7 +46,7 @@ namespace Cod3rsGrowth.Web.Controllers
         {
             _servicoJogo.Atualizar(jogo);
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
