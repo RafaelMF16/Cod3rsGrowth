@@ -52,7 +52,9 @@ namespace Cod3rsGrowth.Web.Controllers
         [HttpDelete("{id}")]
         public IActionResult Apagar(int id)
         {
-            throw new NotImplementedException();
+            _servicoJogo.Deletar(id);
+
+            return NoContent();
         }
     }
 }
