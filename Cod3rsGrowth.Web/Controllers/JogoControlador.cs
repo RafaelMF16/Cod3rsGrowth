@@ -1,4 +1,5 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Dominio.Filtros;
 using Cod3rsGrowth.Servico.Servicos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,11 @@ namespace Cod3rsGrowth.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult ObterTodos()
+        public IActionResult ObterTodos([FromQuery] FiltroJogo filtroJogo)
         {
-            throw new NotImplementedException();
+            var listaDeJogosDoBanco = _servicoJogo.ObterTodos(filtroJogo);
+
+            return Ok(listaDeJogosDoBanco);
         }
 
         [HttpGet("{id}")]
