@@ -28,7 +28,9 @@ namespace Cod3rsGrowth.Web.Controllers
         [HttpGet("{id}")]
         public IActionResult ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            var jogoDoBanco = _servicoJogo.ObterPorId(id);
+
+            return Ok(jogoDoBanco);
         }
 
         [HttpPost]
