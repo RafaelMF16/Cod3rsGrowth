@@ -50,7 +50,7 @@ namespace Cod3rsGrowth.Web.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Apagar(int id)
+        public IActionResult Remover(int id)
         {
             _servicoJogo.Deletar(id);
 
