@@ -1,4 +1,5 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Dominio.Filtros;
 using Cod3rsGrowth.Servico.Servicos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,33 +18,43 @@ namespace Cod3rsGrowth.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult ObterTodos()
+        public IActionResult ObterTodos([FromQuery] FiltroJogo filtroJogo)
         {
-            throw new NotImplementedException();
+            var listaDeJogosDoBanco = _servicoJogo.ObterTodos(filtroJogo);
+
+            return Ok(listaDeJogosDoBanco);
         }
 
         [HttpGet("{id}")]
         public IActionResult ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            var jogoDoBanco = _servicoJogo.ObterPorId(id);
+
+            return Ok(jogoDoBanco);
         }
 
         [HttpPost]
         public IActionResult Criar([FromBody] Jogo jogo)
         {
-            throw new NotImplementedException();
+            _servicoJogo.Adicionar(jogo);
+
+            return Ok();
         }
 
         [HttpPatch]
-        public IActionResult Editar()
+        public IActionResult Editar([FromBody] Jogo jogo)
         {
-            throw new NotImplementedException();
+            _servicoJogo.Atualizar(jogo);
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Apagar(int id)
+        public IActionResult Remover(int id)
         {
-            throw new NotImplementedException();
+            _servicoJogo.Deletar(id);
+
+            return NoContent();
         }
     }
 }
