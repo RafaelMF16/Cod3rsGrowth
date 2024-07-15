@@ -51,9 +51,11 @@ namespace Cod3rsGrowth.Web.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Apagar(int id)
+        public IActionResult Remover(int id)
         {
-            throw new NotImplementedException();
+            _servicoTesteDeJogo.Deletar(id);
+
+            return NoContent();
         }
     }
 }
