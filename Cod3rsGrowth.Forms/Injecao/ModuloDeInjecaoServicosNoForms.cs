@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cod3rsGrowth.Forms.Injecao
 {
-    public static class ModuloDeInjecaoServicos
+    public static class ModuloDeInjecaoServicosNoForms
     {
         public static void AdicionarServicosAoEscopo(this ServiceCollection servicos)
         {
