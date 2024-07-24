@@ -5,9 +5,4 @@
    <Button
       text="{i18n>textoDoBotaoQueMostraOla}"
       press=".onShowHello"/>
-   <Input
-      value="{/recipient/name}"
-      description="Olá {/recipient/name}"
-      valueLiveUpdate="true"
-      width="60%"/>
 </mvc:View>

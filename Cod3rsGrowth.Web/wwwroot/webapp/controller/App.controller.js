@@ -8,14 +8,6 @@ sap.ui.define([
  
     return Controller.extend("ui5.codersgrowth.controller.App", {
       onInit() {
-          const oData = {
-             recipient : {
-                name : "Mundo"
-             }
-          };
-          const oModel = new JSONModel(oData);
-          this.getView().setModel(oModel);
- 
           const i18nModel = new ResourceModel({
              bundleName: "ui5.codersgrowth.i18n.i18n"
           });
@@ -24,8 +16,7 @@ sap.ui.define([
  
        onShowHello() {
           const oBundle = this.getView().getModel("i18n").getResourceBundle();
-          const sRecipient = this.getView().getModel().getProperty("/recipient/name");
-          const sMsg = oBundle.getText("mensagemDeOla", [sRecipient]);
+          const sMsg = oBundle.getText("mensagemDeOla");
  
           MessageToast.show(sMsg);
        }
