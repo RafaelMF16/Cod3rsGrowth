@@ -9,7 +9,7 @@ sap.ui.require(["sap/ui/core/Core"], async(Core) => {
 		"ui5/codersgrowth/localService/mockserver",
 		"ui5/codersgrowth/test/integration/NavigationJourney"
 	], (mockserver) => {
-		// initialize the mock server
+		
 		mockserver.init();
 		QUnit.start();
 	});
