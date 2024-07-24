@@ -6,7 +6,7 @@ sap.ui.define([
  ], (Controller, MessageToast, JSONModel, ResourceModel) => {
     "use strict";
  
-    return Controller.extend("ui5.CodersGrowth.controller.App", {
+    return Controller.extend("ui5.codersgrowth.controller.App", {
       onInit() {
           const oData = {
              recipient : {
@@ -17,7 +17,7 @@ sap.ui.define([
           this.getView().setModel(oModel);
  
           const i18nModel = new ResourceModel({
-             bundleName: "ui5.CodersGrowth.i18n.i18n"
+             bundleName: "ui5.codersgrowth.i18n.i18n"
           });
           this.getView().setModel(i18nModel, "i18n");
        },
@@ -25,7 +25,7 @@ sap.ui.define([
        onShowHello() {
           const oBundle = this.getView().getModel("i18n").getResourceBundle();
           const sRecipient = this.getView().getModel().getProperty("/recipient/name");
-          const sMsg = oBundle.getText("helloMsg", [sRecipient]);
+          const sMsg = oBundle.getText("mensagemDeOla", [sRecipient]);
  
           MessageToast.show(sMsg);
        }

@@ -6,8 +6,8 @@ sap.ui.require(["sap/ui/core/Core"], async(Core) => {
 	await Core.ready();
 
 	sap.ui.require([
-		"ui5/CodersGrowth/localService/mockserver",
-		"ui5/CodersGrowth/test/integration/NavigationJourney"
+		"ui5/codersgrowth/localService/mockserver",
+		"ui5/codersgrowth/test/integration/NavigationJourney"
 	], (mockserver) => {
 		// initialize the mock server
 		mockserver.init();
