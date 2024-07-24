@@ -1,0 +1,8 @@
+{
+    "name": "ui5.CodersGrowth",
+    "version": "1.0.0",
+    "description": "The UI5 walkthrough application",
+    "scripts": {
+        "start": "ui5 serve -o index.html"
+    }
+  }
