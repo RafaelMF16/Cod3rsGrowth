@@ -1,8 +1,0 @@
-<mvc:View
-   controllerName="ui5.codersgrowth.controller.TelaNotFound"
-   xmlns="sap.m"
-   xmlns:mvc="sap.ui.core.mvc">
-   <Button
-      text="{i18n>textoDoBotaoQueVoltaParaPaginaInicial}"
-      press=".onShowHello"/>
-</mvc:View>
