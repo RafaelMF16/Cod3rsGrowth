@@ -65,12 +65,12 @@
 				"jogo": {
 					"id": "jogo",
 					"name": "Jogo",
-					"level" : 1	
+					"level" : 1
             	},
 				"paginaNaoEncontrada": {
 					"id": "paginaNaoEncontrada",
 					"name": "PaginaNaoEncontrada",
-					"transition":"show"
+					"transition":"slide"
 				}
 			}
       	}
