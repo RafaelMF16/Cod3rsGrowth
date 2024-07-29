@@ -4,7 +4,7 @@
    xmlns:mvc="sap.ui.core.mvc">
    <Page 
       showNavButton="true"
-      title="{i18n>paginaNaoEncontrada.titulo}"
+      title="{i18n>paginaNaoEncontradaTitulo}"
       navButtonPress=".onNavBack"
       titleAlignment="Center"> 
       <headerContent>
@@ -12,13 +12,13 @@
             <Button
                press=".voltarParaPaginaInicial"
                icon="sap-icon://home"
-               text="{i18n>textoDoBotaoQueVoltaParaPaginaInicial}"/>
+               text="{i18n>textoBotaoQueVoltaParaPaginaInicial}"/>
          </Toolbar>
       </headerContent>
       <MessagePage
          showHeader="false"
-         text="{i18n>paginaNaoEncontrada.texto}"
-         description="{i18n>paginaNaoEncontrada.descricao}">
+         text="{i18n>paginaNaoEncontradaTexto}"
+         description="{i18n>paginaNaoEncontradaDescricao}">
       </MessagePage>
    </Page>
 </mvc:View>
