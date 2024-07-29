@@ -4,7 +4,7 @@
    xmlns:mvc="sap.ui.core.mvc">
    <Page 
       showNavButton="true"
-      title="{i18n>paginaNaoEncontradaTitulo}"
+      title="{i18n>paginaNaoEncontrada.titulo}"
       navButtonPress=".onNavBack"
       titleAlignment="Center"> 
       <headerContent>
@@ -17,8 +17,8 @@
       </headerContent>
       <MessagePage
          showHeader="false"
-         text="{i18n>paginaNaoEncontradaTexto}"
-         description="{i18n>paginaNaoEncontradaDescricao}">
+         text="{i18n>paginaNaoEncontrada.texto}"
+         description="{i18n>paginaNaoEncontrada.descricao}">
       </MessagePage>
    </Page>
 </mvc:View>
