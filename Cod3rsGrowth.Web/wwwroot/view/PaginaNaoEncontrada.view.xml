@@ -2,19 +2,21 @@
    controllerName="ui5.codersgrowth.controller.PaginaNaoEncontrada"
    xmlns="sap.m"
    xmlns:mvc="sap.ui.core.mvc">
-   <Page> 
-      <customHeader>
-         <Toolbar>
-            <Button 
+   <Page 
+      showNavButton="true"
+      title="{i18n>paginaNaoEncontrada.titulo}"
+      navButtonPress=".onNavBack"
+      titleAlignment="Center"> 
+      <headerContent>
+         <Toolbar >
+            <Button
                press=".voltarParaPaginaInicial"
                icon="sap-icon://home"
                text="{i18n>textoDoBotaoQueVoltaParaPaginaInicial}"/>
          </Toolbar>
-      </customHeader>
+      </headerContent>
       <MessagePage
-         showNavButton="true"
-         title="{i18n>paginaNaoEncontrada.titulo}"
-         navButtonPress=".onNavBack"
+         showHeader="false"
          text="{i18n>paginaNaoEncontrada.texto}"
          description="{i18n>paginaNaoEncontrada.descricao}">
       </MessagePage>
