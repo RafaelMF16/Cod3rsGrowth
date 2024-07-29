@@ -1,18 +1,18 @@
 sap.ui.define([
    "sap/ui/core/UIComponent"
 ], function (UIComponent) {
-   "use strict";
+    "use strict";
 
-   return UIComponent.extend("ui5.codersgrowth.Component", {
+    return UIComponent.extend("ui5.codersgrowth.Component", {
 
-       metadata: {
-           manifest: "json"
-       },
+        metadata: {
+        manifest: "json"
+        },
 
-       init: function () {
-           UIComponent.prototype.init.apply(this, arguments);
+        init: function () {
+            UIComponent.prototype.init.apply(this, arguments);
 
-           this.getRouter().initialize();
-       }
-   });
+            this.getRouter().initialize();
+        }
+    });
 });
