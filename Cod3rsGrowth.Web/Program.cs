@@ -1,15 +1,20 @@
 using Cod3rsGrowth.Web.Injecao;
 using FluentMigrator.Runner;
+using Microsoft.Extensions.FileProviders;
+
+var autorizacoesDeOrigens = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
-var loggerFactory = new LoggerFactory();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: autorizacoesDeOrigens,
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7200");
+        });
+});
 
-var servicos = new ServiceCollection();
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.AdicionarServicosAoEscopo();
 
 var app = builder.Build();
@@ -27,6 +32,22 @@ using (var escopo = app.Services.CreateScope())
     var executarMigracao = escopo.ServiceProvider.GetRequiredService<IMigrationRunner>();
     executarMigracao.MigrateUp();
 }
+
+app.UseStaticFiles(new StaticFileOptions 
+{
+    ServeUnknownFileTypes = true 
+});
+
+app.UseFileServer(new FileServerOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
+    EnableDirectoryBrowsing = true
+});
+
+app.UseRouting();
+
+app.UseCors(autorizacoesDeOrigens);
 
 app.UseHttpsRedirection();
 

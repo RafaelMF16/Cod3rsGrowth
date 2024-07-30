@@ -30,6 +30,9 @@ namespace Cod3rsGrowth.Web.Injecao
             builder.Services.AddScoped<IValidator<TesteDeJogo>, TesteDeJogoValidador>();
             builder.Services.AddScoped<IJogoRepositorio, JogoRepositorio>();
             builder.Services.AddScoped<ITesteDeJogoRepositorio, TesteDeJogoRepositorio>();
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             builder.Services.AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb

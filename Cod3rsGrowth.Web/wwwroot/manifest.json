@@ -1,0 +1,78 @@
+{
+	"_version": "1.58.0",
+	"sap.app": {
+		"id": "ui5.codersgrowth",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{aplicativoTitulo}}",
+		"description": "{{aplicativoDescricao}}",
+		"type": "application",
+		"applicationVersion": {
+			"version": "1.0.0"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"dependencies": {
+			"minUI5Version": "1.108.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "ui5.codersgrowth.i18n.i18n",
+					"supportedLocales": [""],
+					"fallbackLocale": ""
+				}
+			}
+		},
+		"rootView": {
+			"viewName": "ui5.codersgrowth.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "app"
+		},
+		"routing": {
+         	"config": {
+				"routerClass": "sap.m.routing.Router",
+				"type": "View",
+				"viewType": "XML",
+				"path": "ui5.codersgrowth.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"transition": "slide",
+				"bypassed": {
+					"target": "paginaNaoEncontrada"
+				},
+				"async": true
+         	},
+         	"routes": [{
+				"pattern": "",
+				"name": "appJogo",
+				"target": "jogo"
+         	}],
+         	"targets": {
+				"jogo": {
+					"id": "jogo",
+					"name": "Jogo",
+					"level" : 1
+            	},
+				"paginaNaoEncontrada": {
+					"id": "paginaNaoEncontrada",
+					"name": "PaginaNaoEncontrada",
+					"transition":"slide"
+				}
+			}
+      	}
+	}
+}
