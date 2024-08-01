@@ -9,6 +9,7 @@ using LinqToDB.AspNet;
 using LinqToDB;
 using Cod3rsGrowth.Dominio.Migracao;
 using FluentMigrator.Runner;
+using System.Text.Json.Serialization;
 
 namespace Cod3rsGrowth.Web.Injecao
 {
@@ -33,6 +34,10 @@ namespace Cod3rsGrowth.Web.Injecao
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddMvc().AddJsonOptions(x =>
+            {
+                x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
 
             builder.Services.AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
