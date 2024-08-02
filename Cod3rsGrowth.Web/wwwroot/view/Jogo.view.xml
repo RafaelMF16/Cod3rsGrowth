@@ -36,42 +36,22 @@
                                 titleStyle="H3"/>
                             <ToolbarSpacer/>
                             <SearchField 
-                                width="20%"
-                                liveChange=".onFiltrarJogos">
+                                width="25%"
+                                liveChange=".pegarValorDoCampoDePesquisa">
                                 <layoutData>
                                     <OverflowToolbarLayoutData 
                                         priority="NeverOverflow"/>
                                 </layoutData>
                             </SearchField>
                             <ToolbarSeparator />
-                            <ComboBox placeholder="{i18n>comboBoxGenero}">
-                                
-                            </ComboBox>
-                            <ToolbarSeparator />
-                            <Label 
-                                text="{i18n>labelPrecoMin}"/>
-                            <Input
-                                type="Number"
-                                width="10%"
-                                liveChange=".onFiltrarJogos"/>
-                            
-                            <Label 
-                                text="{i18n>labelPrecoMax}"/>
-                            <Input
-                                type="Number"
-                                width="10%"
-                                liveChange=".onFiltrarJogos"/>
-                            <Button 
-                                text="{i18n>botaoFiltrar}"
+                            <Button
                                 icon="sap-icon://filter"
-                                iconFirst="false"
                                 type="Ghost"
-                                press=".onAbrirDialogo"/>
+                                press=".abrirFiltroDialog"/>
                             <ToolbarSeparator />
-                            
                             <Button 
                                 text="{i18n>botaoAdicionar}"
-                                icon="sap-icon://add"
+                                icon="sap-icon://sys-add"
                                 type="Ghost"
                                 iconFirst="false"/>
                         </OverflowToolbar>
@@ -111,7 +91,10 @@
                                 <Text
                                     text="{listaJogos>genero}"/>
                                 <ObjectNumber 
-                                    number="R$ {listaJogos>preco}"/>
+                                    number="{
+                                        path: 'listaJogos>preco',
+                                        formatter: '.formatter.formatarJogosGratis'
+                                    }"/>
                             </cells>
                         </ColumnListItem>
                     </items>
