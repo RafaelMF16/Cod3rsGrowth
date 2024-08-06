@@ -5,16 +5,17 @@ sap.ui.define([
 ], (BaseController, JSONModel, formatter) => {
    "use strict";
 
-   let valorFiltroNome = "";
-   let valorFiltroPrecoMin = "";
-   let valorFiltroPrecoMax = "";
-   let valorFiltroGenero = "";
+   var valorFiltroNome = "";
+   var valorFiltroPrecoMin = "";
+   var valorFiltroPrecoMax = "";
+   var valorFiltroGenero = "";
 
    return BaseController.extend("ui5.codersgrowth.controller.Jogo", {
       formatter: formatter,
 
       onInit: function () {
          const urlObterTodos = "api/JogoControlador";
+         const urlObterGenero = "api/GeneroControlador";
 
          fetch(urlObterTodos).then(jogos => jogos.json()).then(jogos => {
             const dataModel = new JSONModel();
@@ -22,6 +23,19 @@ sap.ui.define([
             
             this.getView().setModel(dataModel, "listaJogos")
          });
+
+         fetch(urlObterGenero).then(generos => generos.json()).then(generos => {
+            const dataModel = new JSONModel();
+            dataModel.setData(generos);
+            
+            this.getView().setModel(dataModel, "listaGenero")
+         });
+      },
+
+      pegarValorComboBox: function (oEvent) {
+         valorFiltroGenero = oEvent.getSource().getSelectedKey();
+
+         this.filtrarJogos();
       },
 
       pegarValorDoCampoDePesquisa: function (oEvent) {
@@ -32,14 +46,18 @@ sap.ui.define([
 
       pegarValorDoCampoPrecoMin: function (oEvent) {
          valorFiltroPrecoMin = oEvent.getSource().getValue();
+         
+         this.filtrarJogos();
       },
 
       pegarValorDoCampoPrecoMax: function (oEvent) {
          valorFiltroPrecoMax = oEvent.getSource().getValue();
+
+         this.filtrarJogos();
       },
 
       filtrarJogos: function () {
-         let urlObterTodos = `api/JogoControlador?Nome=${valorFiltroNome}&PrecoMin=${valorFiltroPrecoMin}&PrecoMax=${valorFiltroPrecoMax}&Genero=${valorFiltroGenero}`;
+         var urlObterTodos = `api/JogoControlador?Nome=${valorFiltroNome}&PrecoMin=${valorFiltroPrecoMin}&PrecoMax=${valorFiltroPrecoMax}&Genero=${valorFiltroGenero}`;
 
          fetch(urlObterTodos).then(jogos => jogos.json()).then(jogos => {
             const dataModel = new JSONModel();
@@ -48,24 +66,6 @@ sap.ui.define([
 
             this.getView().setModel(dataModel, "listaJogos");
          });
-      },
-
-      async abrirFiltroDialog() {
-         this.oDialog ??= await this.loadFragment({
-            name: "ui5.codersgrowth.view.FiltroDialog"
-        });
-
-        this.oDialog.open();
-      },
-
-      apertarFiltrarFiltroDialog: function () {
-         this.filtrarJogos();
-
-         this.oDialog.close();
-      },
-
-      apertarFecharFiltroDialog: function () {
-         this.oDialog.close();
-      },
+      }
    });
 });
