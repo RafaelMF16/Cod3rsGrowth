@@ -4,8 +4,9 @@ sap.ui.define([], () => {
     return {
         formatarJogosGratis(preco) {
             const oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-
-            if (preco == 0) {
+            const menorValor = 0;
+            
+            if (preco === menorValor) {
                 return oResourceBundle.getText("jogoComPrecoZero");
             }
 
@@ -14,8 +15,9 @@ sap.ui.define([], () => {
 
         formatarValorPadraoComboBox(descricao) {
             const oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const enumNaoDefinido = "Não definido";
 
-            if (descricao == "Padrão caso enum não seja definido"){
+            if (descricao === enumNaoDefinido){
                 return oResourceBundle.getText("todosOsGeneros");
             }
 

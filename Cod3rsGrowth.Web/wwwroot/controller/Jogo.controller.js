@@ -1,8 +1,10 @@
 sap.ui.define([
    "ui5/codersgrowth/controller/BaseController",
    "sap/ui/model/json/JSONModel",
-   "../model/formatter"
-], (BaseController, JSONModel, formatter) => {
+   "../model/formatter",
+   "sap/m/MessageBox",
+   "sap/ui/core/BusyIndicator"
+], (BaseController, JSONModel, formatter, MessageBox, BusyIndicator) => {
    "use strict";
 
    var valorFiltroNome = "";
@@ -16,13 +18,19 @@ sap.ui.define([
       onInit: function () {
          const urlObterTodos = "api/JogoControlador";
          const urlObterGenero = "api/GeneroControlador";
+         const statusOk = 200;
+         
+         fetch(urlObterTodos).then(respostaApi => respostaApi.json()).then(respostaApi => {
+            if (respostaApi.Status && respostaApi.Status !== statusOk) {
+               this.mostrarMensagemDeErro(respostaApi);
+            } 
+            else {
+               const dataModel = new JSONModel();
+               dataModel.setData(respostaApi);
 
-         fetch(urlObterTodos).then(jogos => jogos.json()).then(jogos => {
-            const dataModel = new JSONModel();
-            dataModel.setData(jogos);
-            
-            this.getView().setModel(dataModel, "listaJogos")
-         });
+               this.getView().setModel(dataModel, "listaJogos");
+            }
+         })
 
          fetch(urlObterGenero).then(generos => generos.json()).then(generos => {
             const dataModel = new JSONModel();
@@ -66,6 +74,24 @@ sap.ui.define([
 
             this.getView().setModel(dataModel, "listaJogos");
          });
-      }
+      },
+
+      mostrarMensagemDeErro: function (erro) {
+         const tituloMessageBox = "Erro";
+         const detalhesMessageBox = "Detalhes";
+         const statusMessageBox = "Status"
+
+         MessageBox.error(`${erro.Title}`, {
+            title: tituloMessageBox,
+            id: "messageBoxErro",
+            details: 
+               `<p><strong>${statusMessageBox}:<strong> ${erro.Status}` + 
+               `<p><strong>${detalhesMessageBox}<strong>` +
+               `<p>${erro.Detail}` +
+               `<p>Para mais ajuda acesse <a href='${erro.Type}' target='_top'> aqui.`,
+            styleClass: "sResponsivePaddingClasses",
+            dependentOn: this.getView()
+         });
+      },
    });
 });

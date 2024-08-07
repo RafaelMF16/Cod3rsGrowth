@@ -4,7 +4,7 @@ namespace Cod3rsGrowth.Dominio.EnumGenero
 {
     public enum Genero
     {
-        [Description("Padrão caso enum não seja definido")]
+        [Description("Não definido")]
         NAODEFINIDO,
 
         [Description("FPS")]
