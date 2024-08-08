@@ -4,8 +4,7 @@
     controllerName="ui5.codersgrowth.controller.Jogo"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc">
-    <Page
-        title= "{i18n>paginaJogoTitulo}">
+    <Page>
         <customHeader>
             <Toolbar>
                 <Title 
@@ -23,20 +22,21 @@
             width="auto"
             items="{listaJogos>/}"
             growing="true"
-            growingScrollToLoad="true"
+            growingThreshold="10"
             sticky="ColumnHeaders">
             <headerToolbar>
                 <OverflowToolbar 
+                    id="tabelaHeader"
                     design="Transparent">
                     <Title 
-                        text= "{i18n>paginaJogoTabelaTitulo}"
+                        text= "{i18n>paginaJogoTabelaTitulo} ({= ${listaJogos>/}.length})"
                         titleStyle="H3"/>
                     <ToolbarSpacer/>
                     <SearchField 
-                        width="25%"
+                        width="20%"
                         liveChange=".pegarValorDoCampoDePesquisa">
                         <layoutData>
-                            <OverflowToolbarLayoutData 
+                            <OverflowToolbarLayoutData
                                 priority="NeverOverflow"/>
                         </layoutData>
                     </SearchField>
@@ -45,7 +45,7 @@
                         text="{i18n>LabelGenero}"/>
                     <Select 
                         id="genero"
-                        width="15%"
+                        width="12%"
                         items="{listaGenero>/}"
                         change=".pegarValorComboBox">
                         <core:ListItem 

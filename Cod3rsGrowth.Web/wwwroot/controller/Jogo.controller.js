@@ -2,9 +2,8 @@ sap.ui.define([
    "ui5/codersgrowth/controller/BaseController",
    "sap/ui/model/json/JSONModel",
    "../model/formatter",
-   "sap/m/MessageBox",
-   "sap/ui/core/BusyIndicator"
-], (BaseController, JSONModel, formatter, MessageBox, BusyIndicator) => {
+   "sap/m/MessageBox"
+], (BaseController, JSONModel, formatter, MessageBox) => {
    "use strict";
 
    var valorFiltroNome = "";
@@ -31,13 +30,18 @@ sap.ui.define([
                this.getView().setModel(dataModel, "listaJogos");
             }
          })
-
-         fetch(urlObterGenero).then(generos => generos.json()).then(generos => {
-            const dataModel = new JSONModel();
-            dataModel.setData(generos);
-            
-            this.getView().setModel(dataModel, "listaGenero")
-         });
+         
+         fetch(urlObterGenero).then(respostaApi => respostaApi.json()).then(respostaApi => {
+            if (respostaApi.Status && respostaApi.Status !== statusOk) {
+               this.mostrarMensagemDeErro(respostaApi);
+            }
+            else {
+               const dataModel = new JSONModel();
+               dataModel.setData(respostaApi);
+               
+               this.getView().setModel(dataModel, "listaGenero")
+            }
+         })
       },
 
       pegarValorComboBox: function (oEvent) {
@@ -87,8 +91,7 @@ sap.ui.define([
             details: 
                `<p><strong>${statusMessageBox}:<strong> ${erro.Status}` + 
                `<p><strong>${detalhesMessageBox}<strong>` +
-               `<p>${erro.Detail}` +
-               `<p>Para mais ajuda acesse <a href='${erro.Type}' target='_top'> aqui.`,
+               `<p>${erro.Detail}`,
             styleClass: "sResponsivePaddingClasses",
             dependentOn: this.getView()
          });
