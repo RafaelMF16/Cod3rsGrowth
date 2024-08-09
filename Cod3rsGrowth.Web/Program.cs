@@ -2,18 +2,7 @@ using Cod3rsGrowth.Web.Injecao;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.FileProviders;
 
-var autorizacoesDeOrigens = "_myAllowSpecificOrigins";
-
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: autorizacoesDeOrigens,
-        policy =>
-        {
-            policy.WithOrigins("https://localhost:7090");
-        });
-});
 
 builder.AdicionarServicosAoEscopo();
 
@@ -47,7 +36,7 @@ app.UseFileServer(new FileServerOptions
 
 app.UseRouting();
 
-app.UseCors(autorizacoesDeOrigens);
+app.UseCors("SapApp");
 
 app.UseHttpsRedirection();
 

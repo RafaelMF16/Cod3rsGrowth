@@ -15,33 +15,37 @@ sap.ui.define([
       formatter: formatter,
 
       onInit: function () {
-         const urlObterTodos = "api/JogoControlador";
-         const urlObterGenero = "api/GeneroControlador";
+         const urlObterTodos = "/api/JogoControlador";
+         const urlObterGenero = "/api/GeneroControlador";
          const statusOk = 200;
          
-         fetch(urlObterTodos).then(respostaApi => respostaApi.json()).then(respostaApi => {
-            if (respostaApi.Status && respostaApi.Status !== statusOk) {
-               this.mostrarMensagemDeErro(respostaApi);
-            } 
-            else {
-               const dataModel = new JSONModel();
-               dataModel.setData(respostaApi);
+         fetch(urlObterTodos)
+            .then(respostaApi => respostaApi.json())
+            .then(respostaApi => {
+               if (respostaApi.Status && respostaApi.Status !== statusOk) {
+                  this.mostrarMensagemDeErro(respostaApi);
+               } 
+               else {
+                  const dataModel = new JSONModel();
+                  dataModel.setData(respostaApi);
 
-               this.getView().setModel(dataModel, "listaJogos");
-            }
-         })
+                  this.getView().setModel(dataModel, "listaJogos");
+               }
+            })
          
-         fetch(urlObterGenero).then(respostaApi => respostaApi.json()).then(respostaApi => {
-            if (respostaApi.Status && respostaApi.Status !== statusOk) {
-               this.mostrarMensagemDeErro(respostaApi);
-            }
-            else {
-               const dataModel = new JSONModel();
-               dataModel.setData(respostaApi);
-               
-               this.getView().setModel(dataModel, "listaGenero")
-            }
-         })
+         fetch(urlObterGenero)
+            .then(respostaApi => respostaApi.json())
+            .then(respostaApi => {
+               if (respostaApi.Status && respostaApi.Status !== statusOk) {
+                  this.mostrarMensagemDeErro(respostaApi);
+               }
+               else {
+                  const dataModel = new JSONModel();
+                  dataModel.setData(respostaApi);
+                  
+                  this.getView().setModel(dataModel, "listaGenero")
+               }
+            })
       },
 
       pegarValorComboBox: function (oEvent) {

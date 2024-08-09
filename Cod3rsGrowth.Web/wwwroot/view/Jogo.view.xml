@@ -29,10 +29,12 @@
                     id="tabelaHeader"
                     design="Transparent">
                     <Title 
+                        id="tabelaJogoTitulo"
                         text= "{i18n>paginaJogoTabelaTitulo} ({= ${listaJogos>/}.length})"
                         titleStyle="H3"/>
                     <ToolbarSpacer/>
                     <SearchField 
+                        id="campoDePesquisaNome"
                         width="20%"
                         liveChange=".pegarValorDoCampoDePesquisa">
                         <layoutData>

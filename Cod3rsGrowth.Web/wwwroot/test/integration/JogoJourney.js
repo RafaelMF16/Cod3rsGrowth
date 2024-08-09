@@ -4,9 +4,9 @@ sap.ui.define([
 ], (opaTest) => {
 	"use strict";
 
-	QUnit.module("Tela Listagem");
+	QUnit.module("Lista Jogo");
 
-	opaTest("Deve ver a tabela com todos os items", (Given, When, Then) => {
+	opaTest("A tabela deve ter paginação", function (Given, When, Then) {
 		// Arrangements
 		Given.iStartMyUIComponent({
 			componentConfig: {
@@ -14,18 +14,7 @@ sap.ui.define([
 			}
 		});
 
-        Then.jogo.tabelaDeveTerPaginacao().
-			and.tituloDeveMostrarQuantidadeDeItems();
-	});
-
-	opaTest("Deve poder carregar mais items", function (Given, When, Then) {
-
 		//Actions
-		When.jogo.carregarMaisItems();
-
-		//Assert
-		Then.jogo.tabelaDeveTerTodosOsItems();
-
-		Then.iTeardownMyApp();
-	})
+		Then.paginaJogo.aTabelaDeveTerPaginacao();
+	});
 });

@@ -8,7 +8,6 @@ sap.ui.require(["sap/ui/core/Core"], async(Core) => {
 	sap.ui.require([
 		"ui5/codersgrowth/test/integration/JogoJourney"
 	], () => {
-		
 		QUnit.start();
 	});
 });

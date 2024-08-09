@@ -35,10 +35,16 @@ namespace Cod3rsGrowth.Web.Injecao
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddMvc().AddJsonOptions(x =>
             {
                 x.JsonSerializerOptions.Converters.Add(new EnumConverter<Genero>());
             });
+
+            builder.Services.AddCors(p => p.AddPolicy("SapApp", builder =>
+            {
+                builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+            }));
 
             builder.Services.AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
