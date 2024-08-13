@@ -47,6 +47,15 @@ namespace Cod3rsGrowth.Dominio.EnumGenero
         LUTA,
 
         [Description("Corrida")]
-        CORRIDA
+        CORRIDA,
+
+        [Description("Terror")]
+        TERROR,
+
+        [Description("RogueLike")]
+        ROGUELIKE,
+
+        [Description("Aventura")]
+        AVENTURA
     }
 }

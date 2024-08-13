@@ -10,7 +10,6 @@ using FluentMigrator.Runner;
 using FluentValidation;
 using LinqToDB;
 using LinqToDB.AspNet;
-using System.Text.Json.Serialization;
 
 namespace Cod3rsGrowth.Web.Injecao
 {
@@ -18,7 +17,7 @@ namespace Cod3rsGrowth.Web.Injecao
     {
         public static void AdicionarServicosAoEscopo(this WebApplicationBuilder builder)
         {
-            const string nomeVariavelAmbiente = "ConnectionString";
+            var nomeVariavelAmbiente = ConnectionString.connectionString;
             var stringConexao = Environment.GetEnvironmentVariable(nomeVariavelAmbiente)
                 ?? throw new Exception($"Variavel de ambiente [{nomeVariavelAmbiente}] não encontrada");
 

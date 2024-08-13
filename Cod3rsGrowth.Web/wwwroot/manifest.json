@@ -37,7 +37,7 @@
 			}
 		},
 		"rootView": {
-			"viewName": "ui5.codersgrowth.view.App",
+			"viewName": "ui5.codersgrowth.app.App",
 			"type": "XML",
 			"async": true,
 			"id": "app"
@@ -47,7 +47,7 @@
 				"routerClass": "sap.m.routing.Router",
 				"type": "View",
 				"viewType": "XML",
-				"path": "ui5.codersgrowth.view",
+				"path": "ui5.codersgrowth.app",
 				"controlId": "app",
 				"controlAggregation": "pages",
 				"transition": "slide",
@@ -63,11 +63,13 @@
          	}],
          	"targets": {
 				"jogo": {
+					"path": "ui5.codersgrowth.app.jogo",
 					"id": "jogo",
 					"name": "Jogo",
 					"level" : 1
             	},
 				"paginaNaoEncontrada": {
+					"path": "ui5.codersgrowth.app.paginaNaoEncontrada",
 					"id": "paginaNaoEncontrada",
 					"name": "PaginaNaoEncontrada",
 					"transition":"slide"

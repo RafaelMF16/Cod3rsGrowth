@@ -1,7 +1,7 @@
 <mvc:View 
     xmlns:core="sap.ui.core" 
     xmlns:f="sap.f" 
-    controllerName="ui5.codersgrowth.controller.Jogo"
+    controllerName="ui5.codersgrowth.app.jogo.Jogo"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc">
     <Page>
@@ -15,26 +15,27 @@
             </Toolbar>
         </customHeader>
         <Table
-            headerText="{i18n>paginaJogoTabelaTitulo}"
-            id="tabelaJogo"
+            headerText="{i18n>tabelaJogoTitulo}"
+            id="idTabelaJogo"
             fixedLayout="false"
             class="sapUiResponsiveMargin"
             width="auto"
             items="{listaJogos>/}"
             growing="true"
             growingThreshold="10"
-            sticky="ColumnHeaders">
+            sticky="ColumnHeaders"
+            updateFinished=".atualizarTitulo">
             <headerToolbar>
                 <OverflowToolbar 
-                    id="tabelaHeader"
+                    id="idTabelaHeader"
                     design="Transparent">
                     <Title 
-                        id="tabelaJogoTitulo"
-                        text= "{i18n>paginaJogoTabelaTitulo} ({= ${listaJogos>/}.length})"
+                        id="idTabelaJogoTitulo"
+                        text= ""
                         titleStyle="H3"/>
                     <ToolbarSpacer/>
                     <SearchField 
-                        id="campoDePesquisaNome"
+                        id="idCampoDePesquisaNome"
                         width="20%"
                         liveChange=".pegarValorDoCampoDePesquisa">
                         <layoutData>
@@ -46,7 +47,7 @@
                     <Label 
                         text="{i18n>LabelGenero}"/>
                     <Select 
-                        id="genero"
+                        id="idCampoDeSelecaoGenero"
                         width="12%"
                         items="{listaGenero>/}"
                         change=".pegarValorComboBox">
@@ -61,14 +62,14 @@
                     <Label 
                         text="{i18n>LabelPrecoMin}"/>
                     <Input 
-                        id="inputPrecoMin"
+                        id="idInputPrecoMin"
                         type="Number"
                         liveChange=".pegarValorDoCampoPrecoMin"
                         width="8%"/>
                     <Label 
                         text="{i18n>LabelPrecoMax}"/>
                     <Input 
-                        id="inputPrecoMax"
+                        id="idInputPrecoMax"
                         type="Number"
                         liveChange=".pegarValorDoCampoPrecoMax"
                         width="8%"/>   

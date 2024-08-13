@@ -1,8 +1,14 @@
+using Cod3rsGrowth.Infra.Repositorio;
 using Cod3rsGrowth.Web.Injecao;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
+
+if (args.FirstOrDefault() == "BancoDeDadosTeste")
+{
+    ConnectionString.connectionString = "ConnectionStringBancoDeDadosDeTestes";
+}
 
 builder.AdicionarServicosAoEscopo();
 

@@ -1,5 +1,5 @@
 <mvc:View 
-   controllerName="ui5.codersgrowth.controller.PaginaNaoEncontrada"
+   controllerName="ui5.codersgrowth.app.paginaNaoEncontrada.PaginaNaoEncontrada"
    xmlns="sap.m"
    xmlns:mvc="sap.ui.core.mvc">
    <Page 
