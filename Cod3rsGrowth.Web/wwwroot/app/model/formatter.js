@@ -14,11 +14,11 @@ sap.ui.define([], () => {
         },
 
         formatarValorPadraoComboBox(descricao) {
-            const oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const propriedadesI18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             const enumNaoDefinido = "Não definido";
 
             if (descricao === enumNaoDefinido){
-                return oResourceBundle.getText("todosOsGeneros");
+                return propriedadesI18n.getText("todosOsGeneros");
             }
 
             return descricao;

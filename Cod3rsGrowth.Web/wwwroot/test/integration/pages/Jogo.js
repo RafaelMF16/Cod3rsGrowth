@@ -15,6 +15,7 @@ sap.ui.define([
 	const campoDeSelecaoGeneroId = "idCampoDeSelecaoGenero";
 	const inputPrecoMinId = "idInputPrecoMin";
 	const inputPrecoMaxId = "idInputPrecoMax"
+	const menuBotaoHeaderId = "idMenuBotaoHeader";
 
 	Opa5.createPageObjects({
 		paginaJogo: {
@@ -127,6 +128,30 @@ sap.ui.define([
 							text: " "
 						}),
 						errorMessage: "O input de preço máximo não foi encontrado"
+					})
+				},
+
+				aoClicarNoBotaoDeConfiguracoes: function () {
+					return this.waitFor({
+						id: menuBotaoHeaderId,
+						viewName: nomeDaView,
+						actions: new Press(),
+						success: function () {
+							this.waitFor({
+								controlType: "sap.ui.unified.MenuItem",
+								actions: new Press(),
+								success: function () {
+									this.waitFor({
+										controlType: "sap.ui.unified.MenuItem",
+										matchers: [
+											new Properties({ text: "Escuro"}),
+										],
+										actions: new Press(),
+										errorMessage: "O botão não foi encontrado"
+									})
+								}
+							});
+						},
 					})
 				}
 			},

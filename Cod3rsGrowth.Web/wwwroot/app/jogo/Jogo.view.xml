@@ -7,11 +7,46 @@
     <Page>
         <customHeader>
             <Toolbar>
-                <Title 
-                    text="{i18n>paginaJogoTitulo}"
-                    titleStyle="H3"
-                    class="sapUiResponsiveMargin">
-                </Title>
+                <FlexBox 
+                    id="idFlexBoxHeader"
+                    height="100%"
+                    width="100%"
+                    justifyContent="SpaceBetween"
+                    alignItems="Center">
+                    <Title 
+                        text="{i18n>paginaJogoTitulo}"
+                        titleStyle="H3"
+                        class="sapUiResponsiveMargin"/>
+                    <MenuButton
+                        id="idMenuBotaoHeader"
+                        type="Transparent"
+                        icon="sap-icon://action-settings"  
+                        menuPosition="EndBottom"> 
+                        <menu>
+                            <Menu >
+                                <MenuItem
+                                    key="idBotaoDeAparencia"
+                                    text="Aparência" 
+                                    icon="sap-icon://palette">
+                                    <items>
+                                        <MenuItem 
+                                            key="botaModoClaro"
+                                            id="idBotaoModoClaro"
+                                            icon="sap-icon://light-mode" 
+                                            text="Claro"
+                                            press=".alternarTema"/>
+                                        <MenuItem 
+                                            key="botaoModoEscuro"
+                                            id="idBotaoModoEscuro"
+                                            icon="sap-icon://dark-mode" 
+                                            text="Escuro"
+                                            press=".alternarTema"/>
+                                    </items>
+                                </MenuItem>
+                            </Menu>
+                        </menu>
+                    </MenuButton>
+                </FlexBox>
             </Toolbar>
         </customHeader>
         <Table
@@ -23,7 +58,7 @@
             items="{listaJogos>/}"
             growing="true"
             growingThreshold="10"
-            sticky="ColumnHeaders"
+            sticky="ColumnHeaders,HeaderToolbar"
             updateFinished=".atualizarTitulo">
             <headerToolbar>
                 <OverflowToolbar 
@@ -32,7 +67,7 @@
                     <Title 
                         id="idTabelaJogoTitulo"
                         text= ""
-                        titleStyle="H3"/>
+                        titleStyle="H4"/>
                     <ToolbarSpacer/>
                     <SearchField 
                         id="idCampoDePesquisaNome"
@@ -49,12 +84,12 @@
                     <Select 
                         id="idCampoDeSelecaoGenero"
                         width="12%"
-                        items="{listaGenero>/}"
-                        change=".pegarValorComboBox">
+                        items="{listaGeneros>/}"
+                        change=".pegarValorDoSelect">
                         <core:ListItem 
-                            key="{listaGenero>key}"
+                            key="{listaGeneros>key}"
                             text="{
-                                path: 'listaGenero>descricao',
+                                path: 'listaGeneros>descricao',
                                 formatter: '.formatter.formatarValorPadraoComboBox'
                             }"/>
                     </Select>
@@ -72,7 +107,7 @@
                         id="idInputPrecoMax"
                         type="Number"
                         liveChange=".pegarValorDoCampoPrecoMax"
-                        width="8%"/>   
+                        width="8%"/>
                     <ToolbarSeparator />
                     <Button 
                         text="{i18n>botaoAdicionar}"

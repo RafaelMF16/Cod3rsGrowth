@@ -16,78 +16,40 @@ sap.ui.define([
 
       onInit: function () {
          const urlObterTodos = "/api/JogoControlador";
-         const urlObterGenero = "/api/GeneroControlador";
-         const statusOk = 200;
+         const urlObterGeneros = "/api/GeneroControlador";
+         const nomeListaJogos = "listaJogos";
+         const nomeListaGeneros = "listaGeneros";
+         
+         this._fazerRequisicaoGet(urlObterTodos, nomeListaJogos);
 
-         fetch(urlObterTodos)
-            .then(respostaApi => {
-               if (!respostaApi.ok){
-                  this.mostrarMensagemDeErro(respostaApi.json());
-               }
-               return respostaApi.json();
-            })
-            .then(respostaApi => {
-               const dataModel = new JSONModel();
-               dataModel.setData(respostaApi);
-                  
-               this.getView().setModel(dataModel, "listaJogos")
-            })
-         
-         // fetch(urlObterTodos)
-         //    .then(function (respostaApi) {
-         //       if (!respostaApi.ok) {
-         //          this.mostrarMensagemDeErro(respostaApi);
-         //       }
-         //       return respostaApi.json();
-         //    })
-         //    .then(function (jogos) {
-         //       debugger;
-         //       const dataModel = new JSONModel();
-         //       dataModel.setData(jogos);
-                  
-         //       setModel(dataModel, "listaJogos")
-         //    })
-         
-         fetch(urlObterGenero)
-            .then(respostaApi => respostaApi.json())
-            .then(respostaApi => {
-               if (respostaApi.Status && respostaApi.Status !== statusOk) {
-                  this.mostrarMensagemDeErro(respostaApi);
-               }
-               else {
-                  const dataModel = new JSONModel();
-                  dataModel.setData(respostaApi);
-                  
-                  this.getView().setModel(dataModel, "listaGenero")
-               }
-            })
+         this._fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros);
       },
 
-      pegarValorComboBox: function (oEvent) {
+      pegarValorDoSelect: function (oEvent) {
          valorFiltroGenero = oEvent.getSource().getSelectedKey();
 
-         this.filtrarJogos();
+         this._filtrarJogos();
       },
 
       pegarValorDoCampoDePesquisa: function (oEvent) {
          valorFiltroNome = oEvent.getSource().getValue();
          
-         this.filtrarJogos();
+         this._filtrarJogos();
       },
 
       pegarValorDoCampoPrecoMin: function (oEvent) {
          valorFiltroPrecoMin = oEvent.getSource().getValue();
          
-         this.filtrarJogos();
+         this._filtrarJogos();
       },
 
       pegarValorDoCampoPrecoMax: function (oEvent) {
          valorFiltroPrecoMax = oEvent.getSource().getValue();
 
-         this.filtrarJogos();
+         this._filtrarJogos();
       },
 
-      filtrarJogos: function () {
+      _filtrarJogos: function () {
          var urlObterTodos = `/api/JogoControlador?Nome=${valorFiltroNome}&PrecoMin=${valorFiltroPrecoMin}&PrecoMax=${valorFiltroPrecoMax}&Genero=${valorFiltroGenero}`;
 
          fetch(urlObterTodos).then(jogos => jogos.json()).then(jogos => {
@@ -99,7 +61,7 @@ sap.ui.define([
          });
       },
 
-      mostrarMensagemDeErro: function (erro) {
+      _mostrarMensagemDeErro: function (erro) {
          const tituloMessageBox = "Erro";
          const detalhesMessageBox = "Detalhes";
          const statusMessageBox = "Status"
@@ -127,6 +89,43 @@ sap.ui.define([
 				tabelaJogoTitulo = propriedadesI18n.getText("tabelaJogoTitulo");
 			}
       this.getView().byId("idTabelaJogoTitulo").setProperty("text", tabelaJogoTitulo);
+      },
+
+      _fazerRequisicaoGet: function (url, nomeLista) {
+         const delayDoBusyIndicator = 0;
+
+         this.getView().setBusyIndicatorDelay(delayDoBusyIndicator);
+         this.getView().setBusy(true);
+
+         fetch(url)
+            .then(respostaApi => {
+               if (!respostaApi.ok) {
+                  respostaApi.json()
+                     .then(respostaApi => {
+                        this._mostrarMensagemDeErro(respostaApi)
+                     });
+               }
+               return respostaApi.json();
+            })
+            .then(respostaApi => {
+               const dataModel = new JSONModel();
+               dataModel.setData(respostaApi);
+                  
+               this.getView().setModel(dataModel, nomeLista);
+
+               this.getView().setBusy(false);
+            });
+      },
+
+      alternarTema: function (oEvent) {
+         const temaEscolhido = oEvent.getSource().getText();
+         const modoClaro = "Claro";
+         const modoEscuro = "Escuro";
+
+         if (temaEscolhido === modoClaro)
+            sap.ui.getCore().applyTheme("sap_horizon");
+         else if (temaEscolhido === modoEscuro) 
+            sap.ui.getCore().applyTheme("sap_horizon_dark");
       }
    });
 });

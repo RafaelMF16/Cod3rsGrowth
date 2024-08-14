@@ -14,7 +14,9 @@ sap.ui.define([
 			}
 		});
 
-		//Ações
+		When.paginaJogo.aoClicarNoBotaoDeConfiguracoes();
+
+		//Asserções
 		Then.paginaJogo.aTabelaDeveTerPaginacao().
 			and.oTituloDeveMostrarQuantidadeDeItems();
 	});
@@ -107,6 +109,15 @@ sap.ui.define([
 		When.paginaJogo.limparFiltroPrecoMin();
 		When.paginaJogo.limparFiltroPrecoMax();
 		When.paginaJogo.aoColocarTextoNoCampoDePesquisaDeNome("Terraria");
+
+		//Asserções
+		Then.paginaJogo.aTabelaNaoDeveMostrarItem();
+	});
+
+	opaTest("Caso item com nome não exista tabela não terá dados", function (Given, When, Then) {
+		//Ações
+		When.paginaJogo.aoClicarNoBotaoDeConfiguracoes();
+		
 
 		//Asserções
 		Then.paginaJogo.aTabelaNaoDeveMostrarItem();

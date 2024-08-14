@@ -9,7 +9,6 @@ namespace Cod3rsGrowth.Servico.Servicos
         public static string ObterDescricaoEnum(Enum enumerador)
         {
             const int posicaoInicial = 0;
-            const int arrayVazio = 0;
 
             var campo = enumerador.GetType().GetField(enumerador.ToString())
                 ?? throw new Exception($"Erro ao obter {typeof(FieldInfo)}");
@@ -18,7 +17,7 @@ namespace Cod3rsGrowth.Servico.Servicos
                 (DescriptionAttribute[])campo.GetCustomAttributes(
                 typeof(DescriptionAttribute), false);
 
-            return atributos.Length > arrayVazio ? atributos[posicaoInicial].Description : enumerador.ToString();
+            return atributos[posicaoInicial].Description;
         }
     }
 }
