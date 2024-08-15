@@ -117,7 +117,7 @@ sap.ui.define([
 		When.paginaJogo.alternarEntreModoClaroEscuro("Escuro");
 	});
 
-	opaTest("Deve poder trocar para tema escuro", function (Given, When, Then) {
+	opaTest("Deve poder trocar para tema claro", function (Given, When, Then) {
 		//Ações
 		When.paginaJogo.alternarEntreModoClaroEscuro("Claro");
 
