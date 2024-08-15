@@ -50,28 +50,34 @@ sap.ui.define([
       },
 
       _filtrarJogos: function () {
-         var urlObterTodos = `/api/JogoControlador?Nome=${valorFiltroNome}&PrecoMin=${valorFiltroPrecoMin}&PrecoMax=${valorFiltroPrecoMax}&Genero=${valorFiltroGenero}`;
+         let query = {};
 
-         fetch(urlObterTodos).then(jogos => jogos.json()).then(jogos => {
-            const dataModel = new JSONModel();
+         if (valorFiltroNome)
+            query.nome = valorFiltroNome;
 
-            dataModel.setData(jogos);
+         if (valorFiltroGenero)
+            query.genero = valorFiltroGenero;
 
-            this.getView().setModel(dataModel, "listaJogos");
-         });
+         if (valorFiltroPrecoMin)
+            query.precoMin = valorFiltroPrecoMin;
+
+         if (valorFiltroPrecoMax)
+            query.precoMax = valorFiltroPrecoMax;
+
+         let urlObterTodos = `/api/JogoControlador?` + new URLSearchParams(query);
+
+         this._fazerRequisicaoGet(urlObterTodos, "listaJogos")
       },
 
       _mostrarMensagemDeErro: function (erro) {
-         const tituloMessageBox = "Erro";
-         const detalhesMessageBox = "Detalhes";
-         const statusMessageBox = "Status"
+         const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
 
          MessageBox.error(`${erro.Title}`, {
-            title: tituloMessageBox,
+            title: propriedadesI18n.getText("tituloMessageBox"),
             id: "messageBoxErro",
             details: 
-               `<p><strong>${statusMessageBox}:<strong> ${erro.Status}` +
-               `<p><strong>${detalhesMessageBox}<strong>` +
+               `<p><strong>${propriedadesI18n.getText("statusMessageBox")}:<strong> ${erro.Status}` +
+               `<p><strong>${propriedadesI18n.getText("detalhesMessageBox")}<strong>` +
                `<p>${erro.Detail}`,
             styleClass: "sResponsivePaddingClasses",
             dependentOn: this.getView()
@@ -79,7 +85,7 @@ sap.ui.define([
       },
 
       atualizarTitulo: function (oEvent) {
-         var tabelaJogoTitulo,
+         let tabelaJogoTitulo,
 				tabelaJogo = oEvent.getSource(),
 				itemsDaTabelaJogo = oEvent.getParameter("total");
             const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
@@ -88,7 +94,7 @@ sap.ui.define([
 			} else {
 				tabelaJogoTitulo = propriedadesI18n.getText("tabelaJogoTitulo");
 			}
-      this.getView().byId("idTabelaJogoTitulo").setProperty("text", tabelaJogoTitulo);
+         this.getView().byId("idTabelaJogoTitulo").setProperty("text", tabelaJogoTitulo);
       },
 
       _fazerRequisicaoGet: function (url, nomeLista) {
