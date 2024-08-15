@@ -18,7 +18,6 @@ namespace Cod3rsGrowth.Web.Controllers
         }
 
         [HttpGet]
-
         public IActionResult ObterTodos([FromQuery] FiltroJogo filtroJogo)
         {
             var listaDeJogosDoBanco = _servicoJogo.ObterTodos(filtroJogo);

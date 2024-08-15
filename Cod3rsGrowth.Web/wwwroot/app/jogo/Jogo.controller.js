@@ -121,11 +121,13 @@ sap.ui.define([
          const temaEscolhido = oEvent.getSource().getText();
          const modoClaro = "Claro";
          const modoEscuro = "Escuro";
+         const nomeModoEscuro = "sap_horizon";
+         const nomeModoClaro = "sap_horizon_dark";
 
          if (temaEscolhido === modoClaro)
-            sap.ui.getCore().applyTheme("sap_horizon");
+            sap.ui.getCore().applyTheme(nomeModoEscuro);
          else if (temaEscolhido === modoEscuro) 
-            sap.ui.getCore().applyTheme("sap_horizon_dark");
+            sap.ui.getCore().applyTheme(nomeModoClaro);
       }
    });
 });

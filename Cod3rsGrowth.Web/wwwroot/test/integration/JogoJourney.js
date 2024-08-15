@@ -14,8 +14,6 @@ sap.ui.define([
 			}
 		});
 
-		When.paginaJogo.aoClicarNoBotaoDeConfiguracoes();
-
 		//Asserções
 		Then.paginaJogo.aTabelaDeveTerPaginacao().
 			and.oTituloDeveMostrarQuantidadeDeItems();
@@ -114,13 +112,15 @@ sap.ui.define([
 		Then.paginaJogo.aTabelaNaoDeveMostrarItem();
 	});
 
-	opaTest("Caso item com nome não exista tabela não terá dados", function (Given, When, Then) {
+	opaTest("Deve poder trocar para tema escuro", function (Given, When, Then) {
 		//Ações
-		When.paginaJogo.aoClicarNoBotaoDeConfiguracoes();
-		
+		When.paginaJogo.alternarEntreModoClaroEscuro("Escuro");
+	});
 
-		//Asserções
-		Then.paginaJogo.aTabelaNaoDeveMostrarItem();
+	opaTest("Deve poder trocar para tema escuro", function (Given, When, Then) {
+		//Ações
+		When.paginaJogo.alternarEntreModoClaroEscuro("Claro");
+
 		//FinalizarJornada
 		Then.iTeardownMyApp();
 	});

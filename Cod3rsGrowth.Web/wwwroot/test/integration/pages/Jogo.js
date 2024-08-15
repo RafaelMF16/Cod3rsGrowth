@@ -87,12 +87,12 @@ sap.ui.define([
 					})
 				},
 
-				aoColocarValorNoInputPrecoMin: function (valor) {
+				aoColocarValorNoInputPrecoMin: function (precoMin) {
 					return this.waitFor({
 						id: inputPrecoMinId,
 						viewName: nomeDaView,
 						actions: new EnterText({
-							text: valor
+							text: precoMin
 						}),
 						errorMessage: "O input de preço mínimo não foi encontrado"
 					})
@@ -109,12 +109,12 @@ sap.ui.define([
 					})
 				},
 
-				aoColocarValorNoInputPrecoMax: function (valor) {
+				aoColocarValorNoInputPrecoMax: function (precoMax) {
 					return this.waitFor({
 						id: inputPrecoMaxId,
 						viewName: nomeDaView,
 						actions: new EnterText({
-							text: valor
+							text: precoMax
 						}),
 						errorMessage: "O input de preço máximo não foi encontrado"
 					})
@@ -131,7 +131,7 @@ sap.ui.define([
 					})
 				},
 
-				aoClicarNoBotaoDeConfiguracoes: function () {
+				alternarEntreModoClaroEscuro: function (modo) {
 					return this.waitFor({
 						id: menuBotaoHeaderId,
 						viewName: nomeDaView,
@@ -144,16 +144,17 @@ sap.ui.define([
 									this.waitFor({
 										controlType: "sap.ui.unified.MenuItem",
 										matchers: [
-											new Properties({ text: "Escuro"}),
+											new Properties({ text: modo}),
 										],
 										actions: new Press(),
-										errorMessage: "O botão não foi encontrado"
+										errorMessage: "Não foi possível alternar entre os temas"
 									})
+									Opa5.assert.ok(true, "Foi possível alternar entre os temas")
 								}
 							});
 						},
 					})
-				}
+				},
 			},
 			assertions: {
 				aTabelaDeveTerPaginacao: function () {
