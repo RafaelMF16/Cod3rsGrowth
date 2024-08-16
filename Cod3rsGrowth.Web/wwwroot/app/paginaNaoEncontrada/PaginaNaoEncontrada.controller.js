@@ -1,8 +1,8 @@
 sap.ui.define([
-    "ui5/codersgrowth/controller/BaseController"
+    "ui5/codersgrowth/app/BaseController"
 ], function (BaseController) {
     "use strict";
-    return BaseController.extend("ui5.codersgrowth.controller.PaginaNaoEncontrada", {
+    return BaseController.extend("ui5.codersgrowth.app.paginaNaoEncontrada.PaginaNaoEncontrada", {
         onInit: function () {
         },
 

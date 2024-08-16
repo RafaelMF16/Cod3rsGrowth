@@ -44,7 +44,7 @@ public static class ExtensaoDosDetalhesDeErro
                     {
                         var logger = loggerFactory.CreateLogger("GlobalExceptionHandler");
                         logger.LogError($"Erro inesperado: {manipuladorDeExcecoes.Error}");
-                        detalhesDeErro.Title = "Erro inesperado";
+                        detalhesDeErro.Title = $"{manipuladorDeExcecoes.Error.Message}";
                         detalhesDeErro.Status = StatusCodes.Status500InternalServerError;
                         detalhesDeErro.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1";
                         detalhesDeErro.Detail = erroDoManipuladorDaExcecao.Demystify().ToString();

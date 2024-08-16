@@ -1,19 +1,14 @@
+using Cod3rsGrowth.Infra.Repositorio;
 using Cod3rsGrowth.Web.Injecao;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.FileProviders;
 
-var autorizacoesDeOrigens = "_myAllowSpecificOrigins";
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options =>
+if (args.FirstOrDefault() == "BancoDeDadosTeste")
 {
-    options.AddPolicy(name: autorizacoesDeOrigens,
-        policy =>
-        {
-            policy.WithOrigins("https://localhost:7200");
-        });
-});
+    ConnectionString.connectionString = "ConnectionStringBancoDeDadosDeTestes";
+}
 
 builder.AdicionarServicosAoEscopo();
 
@@ -47,7 +42,7 @@ app.UseFileServer(new FileServerOptions
 
 app.UseRouting();
 
-app.UseCors(autorizacoesDeOrigens);
+app.UseCors("SapApp");
 
 app.UseHttpsRedirection();
 
