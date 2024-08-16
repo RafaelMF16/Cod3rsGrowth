@@ -50,6 +50,7 @@ sap.ui.define([
       },
 
       _filtrarJogos: function () {
+         const nomeListaJogos = "listaJogos";
          let query = {};
 
          if (valorFiltroNome)
@@ -66,7 +67,7 @@ sap.ui.define([
 
          let urlObterTodos = `/api/JogoControlador?` + new URLSearchParams(query);
 
-         this._fazerRequisicaoGet(urlObterTodos, "listaJogos")
+         this._fazerRequisicaoGet(urlObterTodos, nomeListaJogos);
       },
 
       _mostrarMensagemDeErro: function (erro) {
