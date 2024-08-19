@@ -20,9 +20,9 @@ sap.ui.define([
          const nomeListaJogos = "listaJogos";
          const nomeListaGeneros = "listaGeneros";
          
-         this._fazerRequisicaoGet(urlObterTodos, nomeListaJogos);
+         this.fazerRequisicaoGet(urlObterTodos, nomeListaJogos);
 
-         this._fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros);
+         this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros);
       },
 
       pegarValorDoSelect: function (oEvent) {
@@ -65,24 +65,9 @@ sap.ui.define([
          if (valorFiltroPrecoMax)
             query.precoMax = valorFiltroPrecoMax;
 
-         let urlObterTodos = `/api/JogoControlador?` + new URLSearchParams(query);
+         let urlObterTodosComFiltros = `/api/JogoControlador?` + new URLSearchParams(query);
 
-         this._fazerRequisicaoGet(urlObterTodos, nomeListaJogos);
-      },
-
-      _mostrarMensagemDeErro: function (erro) {
-         const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
-
-         MessageBox.error(`${erro.Title}`, {
-            title: propriedadesI18n.getText("tituloMessageBox"),
-            id: "messageBoxErro",
-            details: 
-               `<p><strong>${propriedadesI18n.getText("statusMessageBox")}:<strong> ${erro.Status}` +
-               `<p><strong>${propriedadesI18n.getText("detalhesMessageBox")}<strong>` +
-               `<p>${erro.Detail}`,
-            styleClass: "sResponsivePaddingClasses",
-            dependentOn: this.getView()
-         });
+         this.fazerRequisicaoGet(urlObterTodosComFiltros, nomeListaJogos);
       },
 
       atualizarTitulo: function (oEvent) {
@@ -98,43 +83,8 @@ sap.ui.define([
          this.getView().byId("idTabelaJogoTitulo").setProperty("text", tabelaJogoTitulo);
       },
 
-      _fazerRequisicaoGet: function (url, nomeLista) {
-         const delayDoBusyIndicator = 0;
-
-         this.getView().setBusyIndicatorDelay(delayDoBusyIndicator);
-         this.getView().setBusy(true);
-
-         fetch(url)
-            .then(respostaApi => {
-               if (!respostaApi.ok) {
-                  respostaApi.json()
-                     .then(respostaApi => {
-                        this._mostrarMensagemDeErro(respostaApi)
-                     });
-               }
-               return respostaApi.json();
-            })
-            .then(respostaApi => {
-               const dataModel = new JSONModel();
-               dataModel.setData(respostaApi);
-                  
-               this.getView().setModel(dataModel, nomeLista);
-
-               this.getView().setBusy(false);
-            });
-      },
-
-      alternarTema: function (oEvent) {
-         const temaEscolhido = oEvent.getSource().getText();
-         const modoClaro = "Claro";
-         const modoEscuro = "Escuro";
-         const nomeModoEscuro = "sap_horizon";
-         const nomeModoClaro = "sap_horizon_dark";
-
-         if (temaEscolhido === modoClaro)
-            sap.ui.getCore().applyTheme(nomeModoEscuro);
-         else if (temaEscolhido === modoEscuro) 
-            sap.ui.getCore().applyTheme(nomeModoClaro);
+      aoClicarIrParaTelaDeAdicionarJogo: function () {
+         this.getRouter().navTo("appAdicionarJogo", {}, true);
       }
    });
 });

@@ -60,7 +60,11 @@
 				"pattern": "",
 				"name": "appJogo",
 				"target": "jogo"
-         	}],
+         	}, {
+				"pattern": "AdicionarJogo",
+				"name": "appAdicionarJogo",
+				"target": "adicionarJogo"
+			}],
          	"targets": {
 				"jogo": {
 					"path": "ui5.codersgrowth.app.jogo",
@@ -72,6 +76,12 @@
 					"path": "ui5.codersgrowth.app.paginaNaoEncontrada",
 					"id": "paginaNaoEncontrada",
 					"name": "PaginaNaoEncontrada",
+					"transition":"slide"
+				},
+				"adicionarJogo": {
+					"path": "ui5.codersgrowth.app.adicionarJogo",
+					"id": "adicionarJogo",
+					"name": "AdicionarJogo",
 					"transition":"slide"
 				}
 			}
