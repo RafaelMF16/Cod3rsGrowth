@@ -3,11 +3,10 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"sap/ui/core/UIComponent",
 	'sap/ui/model/json/JSONModel'
-], function(Controller, History, UIComponent, JSONModel) {
+], function(Controller, History, UIComponent, JSONModel, ) {
 	"use strict";
 
 	return Controller.extend("ui5.codersgrowth.app.BaseController", {
-
 		getRouter : function () {
 			return UIComponent.getRouterFor(this);
 		},

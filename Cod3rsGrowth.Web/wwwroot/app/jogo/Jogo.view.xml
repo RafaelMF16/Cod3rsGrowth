@@ -91,7 +91,7 @@
                             key="{listaGeneros>key}"
                             text="{
                                 path: 'listaGeneros>descricao',
-                                formatter: '.formatter.formatarValorPadraoComboBox'
+                                formatter: '.formatter.formatarValorPadraoSelectParaTelaDeListagem'
                             }"/>
                     </Select>
                     <ToolbarSeparator />

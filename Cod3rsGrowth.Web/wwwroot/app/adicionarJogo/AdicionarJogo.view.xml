@@ -82,7 +82,7 @@
                             icon="sap-icon://save"
                             iconFirst="false"
                             type="Ghost"
-                            press=".salvar"/>
+                            press=".salvarJogoNoBancoDeDados"/>
                         <Button 
                             text="{i18n>adicionarJogoBotaoCancelarTexto}"
                             icon="sap-icon://sys-cancel-2"
@@ -94,15 +94,17 @@
                     <Label 
                         text="{i18n>adicionarJogoLabelNomeTexto}" 
                         required="true"/>
-                    <Input 
+                    <Input
                         id="idInputNome"
-                        required="true"/>
+                        required="true"
+                        valueStateText="{i18n>campoNomeVazioTexto}"/>
                     <Label 
                         text="{i18n>adicionarJogoLabelPrecoTexto}"/>
                     <Input 
                         id="idInputPreco"
                         required="true"
-                        type="Number"/>
+                        type="Number"
+                        valueStateText="{i18n>campoPrecoVazioTexto}"/>
                         <Label 
                         text="{i18n>adicionarJogoLabelGeneroTexto}"
                         required="true"/>
@@ -110,11 +112,13 @@
                         id="idSelectGenero"
                         required="true"
                         items="{listaGeneros>/}"
-                        width="50%">
+                        width="50%"
+                        valueStateText="{i18n>selectGeneroNaoDefinidoTexto}">
                         <core:ListItem 
                             key="{listaGeneros>key}"
                             text="{
-                                path: 'listaGeneros>descricao'
+                                path: 'listaGeneros>descricao',
+                                formatter: '.formatter.formatarValorPadraoSelectParaTelaDeCriacao'
                             }"/>
                     </Select>
                 </form:content>

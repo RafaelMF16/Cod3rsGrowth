@@ -1,10 +1,16 @@
 sap.ui.define([
     'ui5/codersgrowth/app/BaseController',
-    'sap/ui/model/json/JSONModel'
-], function(BaseController, JSONModel) {
+    'sap/ui/model/json/JSONModel',
+    '../model/formatter'
+], function(BaseController, JSONModel, formatter) {
     'use strict';
+
+    const inputNomeId = "idInputNome";
+    const inputPrecoId = "idInputPreco";
+    const selectGeneroId = "idSelectGenero";
     
     return BaseController.extend("ui5.codersgrowth.app.adicionarJogo.AdicionarJogo",{
+        formatter: formatter,
 
         onInit: function () {
             this.getRouter().getRoute("appAdicionarJogo").attachMatched(this._aoCoincidirRota, this);
@@ -13,24 +19,74 @@ sap.ui.define([
         _aoCoincidirRota: function () {
             const urlObterGeneros = "/api/GeneroControlador";
             const nomeListaGeneros = "listaGeneros";
+            const valueStatePadrao = "None";
 
             this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros);
+
+            this.getView().byId(inputNomeId).setValue();
+            this.getView().byId(inputNomeId).setValueState(valueStatePadrao);
+
+            this.getView().byId(inputPrecoId).setValue();
+            this.getView().byId(inputPrecoId).setValueState(valueStatePadrao);
+
+            this.getView().byId(selectGeneroId).setSelectedKey();
+            this.getView().byId(selectGeneroId).setValueState(valueStatePadrao);
         },
 
-        pegarValorDosCampos: function () {
-            const inputNomeId = "idInputNome";
-            const inputPrecoId = "idInputPreco";
-            const selectGeneroId = "idSelectGenero";
+        _pegarValorDosCampos: function () {
+            const generoNaoDefinido = "NAODEFINIDO";
 
             let valorInputNome = this.getView().byId(inputNomeId).getValue();
             let valorInputPreco = this.getView().byId(inputPrecoId).getValue();
             let valorSelectGenero = this.getView().byId(selectGeneroId).getSelectedKey();
 
-            let valorDosCampos = [valorInputNome, valorInputPreco, valorSelectGenero];
+            let jogo = {};
+
+            if (valorInputNome)
+                jogo.nome = valorInputNome;
+
+            if (valorInputPreco)
+                jogo.preco = valorInputPreco;
+
+            if (valorSelectGenero != generoNaoDefinido)
+                jogo.genero = valorSelectGenero;
+
+            return jogo;
         },
 
-        salvar: function () {
-            this.pegarValorDosCampos();
+        _validarTela: function (jogo) {
+            const valueStateDeErro = "Error";
+            const valueStatePadrao = "None";
+
+            if (!jogo.nome) {
+                this.getView().byId(inputNomeId).setValueState(valueStateDeErro);
+            }
+            else {
+                this.getView().byId(inputNomeId).setValueState(valueStatePadrao);
+            }
+                
+            if (!jogo.preco) {
+                this.getView().byId(inputPrecoId).setValueState(valueStateDeErro);
+            }
+            else {
+                this.getView().byId(inputPrecoId).setValueState(valueStatePadrao);
+            }
+
+            if (!jogo.genero) {
+                this.getView().byId(selectGeneroId).setValueState(valueStateDeErro);
+            }
+            else {
+                this.getView().byId(selectGeneroId).setValueState(valueStatePadrao);
+            }
+        },
+
+        salvarJogoNoBancoDeDados: function () {
+            const jogo = this._pegarValorDosCampos();
+
+            this._validarTela(jogo);
+
+            if (jogo.nome && jogo.preco && jogo.genero)
+                console.log(jogo);
         }
     });
 });
