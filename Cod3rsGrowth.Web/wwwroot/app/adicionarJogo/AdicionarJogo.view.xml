@@ -87,7 +87,8 @@
                             text="{i18n>adicionarJogoBotaoCancelarTexto}"
                             icon="sap-icon://sys-cancel-2"
                             iconFirst="false"
-                            type="Reject"/>
+                            type="Reject"
+                            press=".cancelarAdicaoDeJogo"/>
                     </OverflowToolbar>
                 </form:toolbar>
                 <form:content>
@@ -95,12 +96,14 @@
                         text="{i18n>adicionarJogoLabelNomeTexto}" 
                         required="true"/>
                     <Input
+                        placeholder="{i18n>placeholderInputNome}"
                         id="idInputNome"
                         required="true"
                         valueStateText="{i18n>campoNomeVazioTexto}"/>
                     <Label 
                         text="{i18n>adicionarJogoLabelPrecoTexto}"/>
                     <Input 
+                        placeholder="{i18n>placeholderInputPreco}"
                         id="idInputPreco"
                         required="true"
                         type="Number"

@@ -32,7 +32,7 @@ namespace Cod3rsGrowth.Servico.Validadores
 
             RuleFor(jogo => jogo.Preco)
                 .PrecisionScale(6, 2, true)
-                .WithMessage("Preco deve ter 4 digitos e duas casas decimais.");
+                .WithMessage("Preço deve ter 4 digitos e duas casas decimais.");
         }
 
         private bool validaEnum(Genero genero)

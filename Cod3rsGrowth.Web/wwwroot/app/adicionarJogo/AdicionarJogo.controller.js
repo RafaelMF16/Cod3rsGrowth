@@ -38,7 +38,7 @@ sap.ui.define([
 
             let valorInputNome = this.getView().byId(inputNomeId).getValue();
             let valorInputPreco = this.getView().byId(inputPrecoId).getValue();
-            let valorSelectGenero = this.getView().byId(selectGeneroId).getSelectedKey();
+            let valorSelectGenero = parseInt(this.getView().byId(selectGeneroId).getSelectedKey());
 
             let jogo = {};
 
@@ -82,11 +82,20 @@ sap.ui.define([
 
         salvarJogoNoBancoDeDados: function () {
             const jogo = this._pegarValorDosCampos();
-
+            const urlAdicionarJogo = "/api/JogoControlador";
             this._validarTela(jogo);
 
-            if (jogo.nome && jogo.preco && jogo.genero)
-                console.log(jogo);
+            if (jogo.nome && jogo.preco && jogo.genero) {
+                const opcoes = {
+                    method: 'POST',
+                    body: JSON.stringify(jogo),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                };
+
+                this.fazerRequisicaoPost(urlAdicionarJogo, opcoes);
+            }
         }
     });
 });

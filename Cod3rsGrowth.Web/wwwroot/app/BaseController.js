@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History",
 	"sap/ui/core/UIComponent",
-	'sap/ui/model/json/JSONModel'
-], function(Controller, History, UIComponent, JSONModel, ) {
+	'sap/ui/model/json/JSONModel',
+	"sap/m/MessageBox"
+], function(Controller, History, UIComponent, JSONModel, MessageBox) {
 	"use strict";
 
 	return Controller.extend("ui5.codersgrowth.app.BaseController", {
@@ -35,41 +36,68 @@ sap.ui.define([
 			   sap.ui.getCore().applyTheme(nomeModoEscuro);
 			else if (temaEscolhido === modoEscuro)
 			   sap.ui.getCore().applyTheme(nomeModoClaro);
-		 },
+		},
 
-		 _mostrarMensagemDeErro: function (erro) {
+		_mostrarMensagemDeErro: function (erro) {
 			const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
+			const erroDeValidacao = "Erro de validação"
+
+			if (erro.Title === erroDeValidacao){
+				const mensagensDeErro = Object.values(erro.Extensions.ErroDeValidacao).join("\r \n");
+
+				MessageBox.error(`${erro.Title} \n \n ${mensagensDeErro}`, {
+					title: propriedadesI18n.getText("tituloMessageBox"),
+					id: "messageBoxErro",
+					details: 
+						  `<p><strong>${propriedadesI18n.getText("statusMessageBox")}:<strong> ${erro.Status}` +
+						   `<p><strong>${propriedadesI18n.getText("detalhesMessageBox")}<strong>` +
+						   `<p>${erro.Detail}`,
+					styleClass: "sResponsivePaddingClasses",
+					dependentOn: this.getView()
+				 });
+			}
 
 			MessageBox.error(`${erro.Title}`, {
-			   title: propriedadesI18n.getText("tituloMessageBox"),
-			   id: "messageBoxErro",
-			   details: 
-				  `<p><strong>${propriedadesI18n.getText("statusMessageBox")}:<strong> ${erro.Status}` +
-				  `<p><strong>${propriedadesI18n.getText("detalhesMessageBox")}<strong>` +
-				  `<p>${erro.Detail}`,
-			   styleClass: "sResponsivePaddingClasses",
-			   dependentOn: this.getView()
-			});
-		 },
+				title: propriedadesI18n.getText("tituloMessageBox"),
+				id: "messageBoxErro",
+				details: 
+					  `<p><strong>${propriedadesI18n.getText("statusMessageBox")}:<strong> ${erro.Status}` +
+					   `<p><strong>${propriedadesI18n.getText("detalhesMessageBox")}<strong>` +
+					   `<p>${erro.Detail}`,
+				styleClass: "sResponsivePaddingClasses",
+				dependentOn: this.getView()
+			 });
+		},
 
-		 fazerRequisicaoGet: function (url, nomeLista) {
+		fazerRequisicaoGet: function (url, nomeLista) {
 			fetch(url)
 			   .then(respostaApi => {
-				  if (!respostaApi.ok) {
-					debugger;
-					 respostaApi.json()
-						.then(respostaApi => {
-						   this._mostrarMensagemDeErro(respostaApi)
-						});
-				  }
-				  return respostaApi.json();
-			   })
+					if (!respostaApi.ok) {
+						respostaApi.json()
+							.then(respostaApi => {
+						   		this._mostrarMensagemDeErro(respostaApi)
+							});
+					}
+				  	return respostaApi.json();
+				})
 			   .then(respostaApi => {
-				  const dataModel = new JSONModel();
-				  dataModel.setData(respostaApi);
+					const dataModel = new JSONModel();
+				  	dataModel.setData(respostaApi);
 					 
-				  this.getView().setModel(dataModel, nomeLista);
-			   });
-		 }
+				  	this.getView().setModel(dataModel, nomeLista);
+				});
+		},
+
+		fazerRequisicaoPost: function (url, opcoes) {
+			fetch(url, opcoes)
+				.then(respostaApi => {
+					if(!respostaApi.ok) {
+						respostaApi.json()
+							.then(respostaApi => {
+								this._mostrarMensagemDeErro(respostaApi)
+							});
+					}
+				})
+		}
 	});
 });
