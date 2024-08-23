@@ -12,6 +12,7 @@
             <Toolbar>
                 <FlexBox >
                     <Button 
+                        id="idAdicionarJogoBotaoNavBack"
                         icon="sap-icon://nav-back"
                         press=".onNavBack">
                     </Button>

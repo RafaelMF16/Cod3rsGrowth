@@ -1,9 +1,7 @@
 sap.ui.define([
    "ui5/codersgrowth/app/BaseController",
-   "sap/ui/model/json/JSONModel",
-   "../model/formatter",
-   "sap/m/MessageBox"
-], (BaseController, JSONModel, formatter, MessageBox) => {
+   "../model/formatter"
+], (BaseController, formatter) => {
    "use strict";
 
    var valorFiltroNome = "";
@@ -15,6 +13,10 @@ sap.ui.define([
       formatter: formatter,
 
       onInit: function () {
+         this.getRouter().getRoute("appJogo").attachMatched(this._aoCoincidirRota, this);
+      },
+
+      _aoCoincidirRota: function () {
          const urlObterTodos = "/api/JogoControlador";
          const urlObterGeneros = "/api/GeneroControlador";
          const nomeListaJogos = "listaJogos";
@@ -23,6 +25,27 @@ sap.ui.define([
          this.fazerRequisicaoGet(urlObterTodos, nomeListaJogos);
 
          this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros);
+      },
+
+      _filtrarJogos: function () {
+         const nomeListaJogos = "listaJogos";
+         let query = {};
+
+         if (valorFiltroNome)
+            query.nome = valorFiltroNome;
+
+         if (valorFiltroGenero)
+            query.genero = valorFiltroGenero;
+
+         if (valorFiltroPrecoMin)
+            query.precoMin = valorFiltroPrecoMin;
+
+         if (valorFiltroPrecoMax)
+            query.precoMax = valorFiltroPrecoMax;
+
+         let urlObterTodosComFiltros = `/api/JogoControlador?` + new URLSearchParams(query);
+
+         this.fazerRequisicaoGet(urlObterTodosComFiltros, nomeListaJogos);
       },
 
       pegarValorDoSelect: function (oEvent) {
@@ -47,27 +70,6 @@ sap.ui.define([
          valorFiltroPrecoMax = oEvent.getSource().getValue();
 
          this._filtrarJogos();
-      },
-
-      _filtrarJogos: function () {
-         const nomeListaJogos = "listaJogos";
-         let query = {};
-
-         if (valorFiltroNome)
-            query.nome = valorFiltroNome;
-
-         if (valorFiltroGenero)
-            query.genero = valorFiltroGenero;
-
-         if (valorFiltroPrecoMin)
-            query.precoMin = valorFiltroPrecoMin;
-
-         if (valorFiltroPrecoMax)
-            query.precoMax = valorFiltroPrecoMax;
-
-         let urlObterTodosComFiltros = `/api/JogoControlador?` + new URLSearchParams(query);
-
-         this.fazerRequisicaoGet(urlObterTodosComFiltros, nomeListaJogos);
       },
 
       atualizarTitulo: function (oEvent) {

@@ -12,31 +12,20 @@ sap.ui.define([
 			return UIComponent.getRouterFor(this);
 		},
 
-		onNavBack: function () {
-			var oHistory, sPreviousHash;
-
-			oHistory = History.getInstance();
-			sPreviousHash = oHistory.getPreviousHash();
-
-			if (sPreviousHash !== undefined) {
-				window.history.go(-1);
-			} else {
-				this.getRouter().navTo("appJogo", {}, true);
-			}
-		},
-
-		alternarTema: function (oEvent) {
-			const temaEscolhido = oEvent.getSource().getText();
-			const modoClaro = "Claro";
-			const modoEscuro = "Escuro";
-			const nomeModoEscuro = "sap_horizon";
-			const nomeModoClaro = "sap_horizon_dark";
-
-			if (temaEscolhido === modoClaro)
-			   sap.ui.getCore().applyTheme(nomeModoEscuro);
-			else if (temaEscolhido === modoEscuro)
-			   sap.ui.getCore().applyTheme(nomeModoClaro);
-		},
+		_mostrarMensagemDeSucesso: function (jogoNome) {
+            const mensagemDeSucesso = `${jogoNome} foi adicionado com sucesso`
+            MessageBox.success(mensagemDeSucesso, {
+                id: "messageBoxSucesso",
+                styleClass: "sResponsivePaddingClasses",
+                dependentOn: this.getView(),
+                actions: [MessageBox.Action.OK],
+                onClose: (sAction) => {
+                    if (sAction === MessageBox.Action.OK) {
+                        this._voltarParaTelaDeListagem();
+                    }
+                }
+             });
+        },
 
 		_mostrarMensagemDeErro: function (erro) {
 			const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
@@ -46,27 +35,28 @@ sap.ui.define([
 				const mensagensDeErro = Object.values(erro.Extensions.ErroDeValidacao).join("\r \n");
 
 				MessageBox.error(`${erro.Title} \n \n ${mensagensDeErro}`, {
-					title: propriedadesI18n.getText("tituloMessageBox"),
-					id: "messageBoxErro",
+					title: propriedadesI18n.getText("tituloMessageBoxErro"),
+					id: "messageBoxErroDeValidacao",
 					details: 
-						  `<p><strong>${propriedadesI18n.getText("statusMessageBox")}:<strong> ${erro.Status}` +
-						   `<p><strong>${propriedadesI18n.getText("detalhesMessageBox")}<strong>` +
+						  `<p><strong>${propriedadesI18n.getText("statusMessageBoxErro")}:<strong> ${erro.Status}` +
+						   `<p><strong>${propriedadesI18n.getText("detalhesMessageBoxErro")}<strong>` +
 						   `<p>${erro.Detail}`,
 					styleClass: "sResponsivePaddingClasses",
 					dependentOn: this.getView()
 				 });
 			}
-
-			MessageBox.error(`${erro.Title}`, {
-				title: propriedadesI18n.getText("tituloMessageBox"),
-				id: "messageBoxErro",
-				details: 
-					  `<p><strong>${propriedadesI18n.getText("statusMessageBox")}:<strong> ${erro.Status}` +
-					   `<p><strong>${propriedadesI18n.getText("detalhesMessageBox")}<strong>` +
-					   `<p>${erro.Detail}`,
-				styleClass: "sResponsivePaddingClasses",
-				dependentOn: this.getView()
-			 });
+			else {
+				MessageBox.error(`${erro.Title}`, {
+					title: propriedadesI18n.getText("tituloMessageBoxErro"),
+					id: "messageBoxErroInesperado",
+					details: 
+						  `<p><strong>${propriedadesI18n.getText("statusMessageBoxErro")}:<strong> ${erro.Status}` +
+						   `<p><strong>${propriedadesI18n.getText("detalhesMessageBoxErro")}<strong>` +
+						   `<p>${erro.Detail}`,
+					styleClass: "sResponsivePaddingClasses",
+					dependentOn: this.getView()
+				 });
+			}
 		},
 
 		fazerRequisicaoGet: function (url, nomeLista) {
@@ -88,16 +78,39 @@ sap.ui.define([
 				});
 		},
 
-		fazerRequisicaoPost: function (url, opcoes) {
+		fazerRequisicaoPost: function (url, opcoes, jogoNome) {
 			fetch(url, opcoes)
-				.then(respostaApi => {
-					if(!respostaApi.ok) {
-						respostaApi.json()
-							.then(respostaApi => {
-								this._mostrarMensagemDeErro(respostaApi)
-							});
-					}
-				})
-		}
+				.then(respostaApi => { 
+					return !respostaApi.ok? respostaApi.json().then(respostaApi => {
+						this._mostrarMensagemDeErro(respostaApi)
+					}) : this._mostrarMensagemDeSucesso(jogoNome);
+				});
+		},
+
+		alternarTema: function (oEvent) {
+			const temaEscolhido = oEvent.getSource().getText();
+			const modoClaro = "Claro";
+			const modoEscuro = "Escuro";
+			const nomeModoEscuro = "sap_horizon";
+			const nomeModoClaro = "sap_horizon_dark";
+
+			if (temaEscolhido === modoClaro)
+			   sap.ui.getCore().applyTheme(nomeModoEscuro);
+			else if (temaEscolhido === modoEscuro)
+			   sap.ui.getCore().applyTheme(nomeModoClaro);
+		},
+
+		onNavBack: function () {
+			var oHistory, sPreviousHash;
+
+			oHistory = History.getInstance();
+			sPreviousHash = oHistory.getPreviousHash();
+
+			if (sPreviousHash !== undefined) {
+				window.history.go(-1);
+			} else {
+				this.getRouter().navTo("appJogo", {}, true);
+			}
+		},
 	});
 });

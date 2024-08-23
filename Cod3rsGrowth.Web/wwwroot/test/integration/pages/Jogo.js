@@ -4,26 +4,30 @@ sap.ui.define([
 	'sap/ui/test/matchers/AggregationLengthEquals',
 	'sap/ui/test/actions/EnterText',
 	'sap/ui/test/matchers/I18NText',
-	'sap/ui/test/matchers/Properties'
-], (Opa5, Press, AggregationLengthEquals, EnterText, I18NText, Properties) => {
+	'sap/ui/test/matchers/Properties',
+	'sap/ui/test/matchers/PropertyStrictEquals'
+], (Opa5, Press, AggregationLengthEquals, EnterText, I18NText, Properties, PropertyStrictEquals) => {
 	"use strict";
 
-	const nomeDaView = "ui5.codersgrowth.app.jogo.Jogo";
-	const tabeloJogoId = "idTabelaJogo";
+	const nomeDaViewJogo = "jogo.Jogo";
+	const nomeDaViewAdicionarJogo = "adicionarJogo.AdicionarJogo";
+	const tabelaJogoId = "idTabelaJogo";
 	const tabelaJogoTituloId = "idTabelaJogoTitulo";
 	const campoDePesquisaPorNomeId = "idCampoDePesquisaNome";
 	const campoDeSelecaoGeneroId = "idCampoDeSelecaoGenero";
 	const inputPrecoMinId = "idInputPrecoMin";
 	const inputPrecoMaxId = "idInputPrecoMax"
 	const menuBotaoHeaderId = "idMenuBotaoHeader";
+	const botaAdicionarId = "idBotaoAdicionar";
+	const botaoNavBackAdicionarJogo = "idAdicionarJogoBotaoNavBack";
 
 	Opa5.createPageObjects({
 		paginaJogo: {
 			actions: {
 				aoApertarEmMais: function () {
 					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
+						id: tabelaJogoId,
+						viewName: nomeDaViewJogo,
 						actions: new Press(),
 						errorMessage: "A tabela não tem botão para carregar mais items"
 					});
@@ -32,7 +36,7 @@ sap.ui.define([
 				aoColocarTextoNoCampoDePesquisaDeNome: function (jogoNome) {
 					return this.waitFor({
 						id: campoDePesquisaPorNomeId,
-						viewName: nomeDaView,
+						viewName: nomeDaViewJogo,
 						actions: new EnterText({
 							text: jogoNome
 						}),
@@ -43,7 +47,7 @@ sap.ui.define([
 				limparFiltroDePesquisa: function () {
 					return this.waitFor({
 						id: campoDePesquisaPorNomeId,
-						viewName: nomeDaView,
+						viewName: nomeDaViewJogo,
 						actions: new EnterText({
 							text: " "
 						}),
@@ -54,13 +58,13 @@ sap.ui.define([
 				aoEscolherGeneroNoSelect: function (generoSelecionado) {
 					return this.waitFor({
 						id: campoDeSelecaoGeneroId,
-						viewName: nomeDaView,
+						viewName: nomeDaViewJogo,
 						actions: new Press(),
 						success: function() {
 							this.waitFor({
-								controlType: "sap.ui.core.Item",
+								controlType: "sap.ui.core.ListItem",
 								matchers: [
-									new Properties({ key: generoSelecionado})
+									new Properties({ text: generoSelecionado})
 								],
 								actions: new Press(),
 								errorMessage: "FPS não foi selecionado no select"
@@ -72,13 +76,13 @@ sap.ui.define([
 				limparFiltroGenero: function () {
 					return this.waitFor({
 						id: campoDeSelecaoGeneroId,
-						viewName: nomeDaView,
+						viewName: nomeDaViewJogo,
 						actions: new Press(),
 						success: function() {
 							this.waitFor({
 								controlType: "sap.ui.core.Item",
 								matchers: [
-									new Properties({ key: "NAODEFINIDO"})
+									new Properties({ text: "Todos"})
 								],
 								actions: new Press(),
 								errorMessage: "NAODEFINIDO não foi selecionado no select"
@@ -90,7 +94,7 @@ sap.ui.define([
 				aoColocarValorNoInputPrecoMin: function (precoMin) {
 					return this.waitFor({
 						id: inputPrecoMinId,
-						viewName: nomeDaView,
+						viewName: nomeDaViewJogo,
 						actions: new EnterText({
 							text: precoMin
 						}),
@@ -101,7 +105,7 @@ sap.ui.define([
 				limparFiltroPrecoMin: function() {
 					return this.waitFor({
 						id: inputPrecoMinId,
-						viewName: nomeDaView,
+						viewName: nomeDaViewJogo,
 						actions: new EnterText({
 							text: " "
 						}),
@@ -112,7 +116,7 @@ sap.ui.define([
 				aoColocarValorNoInputPrecoMax: function (precoMax) {
 					return this.waitFor({
 						id: inputPrecoMaxId,
-						viewName: nomeDaView,
+						viewName: nomeDaViewJogo,
 						actions: new EnterText({
 							text: precoMax
 						}),
@@ -123,7 +127,7 @@ sap.ui.define([
 				limparFiltroPrecoMax: function () {
 					return this.waitFor({
 						id: inputPrecoMaxId,
-						viewName: nomeDaView,
+						viewName: nomeDaViewJogo,
 						actions: new EnterText({
 							text: " "
 						}),
@@ -134,7 +138,7 @@ sap.ui.define([
 				alternarEntreModoClaroEscuro: function (modo) {
 					return this.waitFor({
 						id: menuBotaoHeaderId,
-						viewName: nomeDaView,
+						viewName: nomeDaViewJogo,
 						actions: new Press(),
 						success: function () {
 							this.waitFor({
@@ -155,12 +159,29 @@ sap.ui.define([
 						},
 					})
 				},
+				AoClicarNoBotaoAdicionar: function () {
+					return this.waitFor({
+						id: botaAdicionarId,
+						viewName: nomeDaViewJogo,
+						actions: new Press(),
+						errorMessage: "Botão adicionar jogo não foi encontrado"
+					})
+				},
+
+				AoClicarNoBotaoNavBack: function () {
+					return this.waitFor({
+						id: botaoNavBackAdicionarJogo,
+						viewName: nomeDaViewAdicionarJogo,
+						actions: new Press(),
+						errorMessage: "Botão para voltar para tela de listagem não foi encontrado"
+					})
+				}
 			},
 			assertions: {
 				aTabelaDeveTerPaginacao: function () {
 					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
+						id: tabelaJogoId,
+						viewName: nomeDaViewJogo,
 						matchers: new AggregationLengthEquals({
 							name: "items",
 							length: 10
@@ -168,29 +189,14 @@ sap.ui.define([
 						success: function () {
 							Opa5.assert.ok(true, "A tabela tem 10 itens na primeira página.");
 						},
-						errorMessage: "A tabela não contém todos os items."
-					});
-				},
-
-				aTabelaDeveTerTodosOsItems: function () {
-					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
-						matchers: new AggregationLengthEquals({
-							name: "items",
-							length: 20
-						}),
-						success: function () {
-							Opa5.assert.ok(true, "A tabela tem 20 items");
-						},
-						errorMessage: "A tabela não contém todos os items"
+						errorMessage: "A tabela não contém paginação."
 					});
 				},
 
 				oTituloDeveMostrarQuantidadeDeItems: function () {
 					return this.waitFor({
 						id: tabelaJogoTituloId,
-						viewName: nomeDaView,
+						viewName: nomeDaViewJogo,
 						matchers: new I18NText({
 							key: "contadorDeItemsTitulo",
 							propertyName: "text",
@@ -203,139 +209,30 @@ sap.ui.define([
 					});
 				},
 
-				aTabelaDeveTerApenasItemPesquisado: function () {
+				aTabelaDeveTerQuantidadeDeItemsCorrespondente: function (quantidade) {
 					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
-						matchers: new AggregationLengthEquals({
-							name: "items",
-							length: 1
-						}),
-						success: function () {
-							Opa5.assert.ok(true, "A tabela contém um item");
+						id: tabelaJogoId,
+						viewName: nomeDaViewJogo,
+						check: function(tabela){
+							return tabela.getItems().length == quantidade
 						},
-						errorMessage: "Não foi possível fazer a pesquisa"
-					});
-				},
-
-				aTabelaDeveMostrarApenasOsItemsComGeneroSelecionado: function () {
-					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
-						matchers: new AggregationLengthEquals({
-							name: "items",
-							length: 2
-						}),
-						success: function () {
-							Opa5.assert.ok(true, "Foi mostrado apenas os items com gênero FPS");
-						},
-						errorMessage: "Não foi possível filtrar pelo gênero FPS"
-					});
-				},
-
-				aTabelaDeveMostrarApenasItemComNomePesquisadoGeneroSelecionado: function () {
-					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
-						matchers: new AggregationLengthEquals({
-							name: "items",
-							length: 1
-						}),
-						success: function () {
-							Opa5.assert.ok(true, "Foi mostrado apenas o item pesquisado por nome e gênero");
-						},
-						errorMessage: "Não foi possível filtrar por nome e gênero"
-					});
-				},
-
-				aTabelaDeveMostrarApenasOsItemsComPrecoMinIgualCem: function () {
-					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
-						matchers: new AggregationLengthEquals({
-							name: "items",
-							length: 9
-						}),
-						success: function () {
-							Opa5.assert.ok(true, "Foi mostrado apenas os items com preço mínimo igual 100");
-						},
-						errorMessage: "Não foi possível filtrar pelo preço mínimo"
-					});
-				},
-
-				aTabelaDeveMostrarApenasOsItemsComPrecoMaxIgualZero: function () {
-					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
-						matchers: new AggregationLengthEquals({
-							name: "items",
-							length: 5
-						}),
 						success : function () {
-							Opa5.assert.ok(true, "Foi mostrado apenas os items com preço máximo igual 0");
+							Opa5.assert.ok(true, "A tabela tem a quantidade de items correta");
 						},
-						errorMessage: "Não foi possível filtrar pelo preço máximo"
+						errorMessage: "A tabela não tem a quantidade de items correta"
 					});
 				},
 
-				aTabelaDeveMostrarApenasOsItemsComPrecoEntrePrecoMinPrecoMax: function () {
+				aTelaComTituloCorrespondenteFoiCarregadaCorretamente: function (titulo) {
 					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
-						matchers: new AggregationLengthEquals({
-							name: "items",
-							length: 4
+						controlType: "sap.m.Title",
+						matchers: new PropertyStrictEquals({
+							name: 'text',
+							value: titulo
 						}),
-						success : function () {
-							Opa5.assert.ok(true, "Foi mostrado apenas os items com preço entre preço mínimo e preço máximo");
-						},
-						errorMessage: "Não foi possível filtrar pelo preço mínimo e preço máximo"
-					});
-				},
-
-				aTabelaDeveMostrarApenasOsItemsComPrecoEntrePrecoMinPrecoMaxGeneroSelecionado: function () {
-					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
-						matchers: new AggregationLengthEquals({
-							name: "items",
-							length: 2
-						}),
-						success : function () {
-							Opa5.assert.ok(true, "Foi mostrado apenas os items com gênero selecionado e preço entre preço mínimo e preço máximo");
-						},
-						errorMessage: "Não foi possível filtrar pelo preço mínimo, preço máximo e gênero"
-					});
-				},
-
-				aTabelaDeveMostrarApenasItemComNomePesquisadoPrecoEntrePrecoMinPrecoMaxGeneroSelecionado: function () {
-					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
-						matchers: new AggregationLengthEquals({
-							name: "items",
-							length: 1
-						}),
-						success : function () {
-							Opa5.assert.ok(true, "Foi mostrado apenas o item com nome pesquisado, gênero selecionado e preço entre preço mínimo e preço máximo");
-						},
-						errorMessage: "Não foi possível filtrar por nome, preço mínimo, preço máximo e gênero"
-					});
-				},
-
-				aTabelaNaoDeveMostrarItem: function () {
-					return this.waitFor({
-						id: tabeloJogoId,
-						viewName: nomeDaView,
-						matchers: new AggregationLengthEquals({
-							name: "items",
-							length: 0
-						}),
-						success : function () {
-							Opa5.assert.ok(true, "A tabela está sem dados");
-						},
-						errorMessage: "A tabela deveria estar sem dados"
-					});
+						success: () => Opa5.assert.ok(true, `A tela com título ${titulo} foi carregada corretamente`),
+						errorMessage: `A tela com título ${titulo} não foi carregada corretamente`
+					})
 				}
 			}
 		}

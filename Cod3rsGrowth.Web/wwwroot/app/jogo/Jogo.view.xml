@@ -111,6 +111,7 @@
                         width="8%"/>
                     <ToolbarSeparator />
                     <Button 
+                        id="idBotaoAdicionar"
                         text="{i18n>botaoAdicionar}"
                         icon="sap-icon://sys-add"
                         type="Ghost"

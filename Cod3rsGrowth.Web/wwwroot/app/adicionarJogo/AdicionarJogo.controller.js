@@ -1,8 +1,8 @@
 sap.ui.define([
     'ui5/codersgrowth/app/BaseController',
-    'sap/ui/model/json/JSONModel',
+    'sap/m/MessageBox',
     '../model/formatter'
-], function(BaseController, JSONModel, formatter) {
+], function(BaseController, MessageBox, formatter) {
     'use strict';
 
     const inputNomeId = "idInputNome";
@@ -80,6 +80,10 @@ sap.ui.define([
             }
         },
 
+        _voltarParaTelaDeListagem: function () {
+            this.getRouter().navTo("appJogo", {}, true);
+        },
+
         salvarJogoNoBancoDeDados: function () {
             const jogo = this._pegarValorDosCampos();
             const urlAdicionarJogo = "/api/JogoControlador";
@@ -93,9 +97,13 @@ sap.ui.define([
                         "Content-type": "application/json; charset=UTF-8"
                     }
                 };
-
-                this.fazerRequisicaoPost(urlAdicionarJogo, opcoes);
+                this.fazerRequisicaoPost(urlAdicionarJogo, opcoes, jogo.nome);
+                
             }
+        },
+
+        cancelarAdicaoDeJogo: function () {
+            this._voltarParaTelaDeListagem();
         }
     });
 });
