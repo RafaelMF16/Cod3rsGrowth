@@ -79,12 +79,14 @@
                             titleStyle="H4"/>
                         <ToolbarSpacer />
                         <Button 
+                            id="idBotaoSalvarCriacaoJogo"
                             text="{i18n>adicionarJogoBotaoSalvarTexto}"
                             icon="sap-icon://save"
                             iconFirst="false"
                             type="Ghost"
                             press=".salvarJogoNoBancoDeDados"/>
                         <Button 
+                            id="idBotaoCancelarCriacaoJogo"
                             text="{i18n>adicionarJogoBotaoCancelarTexto}"
                             icon="sap-icon://sys-cancel-2"
                             iconFirst="false"

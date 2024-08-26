@@ -57,15 +57,16 @@ sap.ui.define([
         _validarTela: function (jogo) {
             const valueStateDeErro = "Error";
             const valueStatePadrao = "None";
+            const stringVazia = "";
 
-            if (!jogo.nome) {
+            if (!jogo.nome || jogo.nome.trim() === stringVazia) {
                 this.getView().byId(inputNomeId).setValueState(valueStateDeErro);
             }
             else {
                 this.getView().byId(inputNomeId).setValueState(valueStatePadrao);
             }
                 
-            if (!jogo.preco) {
+            if (!jogo.preco || jogo.preco.trim() === stringVazia) {
                 this.getView().byId(inputPrecoId).setValueState(valueStateDeErro);
             }
             else {

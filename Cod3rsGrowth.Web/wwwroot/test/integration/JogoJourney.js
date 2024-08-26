@@ -124,7 +124,7 @@ sap.ui.define([
 
 	opaTest("Deve poder ir para tela de adição de jogos", function (Given, When, Then) {
 		//Ações
-		When.paginaJogo.AoClicarNoBotaoAdicionar();
+		When.paginaJogo.aoClicarNoBotaoAdicionar();
 
 		//Asserções
 		Then.paginaJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Adicionar Jogo");
@@ -132,7 +132,7 @@ sap.ui.define([
 
 	opaTest("Quando estiver na tela de adição deve poder voltar para tela de listagem", function (Given, When, Then) {
 		//Ações
-		When.paginaJogo.AoClicarNoBotaoNavBack();
+		When.paginaJogo.aoClicarNoBotaoNavBack();
 
 		//Asserções
 		Then.paginaJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (20)")

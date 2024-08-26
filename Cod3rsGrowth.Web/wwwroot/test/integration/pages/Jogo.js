@@ -159,7 +159,7 @@ sap.ui.define([
 						},
 					})
 				},
-				AoClicarNoBotaoAdicionar: function () {
+				aoClicarNoBotaoAdicionar: function () {
 					return this.waitFor({
 						id: botaAdicionarId,
 						viewName: nomeDaViewJogo,
@@ -168,7 +168,7 @@ sap.ui.define([
 					})
 				},
 
-				AoClicarNoBotaoNavBack: function () {
+				aoClicarNoBotaoNavBack: function () {
 					return this.waitFor({
 						id: botaoNavBackAdicionarJogo,
 						viewName: nomeDaViewAdicionarJogo,
