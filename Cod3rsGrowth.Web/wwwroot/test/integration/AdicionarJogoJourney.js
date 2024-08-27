@@ -93,7 +93,7 @@ sap.ui.define([
 		Then.paginaAdicionarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Adicionar Jogo")
 	});
 
-	opaTest("Deve ser possível clicar em fechar na caixa de mensagem de erro", function (Given, When, Then) {
+	opaTest("Deve ser possível clicar em OK na caixa de mensagem de sucesso", function (Given, When, Then) {
 		//Ações
 		When.paginaAdicionarJogo.adicionarValorAoInputNome("FarCry 5");
 		When.paginaAdicionarJogo.adicionarValorAoInputPreco("120");
@@ -104,5 +104,8 @@ sap.ui.define([
 
 		//Asserções
 		Then.paginaAdicionarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)")
+
+		//FinalizarJornada
+		Then.iTeardownMyApp();
 	});
 });
