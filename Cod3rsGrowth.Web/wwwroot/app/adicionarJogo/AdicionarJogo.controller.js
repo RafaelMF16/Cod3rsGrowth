@@ -1,8 +1,8 @@
 sap.ui.define([
     'ui5/codersgrowth/app/BaseController',
-    'sap/m/MessageBox',
-    '../model/formatter'
-], function(BaseController, MessageBox, formatter) {
+    '../model/formatter',
+    '../servicos/validacao'
+], function(BaseController, formatter, validacao) {
     'use strict';
 
     const inputNomeId = "idInputNome";
@@ -11,6 +11,7 @@ sap.ui.define([
     
     return BaseController.extend("ui5.codersgrowth.app.adicionarJogo.AdicionarJogo",{
         formatter: formatter,
+        validacao: validacao,
 
         onInit: function () {
             this.getRouter().getRoute("appAdicionarJogo").attachMatched(this._aoCoincidirRota, this);
@@ -54,42 +55,16 @@ sap.ui.define([
             return jogo;
         },
 
-        _validarTela: function (jogo) {
-            const valueStateDeErro = "Error";
-            const valueStatePadrao = "None";
-            const stringVazia = "";
-
-            if (!jogo.nome || jogo.nome.trim() === stringVazia) {
-                this.getView().byId(inputNomeId).setValueState(valueStateDeErro);
-            }
-            else {
-                this.getView().byId(inputNomeId).setValueState(valueStatePadrao);
-            }
-                
-            if (!jogo.preco || jogo.preco.trim() === stringVazia) {
-                this.getView().byId(inputPrecoId).setValueState(valueStateDeErro);
-            }
-            else {
-                this.getView().byId(inputPrecoId).setValueState(valueStatePadrao);
-            }
-
-            if (!jogo.genero) {
-                this.getView().byId(selectGeneroId).setValueState(valueStateDeErro);
-            }
-            else {
-                this.getView().byId(selectGeneroId).setValueState(valueStatePadrao);
-            }
-        },
-
         _voltarParaTelaDeListagem: function () {
             this.getRouter().navTo("appJogo", {}, true);
         },
 
-        salvarJogoNoBancoDeDados: function () {
+        salvarJogo: function () {
             const jogo = this._pegarValorDosCampos();
             const urlAdicionarJogo = "/api/JogoControlador";
-            this._validarTela(jogo);
-
+            const viewAdicionarJogo = this.getView();
+            this.validacao.validarTela(jogo, viewAdicionarJogo);
+            
             if (jogo.nome && jogo.preco && jogo.genero) {
                 const opcoes = {
                     method: 'POST',
@@ -98,7 +73,7 @@ sap.ui.define([
                         "Content-type": "application/json; charset=UTF-8"
                     }
                 };
-                this.fazerRequisicaoPost(urlAdicionarJogo, opcoes, jogo.nome);
+                this.fazerRequisicaoPost(urlAdicionarJogo, opcoes, jogo.nome, viewAdicionarJogo);
                 
             }
         },

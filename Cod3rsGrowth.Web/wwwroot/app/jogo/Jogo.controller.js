@@ -29,6 +29,7 @@ sap.ui.define([
 
       _filtrarJogos: function () {
          const nomeListaJogos = "listaJogos";
+         const viewJogo = this.getView();
          let query = {};
 
          if (valorFiltroNome)
@@ -45,7 +46,7 @@ sap.ui.define([
 
          let urlObterTodosComFiltros = `/api/JogoControlador?` + new URLSearchParams(query);
 
-         this.fazerRequisicaoGet(urlObterTodosComFiltros, nomeListaJogos);
+         this.fazerRequisicaoGet(urlObterTodosComFiltros, nomeListaJogos, viewJogo);
       },
 
       pegarValorDoSelect: function (oEvent) {

@@ -6,9 +6,9 @@ namespace Cod3rsGrowth.Infra.Repositorio
     {
         public static void DeletarJogosAdicionadosEmTeste(DbCod3rsGrowth bancoDeDados)
         {   
-            const int numeroMaximoDeJogos = 20;
+            const string nomeDoJogoQueVaiSerDeletado = "FarCry 5";
             bancoDeDados.Jogo
-                .Delete(jogo => jogo.Id > numeroMaximoDeJogos);
+                .Delete(jogo => jogo.Nome == nomeDoJogoQueVaiSerDeletado);
         }
     }
 }

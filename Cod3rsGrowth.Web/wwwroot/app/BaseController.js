@@ -3,11 +3,14 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"sap/ui/core/UIComponent",
 	'sap/ui/model/json/JSONModel',
-	"sap/m/MessageBox"
-], function(Controller, History, UIComponent, JSONModel, MessageBox) {
+	"sap/m/MessageBox",
+	"ui5/codersgrowth/app/servicos/validacao"
+], function(Controller, History, UIComponent, JSONModel, MessageBox, validacao) {
 	"use strict";
-
+	
 	return Controller.extend("ui5.codersgrowth.app.BaseController", {
+		validacao: validacao,
+		
 		getRouter : function () {
 			return UIComponent.getRouterFor(this);
 		},
@@ -27,45 +30,13 @@ sap.ui.define([
              });
         },
 
-		_mostrarMensagemDeErro: function (erro) {
-			const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
-			const erroDeValidacao = "Erro de validação"
-
-			if (erro.Title === erroDeValidacao){
-				const mensagensDeErro = Object.values(erro.Extensions.ErroDeValidacao).join("\r \n");
-
-				MessageBox.error(`${erro.Title} \n \n ${mensagensDeErro}`, {
-					title: propriedadesI18n.getText("tituloMessageBoxErro"),
-					id: "messageBoxErroDeValidacao",
-					details: 
-						  `<p><strong>${propriedadesI18n.getText("statusMessageBoxErro")}:<strong> ${erro.Status}` +
-						   `<p><strong>${propriedadesI18n.getText("detalhesMessageBoxErro")}<strong>` +
-						   `<p>${erro.Detail}`,
-					styleClass: "sResponsivePaddingClasses",
-					dependentOn: this.getView()
-				 });
-			}
-			else {
-				MessageBox.error(`${erro.Title}`, {
-					title: propriedadesI18n.getText("tituloMessageBoxErro"),
-					id: "messageBoxErroInesperado",
-					details: 
-						  `<p><strong>${propriedadesI18n.getText("statusMessageBoxErro")}:<strong> ${erro.Status}` +
-						   `<p><strong>${propriedadesI18n.getText("detalhesMessageBoxErro")}<strong>` +
-						   `<p>${erro.Detail}`,
-					styleClass: "sResponsivePaddingClasses",
-					dependentOn: this.getView()
-				 });
-			}
-		},
-
-		fazerRequisicaoGet: function (url, nomeLista) {
+		fazerRequisicaoGet: function (url, nomeLista, view) {
 			fetch(url)
 			   .then(respostaApi => {
 					if (!respostaApi.ok) {
 						respostaApi.json()
 							.then(respostaApi => {
-						   		this._mostrarMensagemDeErro(respostaApi)
+						   		this.validacao.mostrarMensagemDeErro(respostaApi, view)
 							});
 					}
 				  	return respostaApi.json();
@@ -78,11 +49,11 @@ sap.ui.define([
 				});
 		},
 
-		fazerRequisicaoPost: function (url, opcoes, jogoNome) {
+		fazerRequisicaoPost: function (url, opcoes, jogoNome, view) {
 			fetch(url, opcoes)
 				.then(respostaApi => { 
 					return !respostaApi.ok? respostaApi.json().then(respostaApi => {
-						this._mostrarMensagemDeErro(respostaApi)
+						this.validacao.mostrarMensagemDeErro(respostaApi, view)
 					}) : this._mostrarMensagemDeSucesso(jogoNome);
 				});
 		},

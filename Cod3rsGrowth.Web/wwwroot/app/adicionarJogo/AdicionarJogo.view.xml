@@ -84,7 +84,7 @@
                             icon="sap-icon://save"
                             iconFirst="false"
                             type="Ghost"
-                            press=".salvarJogoNoBancoDeDados"/>
+                            press=".salvarJogo"/>
                         <Button 
                             id="idBotaoCancelarCriacaoJogo"
                             text="{i18n>adicionarJogoBotaoCancelarTexto}"
