@@ -147,10 +147,11 @@
             </columns>
             <items>
                 <ColumnListItem 
-                    type="Navigation">
+                    type="Navigation"
+                    press=".aoClicarNavegarParaDetalhes">
                     <cells>
                         <ObjectIdentifier 
-                            title="{listaJogos>nome}"/>
+                            title="lau"/>
                         <Text
                             text="{listaJogos>genero}"/>
                         <ObjectNumber 
