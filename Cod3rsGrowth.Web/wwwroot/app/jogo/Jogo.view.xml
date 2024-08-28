@@ -3,7 +3,8 @@
     xmlns:f="sap.f" 
     controllerName="ui5.codersgrowth.app.jogo.Jogo"
     xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc">
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true">
     <Page>
         <customHeader>
             <Toolbar>
@@ -90,7 +91,7 @@
                             key="{listaGeneros>key}"
                             text="{
                                 path: 'listaGeneros>descricao',
-                                formatter: '.formatter.formatarValorPadraoComboBox'
+                                formatter: '.formatter.formatarValorPadraoSelectParaTelaDeListagem'
                             }"/>
                     </Select>
                     <ToolbarSeparator />
@@ -110,10 +111,12 @@
                         width="8%"/>
                     <ToolbarSeparator />
                     <Button 
+                        id="idBotaoAdicionar"
                         text="{i18n>botaoAdicionar}"
                         icon="sap-icon://sys-add"
                         type="Ghost"
-                        iconFirst="false"/>
+                        iconFirst="false"
+                        press=".aoClicarIrParaTelaDeAdicionarJogo"/>
                 </OverflowToolbar>
             </headerToolbar>
             <columns>

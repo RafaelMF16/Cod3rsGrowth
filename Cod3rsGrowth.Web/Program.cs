@@ -1,13 +1,17 @@
+using Cod3rsGrowth.Infra;
 using Cod3rsGrowth.Infra.Repositorio;
 using Cod3rsGrowth.Web.Injecao;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.FileProviders;
 
+const string argumentoBancoDeDadosDeTestes = "BancoDeDadosTeste";
+
 var builder = WebApplication.CreateBuilder(args);
 
-if (args.FirstOrDefault() == "BancoDeDadosTeste")
+if (args.FirstOrDefault() == argumentoBancoDeDadosDeTestes)
 {
-    ConnectionString.connectionString = "ConnectionStringBancoDeDadosDeTestes";
+    const string stringDeConexaoDoBancoDeDadosDeTestes = "ConnectionStringBancoDeDadosDeTestes";
+    ConnectionString.connectionString = stringDeConexaoDoBancoDeDadosDeTestes;
 }
 
 builder.AdicionarServicosAoEscopo();
@@ -49,5 +53,14 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+if (args?.FirstOrDefault() == argumentoBancoDeDadosDeTestes)
+{
+    using (var escopo = app.Services.CreateScope())
+    {
+        var contextoBancoDeDados = escopo.ServiceProvider.GetRequiredService<DbCod3rsGrowth>();
+        DeletarJogosRepositorio.DeletarJogosAdicionadosEmTeste(contextoBancoDeDados);
+    }
+}
 
 app.Run();

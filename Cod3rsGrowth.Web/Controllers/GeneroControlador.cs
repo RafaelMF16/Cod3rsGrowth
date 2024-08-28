@@ -15,7 +15,7 @@ namespace Cod3rsGrowth.Web.Controllers
                                  .Cast<Genero>()
                                  .Select(enumerador => new
                                  {
-                                     Key = enumerador.ToString(),
+                                     Key = (int)enumerador,
                                      Descricao = ServicoGenero.ObterDescricaoEnum(enumerador)
                                  })
                                  .ToList();

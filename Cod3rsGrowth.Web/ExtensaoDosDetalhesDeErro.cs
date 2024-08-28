@@ -28,7 +28,7 @@ public static class ExtensaoDosDetalhesDeErro
                         detalhesDeErro.Status = StatusCodes.Status400BadRequest;
                         detalhesDeErro.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1";
                         detalhesDeErro.Detail = validationException.StackTrace;
-                        detalhesDeErro.Extensions["Erros de validação"] = validationException.Errors
+                        detalhesDeErro.Extensions["ErroDeValidacao"] = validationException.Errors
                         .GroupBy(nomePropriedade => nomePropriedade.PropertyName, mensagemErro => mensagemErro.ErrorMessage)
                         .ToDictionary(x => x.Key, x => x.ToList());
                     }
@@ -38,7 +38,7 @@ public static class ExtensaoDosDetalhesDeErro
                         detalhesDeErro.Status = StatusCodes.Status500InternalServerError;
                         detalhesDeErro.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1";
                         detalhesDeErro.Detail = sqlException.StackTrace;
-                        detalhesDeErro.Extensions["Erro no banco de dados"] = sqlException.Message;
+                        detalhesDeErro.Extensions["ErroNoBancoDeDados"] = sqlException.Message;  
                     }
                     else
                     {
@@ -48,7 +48,7 @@ public static class ExtensaoDosDetalhesDeErro
                         detalhesDeErro.Status = StatusCodes.Status500InternalServerError;
                         detalhesDeErro.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1";
                         detalhesDeErro.Detail = erroDoManipuladorDaExcecao.Demystify().ToString();
-                        detalhesDeErro.Extensions["Erro inesperado"] = erroDoManipuladorDaExcecao.Message;
+                        detalhesDeErro.Extensions["ErroInesperado"] = erroDoManipuladorDaExcecao.Message;
                     }
                     context.Response.StatusCode = detalhesDeErro.Status.Value;
                     context.Response.ContentType = "application/problem+json";

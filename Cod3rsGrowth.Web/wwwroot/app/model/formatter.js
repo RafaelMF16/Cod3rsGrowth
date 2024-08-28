@@ -13,7 +13,7 @@ sap.ui.define([], () => {
             return "R$" + preco;
         },
 
-        formatarValorPadraoComboBox(descricao) {
+        formatarValorPadraoSelectParaTelaDeListagem(descricao) {
             const propriedadesI18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             const enumNaoDefinido = "Não definido";
 
@@ -22,6 +22,17 @@ sap.ui.define([], () => {
             }
 
             return descricao;
-        }   
+        },
+
+        formatarValorPadraoSelectParaTelaDeCriacao(descricao) {
+            const propriedadesI18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const enumNaoDefinido = "Não definido";
+
+            if (descricao === enumNaoDefinido){
+                return propriedadesI18n.getText("SelecioneUmGenero");
+            }
+
+            return descricao;
+        }
     }
 })
