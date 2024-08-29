@@ -136,8 +136,5 @@ sap.ui.define([
 
 		//Asserções
 		Then.paginaJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (20)")
-
-		//FinalizarJornada
-		Then.iTeardownMyApp();
 	});
 });

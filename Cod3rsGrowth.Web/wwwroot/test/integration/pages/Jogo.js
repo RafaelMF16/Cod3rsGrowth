@@ -175,7 +175,7 @@ sap.ui.define([
 						actions: new Press(),
 						errorMessage: "Botão para voltar para tela de listagem não foi encontrado"
 					})
-				}
+				},
 			},
 			assertions: {
 				aTabelaDeveTerPaginacao: function () {
