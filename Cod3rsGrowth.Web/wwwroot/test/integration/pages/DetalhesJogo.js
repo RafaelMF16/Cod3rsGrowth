@@ -36,7 +36,9 @@ sap.ui.define([
 						actions: new Press(),
 						errorMessage: "Não foi possível clicar no item"
 					})
-				}
+				},
+
+                
             },
             assertions: {
                 aTelaComTituloCorrespondenteFoiCarregadaCorretamente: function (titulo) {
@@ -59,6 +61,17 @@ sap.ui.define([
                             value: preco
                         }),
                         success: () => Opa5.assert.ok(true, "O preço do jogo está correto")
+                    })
+                },
+
+                oGeneroDoJogoDeveEstarCorreto: function (genero) {
+                    return this.waitFor({
+                        controlType: "sap.m.Text",
+                        matchers: new PropertyStrictEquals({
+                            name: 'text',
+                            value: genero
+                        }),
+                        success: () => Opa5.assert.ok(true, "O gênero do jogo está correto")
                     })
                 }
             }

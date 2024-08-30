@@ -135,6 +135,9 @@ sap.ui.define([
 		When.paginaJogo.aoClicarNoBotaoNavBack();
 
 		//Asserções
-		Then.paginaJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (20)")
+		Then.paginaJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (20)");
+
+		//FinalizarJornada
+		Then.iTeardownMyApp();
 	});
 });

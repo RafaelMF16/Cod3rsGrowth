@@ -26,11 +26,19 @@ sap.ui.define([
 		Then.detalhesJogo.oPrecoDoJogoDeveEstarCorreto("Grátis");
 	});
 
+	opaTest("Deve aparecer o gênero correto do jogo", function (Given, When, Then) {
+		//Asserções
+		Then.detalhesJogo.oGeneroDoJogoDeveEstarCorreto("FPS");
+	});
+
     opaTest("Deve poder voltar para tela de listagem", function (Given, When, Then) {
         //Ações
 		When.detalhesJogo.aoClicarNoBotaoNavBack();
 
 		//Asserções
-		Then.detalhesJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (20)");
+		Then.detalhesJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
+
+		//FinalizarJornada
+		Then.iTeardownMyApp();
 	});
 })
