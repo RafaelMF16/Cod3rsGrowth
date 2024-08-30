@@ -82,6 +82,6 @@ sap.ui.define([
 			} else {
 				this.getRouter().navTo("appJogo", {}, true);
 			}
-		},
+		}
 	});
 });

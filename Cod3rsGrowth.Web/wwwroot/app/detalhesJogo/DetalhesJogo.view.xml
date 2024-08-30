@@ -1,0 +1,100 @@
+<mvc:View xmlns:uxap="sap.uxap" 
+    controllerName="ui5.codersgrowth.app.detalhesJogo.DetalhesJogo"
+    xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:macros="sap.fe.macros"
+    displayBlock="true">
+    <Page>
+        <customHeader>
+            <Toolbar>
+                <FlexBox >
+                    <Button 
+                        id="idAdicionarJogoBotaoNavBack"
+                        icon="sap-icon://nav-back"
+                        press=".onNavBack">
+                    </Button>
+                </FlexBox>
+                <FlexBox 
+                    id="idFlexBoxHeader"
+                    height="100%"
+                    width="100%"
+                    justifyContent="SpaceBetween"
+                    alignItems="Center">
+                    <Title 
+                        text="{i18n>paginaJogoTitulo}"
+                        titleStyle="H3"
+                        class="sapUiResponsiveMargin"/>
+                    <MenuButton
+                        id="idMenuBotaoHeader"
+                        type="Transparent"
+                        icon="sap-icon://action-settings"  
+                        menuPosition="EndBottom"> 
+                        <menu>
+                            <Menu >
+                                <MenuItem
+                                    id="idBotaoDeAparencia"
+                                    text="Aparência" 
+                                    icon="sap-icon://palette">
+                                    <items>
+                                        <MenuItem 
+                                            key="botaModoClaro"
+                                            id="idBotaoModoClaro"
+                                            icon="sap-icon://light-mode" 
+                                            text="Claro"
+                                            press=".alternarTema"/>
+                                        <MenuItem 
+                                            key="botaoModoEscuro"
+                                            id="idBotaoModoEscuro"
+                                            icon="sap-icon://dark-mode" 
+                                            text="Escuro"
+                                            press=".alternarTema"/>
+                                    </items>
+                                </MenuItem>
+                            </Menu>
+                        </menu>
+                    </MenuButton>
+                </FlexBox>
+            </Toolbar>
+        </customHeader>
+        <FlexBox 
+            class= "sapUiResponsiveMargin"
+            width="auto"
+            justifyContent="SpaceBetween"
+            direction="Column"
+            backgroundDesign="Transparent">
+            <form:SimpleForm 
+                id="formAdicionarJogo"
+                maxContainerCols="2"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanM="1"
+                emptySpanL="8">
+                <form:toolbar>
+                    <OverflowToolbar >
+                        <Title 
+                            text="{i18n>detalhesJogoTitulo} {jogo>/nome}"
+                            titleStyle="H4"/>
+                        <ToolbarSpacer />
+                    </OverflowToolbar>
+                </form:toolbar>
+                <form:content>
+                    <Label 
+                        text="{i18n>detalhesLabelPrecoTexto}"
+                        design="Bold"/>
+                    <Text 
+                        text="{
+                            path: 'jogo>/preco',
+                            formatter: '.formatter.formatarJogosGratis'
+                        }"/>
+                    <Label 
+                        text="{i18n>detalhesLabelGeneroTexto}"
+                        design="Bold"/>
+                    <Text 
+                        text="{jogo>/genero}"/>
+                </form:content>
+            </form:SimpleForm>
+        </FlexBox>
+    </Page>
+</mvc:View>

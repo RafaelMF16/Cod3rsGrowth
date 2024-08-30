@@ -44,9 +44,31 @@ sap.ui.define([
          if (valorFiltroPrecoMax)
             query.precoMax = valorFiltroPrecoMax;
 
-         let urlObterTodosComFiltros = `/api/JogoControlador?` + new URLSearchParams(query);
+         let urlObterTodosComFiltros = `/api/JogoControlador?${new URLSearchParams(query)}`;
 
          this.fazerRequisicaoGet(urlObterTodosComFiltros, nomeListaJogos, viewJogo);
+      },
+
+      _navegarParaDetalhes(id){
+         const rotaDetalhes = 'appDetalhesJogo';
+         this._navegarPara(rotaDetalhes, id);
+      },
+
+      _navegarPara(nomeRota, id){
+         this.getRouter()
+            .navTo(nomeRota, {
+               jogoId: id
+            }, true);
+      },
+
+      _obterIdJogo(evento){
+         const contexto = 'listaJogos';
+         const propriedadeId = 'id';
+         let idJogo = evento.getSource()
+            .getBindingContext(contexto)
+            .getProperty(propriedadeId);
+
+         return idJogo;
       },
 
       pegarValorDoSelect: function (oEvent) {
@@ -87,7 +109,13 @@ sap.ui.define([
       },
 
       aoClicarIrParaTelaDeAdicionarJogo: function () {
-         this.getRouter().navTo("appAdicionarJogo", {}, true);
-      }
+         const rotaCriar = 'appAdicionarJogo';
+         this._navegarPara(rotaCriar);
+      },
+
+      aoClicarNavegarParaDetalhes(oEvent){
+         const idJogo = this._obterIdJogo(oEvent);
+         this._navegarParaDetalhes(idJogo);
+      },
    });
 });

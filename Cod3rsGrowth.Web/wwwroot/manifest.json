@@ -64,6 +64,10 @@
 				"pattern": "AdicionarJogo",
 				"name": "appAdicionarJogo",
 				"target": "adicionarJogo"
+			}, {
+				"pattern": "DetalhesJogo/{jogoId}",
+				"name": "appDetalhesJogo",
+				"target": "detalhesJogo"
 			}],
          	"targets": {
 				"jogo": {
@@ -82,6 +86,12 @@
 					"path": "ui5.codersgrowth.app.adicionarJogo",
 					"id": "adicionarJogo",
 					"name": "AdicionarJogo",
+					"transition":"slide"
+				},
+				"detalhesJogo": {
+					"path": "ui5.codersgrowth.app.detalhesJogo",
+					"id": "detalhesJogo",
+					"name": "DetalhesJogo",
 					"transition":"slide"
 				}
 			}

@@ -24,7 +24,7 @@ sap.ui.define([
 
             this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros);
 
-            this.getView().byId(inputNomeId).setValue();
+            this.getView().byId(inputNomeId).setValue("");
             this.getView().byId(inputNomeId).setValueState(valueStatePadrao);
 
             this.getView().byId(inputPrecoId).setValue();
