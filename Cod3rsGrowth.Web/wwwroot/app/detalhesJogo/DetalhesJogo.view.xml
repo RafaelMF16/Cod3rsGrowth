@@ -74,9 +74,15 @@
                 <form:toolbar>
                     <OverflowToolbar >
                         <Title 
+                            id="idJogoNomeTitulo"
                             text="{i18n>detalhesJogoTitulo} {jogo>/nome}"
                             titleStyle="H4"/>
                         <ToolbarSpacer />
+                        <Button 
+                            text="{i18n>detalhesBotaoEditarTexto}"
+                            icon="sap-icon://edit"
+                            iconFirst="false"
+                            press="aoClicarIrParaEdicao"/>
                     </OverflowToolbar>
                 </form:toolbar>
                 <form:content>
@@ -84,6 +90,7 @@
                         text="{i18n>detalhesLabelPrecoTexto}"
                         design="Bold"/>
                     <Text 
+                        id="idJogoPrecoTexto"
                         text="{
                             path: 'jogo>/preco',
                             formatter: '.formatter.formatarJogosGratis'
@@ -92,6 +99,7 @@
                         text="{i18n>detalhesLabelGeneroTexto}"
                         design="Bold"/>
                     <Text 
+                        id="idJogoGeneroTexto"
                         text="{jogo>/genero}"/>
                 </form:content>
             </form:SimpleForm>

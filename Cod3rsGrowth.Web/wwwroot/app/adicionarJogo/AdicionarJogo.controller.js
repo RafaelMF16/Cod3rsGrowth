@@ -17,21 +17,61 @@ sap.ui.define([
             this.getRouter().getRoute("appAdicionarJogo").attachMatched(this._aoCoincidirRota, this);
         },
 
-        _aoCoincidirRota: function () {
+        _aoCoincidirRota: function (oEvent) {
             const urlObterGeneros = "/api/GeneroControlador";
             const nomeListaGeneros = "listaGeneros";
             const valueStatePadrao = "None";
+            const idJogo = this._obterIdJogoPelaRota(oEvent);
+            const viewAdicionarJogo = this.getView();
+            
+            if (idJogo){
+                const urlObterPorId = `/api/JogoControlador/${idJogo}`;
+                this._fazerRequisicaoObterPorId(urlObterPorId, viewAdicionarJogo);
+            } else {
+                this._limparCampos(inputNomeId, inputPrecoId, selectGeneroId, valueStatePadrao);
+            }
 
-            this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros);
+            this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros, viewAdicionarJogo);
+        },
 
+        _obterIdJogoPelaRota(evento) {
+            const idJogo = evento.getParameters().arguments.jogoId;
+
+            return idJogo;
+        },
+
+        _colocarValorNoInput: function (jogo) {
+            this.getView().byId(inputNomeId).setValue(jogo.nome);
+            this.getView().byId(inputPrecoId).setValue(jogo.preco);
+            this.getView().byId(selectGeneroId).setValue(jogo.genero);
+        },
+
+        _limparCampos: function (inputNomeId, inputPrecoId, selectGeneroId, valueState) {
             this.getView().byId(inputNomeId).setValue("");
-            this.getView().byId(inputNomeId).setValueState(valueStatePadrao);
+            this.getView().byId(inputNomeId).setValueState(valueState);
 
             this.getView().byId(inputPrecoId).setValue();
-            this.getView().byId(inputPrecoId).setValueState(valueStatePadrao);
+            this.getView().byId(inputPrecoId).setValueState(valueState);
+            
+            this.getView().byId(selectGeneroId).setSelectedItemId();
+            this.getView().byId(selectGeneroId).setValueState(valueState);
+        },
 
-            this.getView().byId(selectGeneroId).setSelectedKey();
-            this.getView().byId(selectGeneroId).setValueState(valueStatePadrao);
+        _fazerRequisicaoObterPorId: function (url, view) {
+            fetch(url)
+                .then(respostaApi => {
+                    if(!respostaApi.ok) {
+                        respostaApi.json()
+                            .then(respostaApi => {
+                                this.validacao.mostrarMensagemDeErro(respostaApi, view);
+                            });
+                    }
+                    return respostaApi.json();
+                })
+                .then(respostaApi => {
+                    let jogo = respostaApi;
+                    this._colocarValorNoInput(jogo);
+                });
         },
 
         _pegarValorDosCampos: function () {
