@@ -10,8 +10,8 @@ sap.ui.define([
             this.getRouter().getRoute("appDetalhesJogo").attachMatched(this._aoCoincidirRota, this);
         },
 
-        _aoCoincidirRota: function() {
-            const idJogo = this._obterIdJogoPelaRota();
+        _aoCoincidirRota: function(evento) {
+            const idJogo = this._obterIdJogoPelaRota(evento);
             const viewDetalhesJogo = this.getView();
             const jogo = "jogo";
             const urlObterPorId = `/api/JogoControlador/${idJogo}`
@@ -19,9 +19,8 @@ sap.ui.define([
 
         },
 
-        _obterIdJogoPelaRota() {
-            const posicaoDoIdNaRota = 1;
-            const idJogo = this.getOwnerComponent().getRouter().getHashChanger().getHash().split("/")[posicaoDoIdNaRota];
+        _obterIdJogoPelaRota(evento) {
+            const idJogo = evento.getParameters().arguments.jogoId;
 
             return idJogo;
         }
