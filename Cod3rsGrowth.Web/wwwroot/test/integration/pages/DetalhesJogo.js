@@ -19,6 +19,11 @@ sap.ui.define([
                     return this.waitFor({
                         controlType: "sap.m.Button",
                         viewName: nomeDaViewDetalhesJogo,
+                        matchers: [
+                            new Properties({
+								icon: "sap-icon://nav-back"
+							})
+                        ],
                         actions: new Press(),
                         errorMessage: "Não foi possível clicar no botão nav back"
                     })   

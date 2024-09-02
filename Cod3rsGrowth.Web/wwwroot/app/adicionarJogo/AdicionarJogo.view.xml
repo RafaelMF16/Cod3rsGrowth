@@ -75,6 +75,7 @@
                 <form:toolbar>
                     <OverflowToolbar >
                         <Title 
+                            id="idTituloPaginaAdicionar"
                             text="{i18n>formAdicionarJogoTitulo}"
                             titleStyle="H4"/>
                         <ToolbarSpacer />

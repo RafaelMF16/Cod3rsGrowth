@@ -31,7 +31,7 @@ sap.ui.define([
             this.getRouter()
                 .navTo(nomeRota, {
                     jogoId: idJogo
-                }, true);
+                });
         },
 
         aoClicarIrParaEdicao: function () {

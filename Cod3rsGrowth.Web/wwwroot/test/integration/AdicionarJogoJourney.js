@@ -1,6 +1,6 @@
 sap.ui.define([
 	"sap/ui/test/opaQunit",
-	"./pages/AdicionarJogo"
+	"./pages/AdicionarOuEditarJogo"
 ], (opaTest) => {
 	"use strict";
 
@@ -15,95 +15,95 @@ sap.ui.define([
 		});
 
         //Ações
-		When.paginaAdicionarJogo.aoClicarNoBotaoAdicionar();
-        When.paginaAdicionarJogo.aoClicarNoBotaoDeCancelar();
+		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoAdicionar();
+        When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoDeCancelar();
 
 		//Asserções
-		Then.paginaAdicionarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (20)");
+		Then.paginaAdicionarOuEditarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (20)");
 	});
 
 	opaTest("Os inputs devem ficar em estado de erro caso tente salvar com eles vazios", function (Given, When, Then) {
 		//Ações
-		When.paginaAdicionarJogo.aoClicarNoBotaoAdicionar();
-		When.paginaAdicionarJogo.aoClicarNoBotaoSalvar();
+		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoAdicionar();
+		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoSalvar();
 
 		//Asserções
-		Then.paginaAdicionarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idInputNome", "Error");
-		Then.paginaAdicionarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idInputPreco", "Error");
-		Then.paginaAdicionarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idSelectGenero", "Error");
+		Then.paginaAdicionarOuEditarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idInputNome", "Error");
+		Then.paginaAdicionarOuEditarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idInputPreco", "Error");
+		Then.paginaAdicionarOuEditarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idSelectGenero", "Error");
 	});
 
 	opaTest("Os inputs devem ficar com texto de campo obrigatório caso estejam vazios", function (Given, When, Then) {
 		//Asserções
-		Then.paginaAdicionarJogo.oInputComIdCorrespondenteFicouComTextoDeCampoObrigatorio("idInputNome", "O campo nome é obrigatório");
-		Then.paginaAdicionarJogo.oInputComIdCorrespondenteFicouComTextoDeCampoObrigatorio("idInputPreco", "O campo preço é obrigatório");
-		Then.paginaAdicionarJogo.oInputComIdCorrespondenteFicouComTextoDeCampoObrigatorio("idSelectGenero", "O campo gênero é obrigatório");
+		Then.paginaAdicionarOuEditarJogo.oInputComIdCorrespondenteFicouComTextoDeCampoObrigatorio("idInputNome", "O campo nome é obrigatório");
+		Then.paginaAdicionarOuEditarJogo.oInputComIdCorrespondenteFicouComTextoDeCampoObrigatorio("idInputPreco", "O campo preço é obrigatório");
+		Then.paginaAdicionarOuEditarJogo.oInputComIdCorrespondenteFicouComTextoDeCampoObrigatorio("idSelectGenero", "O campo gênero é obrigatório");
 	});
 
 	opaTest("O input nome deve ficar em estado padrão caso seja preenchido", function (Given, When, Then) {
 		//Ações
-		When.paginaAdicionarJogo.adicionarValorAoInputNome("FarCry4");
-		When.paginaAdicionarJogo.aoClicarNoBotaoSalvar();
+		When.paginaAdicionarOuEditarJogo.adicionarValorAoInputNome("FarCry4");
+		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoSalvar();
 
 		//Asserções
-		Then.paginaAdicionarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idInputNome", "None");
+		Then.paginaAdicionarOuEditarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idInputNome", "None");
 	});
 
 	opaTest("O input preço deve ficar em estado padrão caso seja preenchido", function (Given, When, Then) {
 		//Ações
-		When.paginaAdicionarJogo.limparInputNome();
-		When.paginaAdicionarJogo.adicionarValorAoInputPreco("100");
-		When.paginaAdicionarJogo.aoClicarNoBotaoSalvar();
+		When.paginaAdicionarOuEditarJogo.limparInputNome();
+		When.paginaAdicionarOuEditarJogo.adicionarValorAoInputPreco("100");
+		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoSalvar();
 
 		//Asserções
-		Then.paginaAdicionarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idInputPreco", "None");
+		Then.paginaAdicionarOuEditarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idInputPreco", "None");
 	});
 
 	opaTest("O select gênero deve ficar em estado padrão caso seja preenchido", function (Given, When, Then) {
 		//Ações
-		When.paginaAdicionarJogo.limparInputPreco();
-		When.paginaAdicionarJogo.selecionarGeneroNoSelect("FPS");
-		When.paginaAdicionarJogo.aoClicarNoBotaoSalvar();
+		When.paginaAdicionarOuEditarJogo.limparInputPreco();
+		When.paginaAdicionarOuEditarJogo.selecionarGeneroNoSelect("FPS");
+		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoSalvar();
 
 		//Asserções
-		Then.paginaAdicionarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idSelectGenero", "None");
+		Then.paginaAdicionarOuEditarJogo.oInputComIdCorrespondenteFicouNoEstadoEsperado("idSelectGenero", "None");
 	});
 
 	opaTest("Deve ser possível ver a caixa de mensagem de erro", function (Given, When, Then) {
 		//Ações
-		When.paginaAdicionarJogo.adicionarValorAoInputNome("Minecraft");
-		When.paginaAdicionarJogo.adicionarValorAoInputPreco("20000");
-		When.paginaAdicionarJogo.selecionarGeneroNoSelect("FPS");
-		When.paginaAdicionarJogo.aoClicarNoBotaoSalvar();
+		When.paginaAdicionarOuEditarJogo.adicionarValorAoInputNome("Minecraft");
+		When.paginaAdicionarOuEditarJogo.adicionarValorAoInputPreco("20000");
+		When.paginaAdicionarOuEditarJogo.selecionarGeneroNoSelect("FPS");
+		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoSalvar();
 
 		//Asserções
-		Then.paginaAdicionarJogo.aCaixaDeMensagemApareceu("Erro")
+		Then.paginaAdicionarOuEditarJogo.aCaixaDeMensagemApareceu("Erro")
 	});
 
 	opaTest("Deve ser possível clicar em visualizar detalhes", function (Given, When, Then) {
 		//Ações
-		When.paginaAdicionarJogo.aoClicarEmVisualizarDetalhes();
+		When.paginaAdicionarOuEditarJogo.aoClicarEmVisualizarDetalhes();
 	});
 
 	opaTest("Deve ser possível clicar em fechar na caixa de mensagem de erro", function (Given, When, Then) {
 		//Ações
-		When.paginaAdicionarJogo.aoClicarEmFechar();
+		When.paginaAdicionarOuEditarJogo.aoClicarEmFechar();
 
 		//Asserções
-		Then.paginaAdicionarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Adicionar Jogo")
+		Then.paginaAdicionarOuEditarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Adicionar Jogo")
 	});
 
 	opaTest("Deve ser possível clicar em OK na caixa de mensagem de sucesso", function (Given, When, Then) {
 		//Ações
-		When.paginaAdicionarJogo.adicionarValorAoInputNome("FarCry 5");
-		When.paginaAdicionarJogo.adicionarValorAoInputPreco("120");
-		When.paginaAdicionarJogo.selecionarGeneroNoSelect("FPA");
-		When.paginaAdicionarJogo.aoClicarNoBotaoSalvar();
-		When.paginaAdicionarJogo.aoClicarNoBotaoDeOkNaCaixaDeMensagemDeSucesso();
+		When.paginaAdicionarOuEditarJogo.adicionarValorAoInputNome("FarCry 5");
+		When.paginaAdicionarOuEditarJogo.adicionarValorAoInputPreco("120");
+		When.paginaAdicionarOuEditarJogo.selecionarGeneroNoSelect("FPA");
+		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoSalvar();
+		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoDeOkNaCaixaDeMensagemDeSucesso();
 		
 
 		//Asserções
-		Then.paginaAdicionarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)")
+		Then.paginaAdicionarOuEditarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)")
 
 		//FinalizarJornada
 		Then.iTeardownMyApp();

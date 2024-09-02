@@ -15,7 +15,7 @@ sap.ui.define([
 		});
         
         //Ações
-		When.detalhesJogo.aoClicarNoItemDaTabela();
+		When.detalhesJogo.aoClicarNoItemDaTabela("Counter-Strike: Global Offensive");
 
 		//Asserções
 		Then.detalhesJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes: Counter-Strike: Global Offensive")
@@ -32,6 +32,17 @@ sap.ui.define([
 	});
 
     opaTest("Deve poder voltar para tela de listagem", function (Given, When, Then) {
+        //Ações
+		When.detalhesJogo.aoClicarNoBotaoNavBack();
+
+		//Asserções
+		Then.detalhesJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
+
+		//FinalizarJornada
+		Then.iTeardownMyApp();
+	});
+
+	opaTest("Deve poder ir para tela de edição", function (Given, When, Then) {
         //Ações
 		When.detalhesJogo.aoClicarNoBotaoNavBack();
 

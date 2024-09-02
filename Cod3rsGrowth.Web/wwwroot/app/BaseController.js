@@ -16,7 +16,7 @@ sap.ui.define([
 		},
 
 		_mostrarMensagemDeSucesso: function (jogoNome) {
-            const mensagemDeSucesso = `${jogoNome} foi adicionado com sucesso`
+            const mensagemDeSucesso = `${jogoNome} foi salvo com sucesso`
             MessageBox.success(mensagemDeSucesso, {
                 id: "messageBoxSucesso",
                 styleClass: "sResponsivePaddingClasses",
@@ -49,7 +49,7 @@ sap.ui.define([
 				});
 		},
 
-		fazerRequisicaoPost: function (url, opcoes, jogoNome, view) {
+		fazerRequisicaoPostOuPatch: function (url, opcoes, jogoNome, view) {
 			fetch(url, opcoes)
 				.then(respostaApi => { 
 					return !respostaApi.ok? respostaApi.json().then(respostaApi => {
@@ -73,7 +73,7 @@ sap.ui.define([
 
 		onNavBack: function () {
 			var oHistory, sPreviousHash;
-
+			
 			oHistory = History.getInstance();
 			sPreviousHash = oHistory.getPreviousHash();
 

@@ -8,6 +8,8 @@ sap.ui.define([
     const inputNomeId = "idInputNome";
     const inputPrecoId = "idInputPreco";
     const selectGeneroId = "idSelectGenero";
+    const tituloPaginaAdicionarOuEditar = "idTituloPaginaAdicionar";
+    var idJogo = "";
     
     return BaseController.extend("ui5.codersgrowth.app.adicionarJogo.AdicionarJogo",{
         formatter: formatter,
@@ -21,39 +23,49 @@ sap.ui.define([
             const urlObterGeneros = "/api/GeneroControlador";
             const nomeListaGeneros = "listaGeneros";
             const valueStatePadrao = "None";
-            const idJogo = this._obterIdJogoPelaRota(oEvent);
             const viewAdicionarJogo = this.getView();
+            const tituloPaginaEditar = "Editar Jogo";
+            const titutloPaginaAdicionar = "Adicionar Jogo";
+
+            this._obterIdJogoPelaRota(oEvent);
+
+            this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros, viewAdicionarJogo);
             
             if (idJogo){
                 const urlObterPorId = `/api/JogoControlador/${idJogo}`;
+
+                this._mudarTituloDaPagina(tituloPaginaEditar);
+                this._limparValueState(valueStatePadrao);
                 this._fazerRequisicaoObterPorId(urlObterPorId, viewAdicionarJogo);
             } else {
-                this._limparCampos(inputNomeId, inputPrecoId, selectGeneroId, valueStatePadrao);
+                this._mudarTituloDaPagina(titutloPaginaAdicionar);
+                this._limparCampos(inputNomeId, inputPrecoId, selectGeneroId);
+                this._limparValueState(valueStatePadrao);
             }
-
-            this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros, viewAdicionarJogo);
         },
 
         _obterIdJogoPelaRota(evento) {
-            const idJogo = evento.getParameters().arguments.jogoId;
-
-            return idJogo;
+            idJogo = evento.getParameters().arguments.jogoId;
         },
 
         _colocarValorNoInput: function (jogo) {
+            const generos = this.getView().byId(selectGeneroId).getItems();
+            const generoQueVaiSerSelecionadoNoSelect = generos.find(genero => genero.mProperties.text === jogo.genero);
+            
             this.getView().byId(inputNomeId).setValue(jogo.nome);
             this.getView().byId(inputPrecoId).setValue(jogo.preco);
-            this.getView().byId(selectGeneroId).setValue(jogo.genero);
+            this.getView().byId(selectGeneroId).setSelectedItem(generoQueVaiSerSelecionadoNoSelect);
         },
 
-        _limparCampos: function (inputNomeId, inputPrecoId, selectGeneroId, valueState) {
+        _limparCampos: function (inputNomeId, inputPrecoId, selectGeneroId) {
             this.getView().byId(inputNomeId).setValue("");
-            this.getView().byId(inputNomeId).setValueState(valueState);
-
             this.getView().byId(inputPrecoId).setValue();
+            this.getView().byId(selectGeneroId).setSelectedKey();
+        },
+
+        _limparValueState: function (valueState) {
+            this.getView().byId(inputNomeId).setValueState(valueState);
             this.getView().byId(inputPrecoId).setValueState(valueState);
-            
-            this.getView().byId(selectGeneroId).setSelectedItemId();
             this.getView().byId(selectGeneroId).setValueState(valueState);
         },
 
@@ -99,22 +111,43 @@ sap.ui.define([
             this.getRouter().navTo("appJogo", {}, true);
         },
 
+        _mudarTituloDaPagina: function (titulo) {
+            
+            this.getView().byId(tituloPaginaAdicionarOuEditar).setText(titulo)
+        },
+
         salvarJogo: function () {
             const jogo = this._pegarValorDosCampos();
-            const urlAdicionarJogo = "/api/JogoControlador";
+            const urlAdicionarOuAtualizarJogo = "/api/JogoControlador";
             const viewAdicionarJogo = this.getView();
+
             this.validacao.validarTela(jogo, viewAdicionarJogo);
             
             if (jogo.nome && jogo.preco && jogo.genero) {
-                const opcoes = {
-                    method: 'POST',
-                    body: JSON.stringify(jogo),
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                    }
-                };
-                this.fazerRequisicaoPost(urlAdicionarJogo, opcoes, jogo.nome, viewAdicionarJogo);
-                
+                if (idJogo) {
+                    jogo.id = idJogo;
+
+                    const opcoes = {
+                        method: 'PATCH',
+                        body: JSON.stringify(jogo),
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8"
+                        }
+                    };
+
+                    this.fazerRequisicaoPostOuPatch(urlAdicionarOuAtualizarJogo, opcoes, jogo.nome, viewAdicionarJogo);
+
+                } else {
+                    const opcoes = {
+                        method: 'POST',
+                        body: JSON.stringify(jogo),
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8"
+                        }
+                    };
+
+                    this.fazerRequisicaoPostOuPatch(urlAdicionarOuAtualizarJogo, opcoes, jogo.nome, viewAdicionarJogo);
+                }
             }
         },
 

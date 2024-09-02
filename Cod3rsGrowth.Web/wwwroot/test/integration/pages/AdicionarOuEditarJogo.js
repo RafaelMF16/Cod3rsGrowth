@@ -8,8 +8,9 @@ sap.ui.define([
 ], (Opa5, Press, EnterText, I18NText, Properties, PropertyStrictEquals) => {
 	"use strict";
     
-	const nomeDaViewAdicionarJogo = "adicionarJogo.AdicionarJogo";
+	const nomeDaViewAdicionarOuEditarJogo = "adicionarJogo.AdicionarJogo";
 	const nomeDaViewJogo = "jogo.Jogo";
+	const nomeDaViewDetalhesJogo = "detalhesJogo.DetalhesJogo"
 	const botaoCancelarCriacaoJogoId = "idBotaoCancelarCriacaoJogo";
 	const botaAdicionarId = "idBotaoAdicionar";
 	const botaoSalvarCriacaoJogoId = "idBotaoSalvarCriacaoJogo";
@@ -18,12 +19,12 @@ sap.ui.define([
 	const selectGeneroId = "idSelectGenero";
 
 	Opa5.createPageObjects({
-		paginaAdicionarJogo: {
+		paginaAdicionarOuEditarJogo: {
 			actions: {
 				aoClicarNoBotaoDeCancelar: function () {
 					return this.waitFor({
 						id: botaoCancelarCriacaoJogoId,
-						viewName: nomeDaViewAdicionarJogo,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
 						actions: new Press(),
 						errorMessage: "O botão de cancelar não foi encontrado"
 					});
@@ -41,7 +42,7 @@ sap.ui.define([
 				aoClicarNoBotaoSalvar: function () {
 					return this.waitFor({
 						id: botaoSalvarCriacaoJogoId,
-						viewName: nomeDaViewAdicionarJogo,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
 						actions: new Press(),
 						errorMessage: "Botão salvar na tela de criação não foi encontrado"
 					});
@@ -50,7 +51,7 @@ sap.ui.define([
 				adicionarValorAoInputNome: function (nomeJogo) {
 					return this.waitFor({
 						id: inputNomeId,
-						viewName: nomeDaViewAdicionarJogo,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
 						actions: new EnterText({
 							text: nomeJogo
 						}),
@@ -61,7 +62,7 @@ sap.ui.define([
 				limparInputNome: function () {
 					return this.waitFor({
 						id: inputNomeId,
-						viewName: nomeDaViewAdicionarJogo,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
 						actions: new EnterText({
 							text: " "
 						}),
@@ -72,9 +73,9 @@ sap.ui.define([
 				adicionarValorAoInputPreco: function (precoJogo) {
 					this.waitFor({
 						id: inputPrecoId, 
-						viewName: nomeDaViewAdicionarJogo,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
 						actions: new EnterText({
-							text: "100"
+							text: precoJogo
 						}),
 						errorMessage: "O input preço não foi encontrado",
 					});
@@ -83,7 +84,7 @@ sap.ui.define([
 				limparInputPreco: function () {
 					return this.waitFor({
 						id: inputPrecoId,
-						viewName: nomeDaViewAdicionarJogo,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
 						actions: new EnterText({
 							text: " "
 						}),
@@ -94,7 +95,7 @@ sap.ui.define([
 				selecionarGeneroNoSelect: function (generoSelecionado) {
 					return this.waitFor({
 						id: selectGeneroId,
-						viewName: nomeDaViewAdicionarJogo,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
 						actions: new Press(),
 						success: function() {
 							this.waitFor({
@@ -141,6 +142,48 @@ sap.ui.define([
 							})
 						}
 					})
+				},
+
+				aoClicarNoItemDaTabela: function (jogoNome) {
+					return this.waitFor({
+						controlType: "sap.m.ObjectIdentifier",
+						viewName: nomeDaViewJogo,
+						matchers:[
+							new Properties({
+								title: jogoNome
+							})
+						],
+						actions: new Press(),
+						errorMessage: "Não foi possível clicar no item"
+					})
+				},
+
+				aoClicarNoBotaoEditar: function () {
+					return this.waitFor({
+						controlType : "sap.m.Button",
+						viewName: nomeDaViewDetalhesJogo,
+						matchers: [
+							new Properties({
+								text: "Editar"
+							})
+						],
+						actions: new Press(),
+						errorMessage: "Não foi possível clicar no botão de editar"
+					})
+				},
+
+				aoClicarNoBotaoNavBack: function () {
+					return this.waitFor({
+						controlType : "sap.m.Button",
+						viewName: nomeDaViewAdicionarOuEditarJogo,
+						matchers: [
+							new Properties({
+								icon: "sap-icon://nav-back"
+							})
+						],
+						actions: new Press(),
+						errorMessage: "Não foi possível clicar no botão de nav back"
+					})
 				}
 			},
 			assertions: {
@@ -159,7 +202,7 @@ sap.ui.define([
 				oInputComIdCorrespondenteFicouNoEstadoEsperado: function (inputId, estado) {
 					return this.waitFor({
 						id: inputId,
-						viewName: nomeDaViewAdicionarJogo,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
 						check: function (input) {
 							return input.getValueState() === estado;
 						},
@@ -171,7 +214,7 @@ sap.ui.define([
 				oInputComIdCorrespondenteFicouComTextoDeCampoObrigatorio: function (inputId, textoDoErro) {
 					this.waitFor({
 						id: inputId,
-						viewName: nomeDaViewAdicionarJogo,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
 						check: function (input) {
 							return input.getValueStateText() === textoDoErro;
 						},
@@ -192,6 +235,39 @@ sap.ui.define([
 						},
 						errorMessage: "A caixa de mensagem de erro não apareceu"
 					});
+				},
+
+				oGeneroDoJogoDeveEstarCorreto: function () {
+                    return this.waitFor({
+                        id: selectGeneroId,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
+                        success: function (oSelect) {
+							Opa5.assert.strictEqual(oSelect.getSelectedKey(), "10", "O gênero do jogo está correto")
+						},
+						errorMessage: "O gênero está incorreto"
+                    })
+                },
+
+				oNomeDoJogoDeveEstarCorreto: function () {
+					return this.waitFor({
+						id: inputNomeId,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
+						success: function (inputNome) {
+							Opa5.assert.strictEqual(inputNome.getValue(), "Rust", "O nome do jogo está correto")
+						},
+						errorMessage: "O nome está incorreto"
+					})
+				},
+
+				oPrecoDoJogoDeveEstarCorreto: function () {
+					return this.waitFor({
+						id: inputPrecoId,
+						viewName: nomeDaViewAdicionarOuEditarJogo,
+						success: function (inputPreco) {
+							Opa5.assert.strictEqual(inputPreco.getValue(), "90", "O preço do jogo está correto")
+						},
+						errorMessage: "O preço está incorreto"
+					})
 				}
 			}
 		}
