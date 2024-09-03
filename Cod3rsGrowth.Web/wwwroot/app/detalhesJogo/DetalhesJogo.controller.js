@@ -4,6 +4,8 @@ sap.ui.define([
 ], function (BaseController, formatter) {
     'use strict';
 
+    var idJogo = "";
+
     return BaseController.extend("ui5.codersgrowth.app.detalhesJogo.DetalhesJogo", {
         formatter: formatter,
         onInit: function() {
@@ -11,18 +13,30 @@ sap.ui.define([
         },
 
         _aoCoincidirRota: function(evento) {
-            const idJogo = this._obterIdJogoPelaRota(evento);
+            idJogo = this._obterIdJogoPelaRota(evento);
             const viewDetalhesJogo = this.getView();
             const jogo = "jogo";
             const urlObterPorId = `/api/JogoControlador/${idJogo}`
-            this.fazerRequisicaoGet(urlObterPorId, jogo, viewDetalhesJogo);
 
+            this.fazerRequisicaoGet(urlObterPorId, jogo, viewDetalhesJogo);
         },
 
         _obterIdJogoPelaRota(evento) {
             const idJogo = evento.getParameters().arguments.jogoId;
 
             return idJogo;
+        },
+
+        _navegarPara(nomeRota){
+            this.getRouter()
+                .navTo(nomeRota, {
+                    jogoId: idJogo
+                });
+        },
+
+        aoClicarIrParaEdicao: function () {
+            const rotaAdicionarJogo = "appAdicionarJogo";
+            this._navegarPara(rotaAdicionarJogo);
         }
     })
 })

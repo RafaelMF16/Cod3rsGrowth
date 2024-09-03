@@ -61,7 +61,7 @@
 				"name": "appJogo",
 				"target": "jogo"
          	}, {
-				"pattern": "AdicionarJogo",
+				"pattern": "AdicionarJogo/:jogoId:",
 				"name": "appAdicionarJogo",
 				"target": "adicionarJogo"
 			}, {

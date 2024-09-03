@@ -19,6 +19,11 @@ sap.ui.define([
                     return this.waitFor({
                         controlType: "sap.m.Button",
                         viewName: nomeDaViewDetalhesJogo,
+                        matchers: [
+                            new Properties({
+								icon: "sap-icon://nav-back"
+							})
+                        ],
                         actions: new Press(),
                         errorMessage: "Não foi possível clicar no botão nav back"
                     })   
@@ -38,7 +43,33 @@ sap.ui.define([
 					})
 				},
 
-                
+                aoClicarNoItemDaTabela: function (jogoNome) {
+					return this.waitFor({
+						controlType: "sap.m.ObjectIdentifier",
+						viewName: nomeDaViewJogo,
+						matchers:[
+							new Properties({
+								title: jogoNome
+							})
+						],
+						actions: new Press(),
+						errorMessage: "Não foi possível clicar no item"
+					})
+				},
+
+                aoClicarNoBotaoEditar: function () {
+					return this.waitFor({
+						controlType : "sap.m.Button",
+						viewName: nomeDaViewDetalhesJogo,
+						matchers: [
+							new Properties({
+								text: "Editar"
+							})
+						],
+						actions: new Press(),
+						errorMessage: "Não foi possível clicar no botão de editar"
+					})
+				},
             },
             assertions: {
                 aTelaComTituloCorrespondenteFoiCarregadaCorretamente: function (titulo) {
