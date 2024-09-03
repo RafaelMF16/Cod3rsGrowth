@@ -63,6 +63,9 @@ sap.ui.define([
             else {
                 view.byId(selectGeneroId).setValueState(valueStatePadrao);
             }
+
+            if (jogo.nome && jogo.preco && jogo.genero)
+                return true;
         },
     })
 })

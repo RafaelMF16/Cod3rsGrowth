@@ -36,7 +36,7 @@ sap.ui.define([
 
                 this._mudarTituloDaPagina(tituloPaginaEditar);
                 this._limparValueState(valueStatePadrao);
-                this._fazerRequisicaoObterPorId(urlObterPorId, viewAdicionarJogo);
+                this.fazerRequisicaoObterPorId(urlObterPorId, viewAdicionarJogo);
             } else {
                 this._mudarTituloDaPagina(titutloPaginaAdicionar);
                 this._limparCampos(inputNomeId, inputPrecoId, selectGeneroId);
@@ -69,22 +69,7 @@ sap.ui.define([
             this.getView().byId(selectGeneroId).setValueState(valueState);
         },
 
-        _fazerRequisicaoObterPorId: function (url, view) {
-            fetch(url)
-                .then(respostaApi => {
-                    if(!respostaApi.ok) {
-                        respostaApi.json()
-                            .then(respostaApi => {
-                                this.validacao.mostrarMensagemDeErro(respostaApi, view);
-                            });
-                    }
-                    return respostaApi.json();
-                })
-                .then(respostaApi => {
-                    let jogo = respostaApi;
-                    this._colocarValorNoInput(jogo);
-                });
-        },
+        
 
         _pegarValorDosCampos: function () {
             const generoNaoDefinido = "NAODEFINIDO";
@@ -104,6 +89,9 @@ sap.ui.define([
             if (valorSelectGenero != generoNaoDefinido)
                 jogo.genero = valorSelectGenero;
 
+            if (idJogo)
+                jogo.id = idJogo;
+
             return jogo;
         },
 
@@ -120,35 +108,20 @@ sap.ui.define([
             const jogo = this._pegarValorDosCampos();
             const urlAdicionarOuAtualizarJogo = "/api/JogoControlador";
             const viewAdicionarJogo = this.getView();
-
-            this.validacao.validarTela(jogo, viewAdicionarJogo);
-            
-            if (jogo.nome && jogo.preco && jogo.genero) {
-                if (idJogo) {
-                    jogo.id = idJogo;
-
-                    const opcoes = {
-                        method: 'PATCH',
-                        body: JSON.stringify(jogo),
-                        headers: {
-                            "Content-type": "application/json; charset=UTF-8"
-                        }
-                    };
-
-                    this.fazerRequisicaoPostOuPatch(urlAdicionarOuAtualizarJogo, opcoes, jogo.nome, viewAdicionarJogo);
-
-                } else {
-                    const opcoes = {
-                        method: 'POST',
-                        body: JSON.stringify(jogo),
-                        headers: {
-                            "Content-type": "application/json; charset=UTF-8"
-                        }
-                    };
-
-                    this.fazerRequisicaoPostOuPatch(urlAdicionarOuAtualizarJogo, opcoes, jogo.nome, viewAdicionarJogo);
+            const opcoes = {
+                method: 'POST',
+                body: JSON.stringify(jogo),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
                 }
+            };
+            
+            if (idJogo) {
+                opcoes.method = 'PATCH'
             }
+
+            if (this.validacao.validarTela(jogo, viewAdicionarJogo))
+                this.fazerRequisicaoPostOuPatch(urlAdicionarOuAtualizarJogo, opcoes, jogo.nome, viewAdicionarJogo);
         },
 
         cancelarAdicaoDeJogo: function () {

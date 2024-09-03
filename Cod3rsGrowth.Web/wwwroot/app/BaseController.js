@@ -58,6 +58,23 @@ sap.ui.define([
 				});
 		},
 
+		fazerRequisicaoObterPorId: function (url, view) {
+            fetch(url)
+                .then(respostaApi => {
+                    if(!respostaApi.ok) {
+                        respostaApi.json()
+                            .then(respostaApi => {
+                                this.validacao.mostrarMensagemDeErro(respostaApi, view);
+                            });
+                    }
+                    return respostaApi.json();
+                })
+                .then(respostaApi => {
+                    let jogo = respostaApi;
+                    this._colocarValorNoInput(jogo);
+                });
+        },
+
 		alternarTema: function (oEvent) {
 			const temaEscolhido = oEvent.getSource().getText();
 			const modoClaro = "Claro";
