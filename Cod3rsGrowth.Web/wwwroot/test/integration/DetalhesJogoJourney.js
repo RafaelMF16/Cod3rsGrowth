@@ -37,17 +37,15 @@ sap.ui.define([
 
 		//Asserções
 		Then.detalhesJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
-
-		//FinalizarJornada
-		Then.iTeardownMyApp();
 	});
 
 	opaTest("Deve poder ir para tela de edição", function (Given, When, Then) {
         //Ações
-		When.detalhesJogo.aoClicarNoBotaoNavBack();
+		When.detalhesJogo.aoClicarNoItemDaTabela("Rust");
+		When.detalhesJogo.aoClicarNoBotaoEditar();
 
 		//Asserções
-		Then.detalhesJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
+		Then.detalhesJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Editar Jogo");
 
 		//FinalizarJornada
 		Then.iTeardownMyApp();
