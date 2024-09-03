@@ -4,7 +4,8 @@ sap.ui.define([
     './JogoJourney',
     './AdicionarJogoJourney',
     './DetalhesJogoJourney',
-    './EditarJogoJourney'
+    './EditarJogoJourney',
+    './RemoverJogoJourney'
 ], function(Opa5, Startup) {
     'use strict';
 

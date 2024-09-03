@@ -1,6 +1,6 @@
 sap.ui.define([
 	"sap/ui/test/opaQunit",
-	"./pages/DetalhesJogo"
+	"./pages/DetalhesOuRemoverJogo"
 ], (opaTest) => {
 	"use strict";
 
@@ -15,37 +15,37 @@ sap.ui.define([
 		});
         
         //Ações
-		When.detalhesJogo.aoClicarNoItemDaTabela("Counter-Strike: Global Offensive");
+		When.paginaDetalhesOuRemoverJogo.aoClicarNoItemDaTabela("Counter-Strike: Global Offensive");
 
 		//Asserções
-		Then.detalhesJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes: Counter-Strike: Global Offensive")
+		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes: Counter-Strike: Global Offensive")
 	});
 
     opaTest("Deve aparecer o preço correto do jogo", function (Given, When, Then) {
 		//Asserções
-		Then.detalhesJogo.oPrecoDoJogoDeveEstarCorreto("Grátis");
+		Then.paginaDetalhesOuRemoverJogo.oPrecoDoJogoDeveEstarCorreto("Grátis");
 	});
 
 	opaTest("Deve aparecer o gênero correto do jogo", function (Given, When, Then) {
 		//Asserções
-		Then.detalhesJogo.oGeneroDoJogoDeveEstarCorreto("FPS");
+		Then.paginaDetalhesOuRemoverJogo.oGeneroDoJogoDeveEstarCorreto("FPS");
 	});
 
     opaTest("Deve poder voltar para tela de listagem", function (Given, When, Then) {
         //Ações
-		When.detalhesJogo.aoClicarNoBotaoNavBack();
+		When.paginaDetalhesOuRemoverJogo.aoClicarNoBotaoNavBack();
 
 		//Asserções
-		Then.detalhesJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
+		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
 	});
 
 	opaTest("Deve poder ir para tela de edição", function (Given, When, Then) {
         //Ações
-		When.detalhesJogo.aoClicarNoItemDaTabela("Rust");
-		When.detalhesJogo.aoClicarNoBotaoEditar();
+		When.paginaDetalhesOuRemoverJogo.aoClicarNoItemDaTabela("Rust");
+		When.paginaDetalhesOuRemoverJogo.aoClicarNoBotaoEditar();
 
 		//Asserções
-		Then.detalhesJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Editar Jogo");
+		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Editar Jogo");
 
 		//FinalizarJornada
 		Then.iTeardownMyApp();

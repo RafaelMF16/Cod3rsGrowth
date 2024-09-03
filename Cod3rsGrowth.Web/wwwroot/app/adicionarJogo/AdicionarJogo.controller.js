@@ -95,10 +95,6 @@ sap.ui.define([
             return jogo;
         },
 
-        _voltarParaTelaDeListagem: function () {
-            this.getRouter().navTo("appJogo", {}, true);
-        },
-
         _mudarTituloDaPagina: function (titulo) {
             
             this.getView().byId(tituloPaginaAdicionarOuEditar).setText(titulo)

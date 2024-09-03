@@ -82,7 +82,13 @@
                             text="{i18n>detalhesBotaoEditarTexto}"
                             icon="sap-icon://edit"
                             iconFirst="false"
-                            press="aoClicarIrParaEdicao"/>
+                            press=".aoClicarIrParaEdicao"/>
+                        <Button 
+                            text="{i18n>detalhesBotaoRemoverTexto}"
+                            icon="sap-icon://delete"
+                            iconFirst="false"
+                            press=".aoClicarRemoverJogo"
+                            type="Reject"/>
                     </OverflowToolbar>
                 </form:toolbar>
                 <form:content>

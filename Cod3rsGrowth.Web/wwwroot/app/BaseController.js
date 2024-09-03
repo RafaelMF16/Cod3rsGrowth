@@ -15,8 +15,7 @@ sap.ui.define([
 			return UIComponent.getRouterFor(this);
 		},
 
-		_mostrarMensagemDeSucesso: function (jogoNome) {
-            const mensagemDeSucesso = `${jogoNome} foi salvo com sucesso`
+		_mostrarMensagemDeSucesso: function (mensagemDeSucesso) {
             MessageBox.success(mensagemDeSucesso, {
                 id: "messageBoxSucesso",
                 styleClass: "sResponsivePaddingClasses",
@@ -28,6 +27,10 @@ sap.ui.define([
                     }
                 }
              });
+        },
+
+		_voltarParaTelaDeListagem: function () {
+            this.getRouter().navTo("appJogo", {}, true);
         },
 
 		fazerRequisicaoGet: function (url, nomeLista, view) {
@@ -50,11 +53,13 @@ sap.ui.define([
 		},
 
 		fazerRequisicaoPostOuPatch: function (url, opcoes, jogoNome, view) {
+			const mensagemDeSucessoRequisicaoPostOuPatch = `${jogoNome} foi salvo com sucesso`;
+			
 			fetch(url, opcoes)
 				.then(respostaApi => { 
 					return !respostaApi.ok? respostaApi.json().then(respostaApi => {
 						this.validacao.mostrarMensagemDeErro(respostaApi, view)
-					}) : this._mostrarMensagemDeSucesso(jogoNome);
+					}) : this._mostrarMensagemDeSucesso(mensagemDeSucessoRequisicaoPostOuPatch);
 				});
 		},
 
@@ -74,6 +79,17 @@ sap.ui.define([
                     this._colocarValorNoInput(jogo);
                 });
         },
+
+		fazerRequisicaoDelete: function (url, opcoes, jogoNome, view) {
+			const mensagemDeSucessoRequisicaoDelete = `${jogoNome} foi deletado com sucesso`
+
+			fetch(url, opcoes)
+				.then(respostaApi => { 
+					return !respostaApi.ok? respostaApi.json().then(respostaApi => {
+						this.validacao.mostrarMensagemDeErro(respostaApi, view)
+					}) : this._mostrarMensagemDeSucesso(mensagemDeSucessoRequisicaoDelete);
+				});
+		},
 
 		alternarTema: function (oEvent) {
 			const temaEscolhido = oEvent.getSource().getText();

@@ -11,9 +11,10 @@ sap.ui.define([
 
     const nomeDaViewJogo = "jogo.Jogo";
     const nomeDaViewDetalhesJogo = "detalhesJogo.DetalhesJogo"
+	const tabelaJogoId = "idTabelaJogo";
 
     Opa5.createPageObjects({
-        detalhesJogo: {
+        paginaDetalhesOuRemoverJogo: {
             actions: {
                 aoClicarNoBotaoNavBack: function () {
                     return this.waitFor({
@@ -70,6 +71,51 @@ sap.ui.define([
 						errorMessage: "Não foi possível clicar no botão de editar"
 					})
 				},
+
+				aoClicarNoBotaoRemover: function () {
+					return this.waitFor({
+						controlType: "sap.m.Button",
+						viewName: nomeDaViewDetalhesJogo,
+						matchers: new Properties({
+							text: "Remover"
+						}),
+						actions: new Press(),
+						errorMessage: "Não foi possível clicar no botão remover"
+					})
+				},
+
+				aoApertarEmMais: function () {
+					return this.waitFor({
+						id: tabelaJogoId,
+						viewName: nomeDaViewJogo,
+						actions: new Press(),
+						errorMessage: "A tabela não tem botão para carregar mais items"
+					});
+				},
+
+				aoClicarNoBotaoCancelar: function () {
+					return this.waitFor({
+						controlType: "sap.m.Button",
+						viewName: nomeDaViewDetalhesJogo,
+						matchers: new Properties({
+							text: "Cancelar"
+						}),
+						actions: new Press(),
+						errorMessage: "O botão de cancelar não foi encontrado"
+					});
+				},
+
+				aoClicarNoBotaoOk: function () {
+					return this.waitFor({
+						controlType: "sap.m.Button",
+						viewName: nomeDaViewDetalhesJogo,
+						matchers: new Properties({
+							text: "OK"
+						}),
+						actions: new Press(),
+						errorMessage: "O botão de cancelar não foi encontrado"
+					});
+				}
             },
             assertions: {
                 aTelaComTituloCorrespondenteFoiCarregadaCorretamente: function (titulo) {
