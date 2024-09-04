@@ -48,7 +48,7 @@ sap.ui.define([
             idJogo = evento.getParameters().arguments.jogoId;
         },
 
-        _colocarValorNoInput: function (jogo) {
+        colocarValorNoInput: function (jogo) {
             const generos = this.getView().byId(selectGeneroId).getItems();
             const generoQueVaiSerSelecionadoNoSelect = generos.find(genero => genero.mProperties.text === jogo.genero);
             

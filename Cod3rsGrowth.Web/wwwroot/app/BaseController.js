@@ -75,8 +75,8 @@ sap.ui.define([
                     return respostaApi.json();
                 })
                 .then(respostaApi => {
-                    let jogo = respostaApi;
-                    this._colocarValorNoInput(jogo);
+					const jogo = respostaApi;
+					this.colocarValorNoInput(jogo);
                 });
         },
 

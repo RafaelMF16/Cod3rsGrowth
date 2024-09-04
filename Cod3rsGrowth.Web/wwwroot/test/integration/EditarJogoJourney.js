@@ -103,14 +103,14 @@ sap.ui.define([
 		Then.paginaAdicionarOuEditarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
 	});
 
-    opaTest("Deve poder voltar para tela de detalhes ao clicar no botao nav back", function (Given, When, Then) {
+    opaTest("Deve poder voltar para tela de listagem ao clicar no botao nav back", function (Given, When, Then) {
         //Ações
         When.paginaAdicionarOuEditarJogo.aoClicarNoItemDaTabela("Rust");
         When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoEditar();
         When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoNavBack();
 		
 		//Asserções
-		Then.paginaAdicionarOuEditarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes: Rust");
+		Then.paginaAdicionarOuEditarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
 
         //FinalizarJornada
 		Then.iTeardownMyApp();

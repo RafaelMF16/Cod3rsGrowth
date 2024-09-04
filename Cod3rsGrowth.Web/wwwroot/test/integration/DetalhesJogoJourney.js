@@ -18,7 +18,7 @@ sap.ui.define([
 		When.paginaDetalhesOuRemoverJogo.aoClicarNoItemDaTabela("Counter-Strike: Global Offensive");
 
 		//Asserções
-		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes: Counter-Strike: Global Offensive")
+		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes:")
 	});
 
     opaTest("Deve aparecer o preço correto do jogo", function (Given, When, Then) {
@@ -36,7 +36,7 @@ sap.ui.define([
 		When.paginaDetalhesOuRemoverJogo.aoClicarNoBotaoNavBack();
 
 		//Asserções
-		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
+		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (20)");
 	});
 
 	opaTest("Deve poder ir para tela de edição", function (Given, When, Then) {

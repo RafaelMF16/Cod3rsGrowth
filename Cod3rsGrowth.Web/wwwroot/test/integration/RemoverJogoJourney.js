@@ -20,7 +20,7 @@ sap.ui.define([
 		When.paginaDetalhesOuRemoverJogo.aoClicarNoItemDaTabela("FarCry 5");
 
 		//Asserções
-		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes: FarCry 5")
+		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes:")
 	});
 
     opaTest("Deve poder clicar no botão de remoção", function (Given, When, Then) {
@@ -36,7 +36,7 @@ sap.ui.define([
 		When.paginaDetalhesOuRemoverJogo.aoClicarNoBotaoCancelar();
 
 		//Asserções
-		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes: FarCry 5")
+		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes:")
 	});
 
     opaTest("Deve poder clicar no botão ok da caixa de mensagem de aviso", function (Given, When, Then) {

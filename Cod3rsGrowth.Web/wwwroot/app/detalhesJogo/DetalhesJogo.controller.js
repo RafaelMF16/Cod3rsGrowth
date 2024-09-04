@@ -15,6 +15,7 @@ sap.ui.define([
 
         _aoCoincidirRota: function(evento) {
             idJogo = this._obterIdJogoPelaRota(evento);
+
             const viewDetalhesJogo = this.getView();
             const jogo = "jogo";
             const urlObterPorId = `/api/JogoControlador/${idJogo}`
@@ -32,23 +33,19 @@ sap.ui.define([
             this.getRouter()
                 .navTo(nomeRota, {
                     jogoId: idJogo
-                });
+                }, true);
         },
 
         _pegarNomeDoJogo: function () {
-            const detalhesJogoTituloId = "idJogoNomeTitulo";
-            const tituloDetalhes = "Detalhes:"
-            const nomeJogoPosicao = 1;
-            let tituloJogo = this.getView().byId(detalhesJogoTituloId).mProperties.text.split(tituloDetalhes)[nomeJogoPosicao];
+            const idJogoNomeTitulo = "idJogoNomeTitulo";
+            let jogoNome = this.getView().byId(idJogoNomeTitulo).getText();
             
-            return tituloJogo;
+            return jogoNome;
         },
 
         _mostrarMensagemDeAtencao: function () {
-            const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
-
             const viewDetalhesJogo = this.getView();
-
+            const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
             const opcoes = {
                 method: 'DELETE',
                 headers: {
