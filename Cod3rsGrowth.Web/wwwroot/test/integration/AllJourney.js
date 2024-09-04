@@ -1,7 +1,7 @@
 sap.ui.define([
     'sap/ui/test/Opa5',
     './arrangements/Startup',
-    './JogoJourney',
+    './ListagemJogoJourney',
     './AdicionarJogoJourney',
     './DetalhesJogoJourney',
     './EditarJogoJourney',

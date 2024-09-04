@@ -48,15 +48,6 @@ sap.ui.define([
             idJogo = evento.getParameters().arguments.jogoId;
         },
 
-        colocarValorNoInput: function (jogo) {
-            const generos = this.getView().byId(selectGeneroId).getItems();
-            const generoQueVaiSerSelecionadoNoSelect = generos.find(genero => genero.mProperties.text === jogo.genero);
-            
-            this.getView().byId(inputNomeId).setValue(jogo.nome);
-            this.getView().byId(inputPrecoId).setValue(jogo.preco);
-            this.getView().byId(selectGeneroId).setSelectedItem(generoQueVaiSerSelecionadoNoSelect);
-        },
-
         _limparCampos: function (inputNomeId, inputPrecoId, selectGeneroId) {
             this.getView().byId(inputNomeId).setValue("");
             this.getView().byId(inputPrecoId).setValue();
@@ -68,8 +59,6 @@ sap.ui.define([
             this.getView().byId(inputPrecoId).setValueState(valueState);
             this.getView().byId(selectGeneroId).setValueState(valueState);
         },
-
-        
 
         _pegarValorDosCampos: function () {
             const generoNaoDefinido = "NAODEFINIDO";
@@ -96,7 +85,6 @@ sap.ui.define([
         },
 
         _mudarTituloDaPagina: function (titulo) {
-            
             this.getView().byId(tituloPaginaAdicionarOuEditar).setText(titulo)
         },
 
@@ -122,6 +110,15 @@ sap.ui.define([
 
         cancelarAdicaoDeJogo: function () {
             this._voltarParaTelaDeListagem();
-        }
+        },
+
+        colocarValorNoInput: function (jogo) {
+            const generos = this.getView().byId(selectGeneroId).getItems();
+            const generoQueVaiSerSelecionadoNoSelect = generos.find(genero => genero.mProperties.text === jogo.genero);
+            
+            this.getView().byId(inputNomeId).setValue(jogo.nome);
+            this.getView().byId(inputPrecoId).setValue(jogo.preco);
+            this.getView().byId(selectGeneroId).setSelectedItem(generoQueVaiSerSelecionadoNoSelect);
+        },
     });
 });

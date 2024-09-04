@@ -9,6 +9,7 @@ sap.ui.define([
 
     return BaseController.extend("ui5.codersgrowth.app.detalhesJogo.DetalhesJogo", {
         formatter: formatter,
+        
         onInit: function() {
             this.getRouter().getRoute("appDetalhesJogo").attachMatched(this._aoCoincidirRota, this);
         },

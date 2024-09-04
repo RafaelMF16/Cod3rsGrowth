@@ -58,8 +58,8 @@
          	},
          	"routes": [{
 				"pattern": "",
-				"name": "appJogo",
-				"target": "jogo"
+				"name": "appListagemJogo",
+				"target": "listagemJogo"
          	}, {
 				"pattern": "AdicionarJogo/:jogoId:",
 				"name": "appAdicionarJogo",
@@ -70,10 +70,10 @@
 				"target": "detalhesJogo"
 			}],
          	"targets": {
-				"jogo": {
-					"path": "ui5.codersgrowth.app.jogo",
+				"listagemJogo": {
+					"path": "ui5.codersgrowth.app.listagemJogo",
 					"id": "jogo",
-					"name": "Jogo",
+					"name": "ListagemJogo",
 					"level" : 1
             	},
 				"paginaNaoEncontrada": {

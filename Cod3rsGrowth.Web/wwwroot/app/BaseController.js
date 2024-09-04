@@ -30,7 +30,7 @@ sap.ui.define([
         },
 
 		_voltarParaTelaDeListagem: function () {
-            this.getRouter().navTo("appJogo", {}, true);
+            this.getRouter().navTo("appListagemJogo", {}, true);
         },
 
 		fazerRequisicaoGet: function (url, nomeLista, view) {
@@ -113,7 +113,7 @@ sap.ui.define([
 			if (sPreviousHash !== undefined) {
 				window.history.go(-1);
 			} else {
-				this.getRouter().navTo("appJogo", {}, true);
+				this.getRouter().navTo("appListagemJogo", {}, true);
 			}
 		}
 	});

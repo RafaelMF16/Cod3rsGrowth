@@ -15,47 +15,77 @@ sap.ui.define([
 		});
         
         //Ações
-        When.paginaDetalhesOuRemoverJogo.aoApertarEmMais();
-        When.paginaDetalhesOuRemoverJogo.aoApertarEmMais();
-		When.paginaDetalhesOuRemoverJogo.aoClicarNoItemDaTabela("FarCry 5");
+        When
+			.paginaDetalhesOuRemoverJogo
+			.aoApertarEmMais();
+
+        When
+			.paginaDetalhesOuRemoverJogo
+			.aoApertarEmMais();
+
+		When
+			.paginaDetalhesOuRemoverJogo
+			.aoClicarNoItemDaTabela("FarCry 5");
 
 		//Asserções
-		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes:")
+		Then
+			.paginaDetalhesOuRemoverJogo
+			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes:")
 	});
 
     opaTest("Deve poder clicar no botão de remoção", function (Given, When, Then) {
         //Ações
-		When.paginaDetalhesOuRemoverJogo.aoClicarNoBotaoRemover();
+		When
+			.paginaDetalhesOuRemoverJogo
+			.aoClicarNoBotaoRemover();
 
 		//Asserções
-		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Aviso")
+		Then
+			.paginaDetalhesOuRemoverJogo
+			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Aviso")
 	});
 
     opaTest("Deve poder clicar no botão cancelar da caixa de mensagem de aviso", function (Given, When, Then) {
         //Ações
-		When.paginaDetalhesOuRemoverJogo.aoClicarNoBotaoCancelar();
+		When
+			.paginaDetalhesOuRemoverJogo
+			.aoClicarNoBotaoCancelar();
 
 		//Asserções
-		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes:")
+		Then
+			.paginaDetalhesOuRemoverJogo
+			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes:")
 	});
 
     opaTest("Deve poder clicar no botão ok da caixa de mensagem de aviso", function (Given, When, Then) {
         //Ações
-		When.paginaDetalhesOuRemoverJogo.aoClicarNoBotaoRemover();
-		When.paginaDetalhesOuRemoverJogo.aoClicarNoBotaoOk();
+		When
+			.paginaDetalhesOuRemoverJogo
+			.aoClicarNoBotaoRemover();
+			
+		When
+			.paginaDetalhesOuRemoverJogo
+			.aoClicarNoBotaoOk();
 
 		//Asserções
-		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Êxito");
+		Then
+			.paginaDetalhesOuRemoverJogo
+			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Êxito");
 	});
 
     opaTest("Deve poder clicar no botão ok da caixa de mensagem de sucesso", function (Given, When, Then) {
         //Ações
-		When.paginaDetalhesOuRemoverJogo.aoClicarNoBotaoOk();
+		When
+			.paginaDetalhesOuRemoverJogo
+			.aoClicarNoBotaoOk();
 
 		//Asserções
-		Then.paginaDetalhesOuRemoverJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (20)");
+		Then
+			.paginaDetalhesOuRemoverJogo
+			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (20)");
 
         //FinalizarJornada
-		Then.iTeardownMyApp();
+		Then
+			.iTeardownMyApp();
 	});
 });

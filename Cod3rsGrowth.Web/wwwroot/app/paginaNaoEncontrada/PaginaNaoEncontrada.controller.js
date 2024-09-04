@@ -3,11 +3,8 @@ sap.ui.define([
 ], function (BaseController) {
     "use strict";
     return BaseController.extend("ui5.codersgrowth.app.paginaNaoEncontrada.PaginaNaoEncontrada", {
-        onInit: function () {
-        },
-
         voltarParaPaginaInicial: function () {
-            this.getRouter().navTo("appJogo", {}, true);
+            this.getRouter().navTo("appListagemJogo", {}, true);
         }
     });
 });

@@ -9,11 +9,11 @@ sap.ui.define([
    var valorFiltroPrecoMax = "";
    var valorFiltroGenero = "";
 
-   return BaseController.extend("ui5.codersgrowth.app.jogo.Jogo", {
+   return BaseController.extend("ui5.codersgrowth.app.listagemJogo.ListagemJogo", {
       formatter: formatter,
 
       onInit: function () {
-         this.getRouter().getRoute("appJogo").attachMatched(this._aoCoincidirRota, this);
+         this.getRouter().getRoute("appListagemJogo").attachMatched(this._aoCoincidirRota, this);
       },
 
       _aoCoincidirRota: function () {
