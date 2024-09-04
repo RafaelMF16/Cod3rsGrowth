@@ -9,7 +9,7 @@ sap.ui.define([
 
     return BaseController.extend("ui5.codersgrowth.app.detalhesJogo.DetalhesJogo", {
         formatter: formatter,
-        
+
         onInit: function() {
             this.getRouter().getRoute("appDetalhesJogo").attachMatched(this._aoCoincidirRota, this);
         },
@@ -56,7 +56,7 @@ sap.ui.define([
 
             let jogoNome = this._pegarNomeDoJogo();
 
-            MessageBox.warning(`Tem certeza que deseja remover o ${jogoNome}`, {
+            MessageBox.warning(`Tem certeza que deseja remover o ${jogoNome}?`, {
                 title: propriedadesI18n.getText("tituloMessageBoxAtencao"),
                 id: "messageBoxAtencaoId",
                 styleClass: "sResponsivePaddingClasses",

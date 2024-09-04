@@ -189,6 +189,10 @@ sap.ui.define([
 		//Ações
 		When
 			.paginaJogo
+			.limparFiltroDePesquisa();
+			
+		When
+			.paginaJogo
 			.alternarEntreModoClaroEscuro("Escuro");
 	});
 

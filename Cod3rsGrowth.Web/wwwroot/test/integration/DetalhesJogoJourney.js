@@ -56,7 +56,7 @@ sap.ui.define([
 		When
 			.paginaDetalhesOuRemoverJogo
 			.aoClicarNoItemDaTabela("Rust");
-			
+
 		When
 			.paginaDetalhesOuRemoverJogo
 			.aoClicarNoBotaoEditar();

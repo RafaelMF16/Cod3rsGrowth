@@ -9,7 +9,7 @@ sap.ui.define([
 	"use strict";
     
 	const nomeDaViewAdicionarOuEditarJogo = "adicionarJogo.AdicionarJogo";
-	const nomeDaViewJogo = "jogo.Jogo";
+	const nomeDaViewJogo = "listagemJogo.ListagemJogo";
 	const nomeDaViewDetalhesJogo = "detalhesJogo.DetalhesJogo"
 	const botaoCancelarCriacaoJogoId = "idBotaoCancelarCriacaoJogo";
 	const botaAdicionarId = "idBotaoAdicionar";

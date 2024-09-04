@@ -9,7 +9,7 @@ sap.ui.define([
 ], (Opa5, Press, AggregationLengthEquals, EnterText, I18NText, Properties, PropertyStrictEquals) => {
 	"use strict";
 
-	const nomeDaViewJogo = "jogo.Jogo";
+	const nomeDaViewJogo = "listagemJogo.ListagemJogo";
 	const nomeDaViewAdicionarJogo = "adicionarJogo.AdicionarJogo";
 	const tabelaJogoId = "idTabelaJogo";
 	const tabelaJogoTituloId = "idTabelaJogoTitulo";
@@ -214,7 +214,7 @@ sap.ui.define([
 						id: tabelaJogoId,
 						viewName: nomeDaViewJogo,
 						check: function(tabela){
-							return tabela.getItems().length == quantidade
+							return tabela.getItems().length === quantidade
 						},
 						success : function () {
 							Opa5.assert.ok(true, "A tabela tem a quantidade de items correta");

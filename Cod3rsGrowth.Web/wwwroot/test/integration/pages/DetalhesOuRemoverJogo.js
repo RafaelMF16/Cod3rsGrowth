@@ -9,7 +9,7 @@ sap.ui.define([
 ], (Opa5, Press, AggregationLengthEquals, EnterText, I18NText, Properties, PropertyStrictEquals) => {
 	"use strict";
 
-    const nomeDaViewJogo = "jogo.Jogo";
+    const nomeDaViewJogo = "listagemJogo.ListagemJogo";
     const nomeDaViewDetalhesJogo = "detalhesJogo.DetalhesJogo"
 	const tabelaJogoId = "idTabelaJogo";
 

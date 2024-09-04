@@ -84,14 +84,12 @@
                             text="{i18n>adicionarJogoBotaoSalvarTexto}"
                             icon="sap-icon://save"
                             iconFirst="false"
-                            type="Ghost"
                             press=".salvarJogo"/>
                         <Button 
                             id="idBotaoCancelarCriacaoJogo"
                             text="{i18n>adicionarJogoBotaoCancelarTexto}"
                             icon="sap-icon://sys-cancel-2"
                             iconFirst="false"
-                            type="Reject"
                             press=".cancelarAdicaoDeJogo"/>
                     </OverflowToolbar>
                 </form:toolbar>

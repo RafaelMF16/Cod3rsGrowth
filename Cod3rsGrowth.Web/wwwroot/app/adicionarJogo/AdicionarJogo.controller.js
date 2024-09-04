@@ -1,8 +1,9 @@
 sap.ui.define([
     'ui5/codersgrowth/app/BaseController',
     '../model/formatter',
-    '../servicos/validacao'
-], function(BaseController, formatter, validacao) {
+    '../servicos/validacao',
+    'sap/m/MessageBox'
+], function(BaseController, formatter, validacao, MessageBox) {
     'use strict';
 
     const inputNomeId = "idInputNome";
@@ -88,6 +89,27 @@ sap.ui.define([
             this.getView().byId(tituloPaginaAdicionarOuEditar).setText(titulo)
         },
 
+        _mostrarMensagemDeAtencao: function () {
+            const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
+            const nomeRotaDetalhes = "appDetalhesJogo"
+            const nomeRotaListagem = "appListagemJogo"
+
+            MessageBox.warning("Tem certeza que deseja cancelar?", {
+                title: propriedadesI18n.getText("tituloMessageBoxAtencao"),
+                id: "messageBoxAtencaoId",
+                styleClass: "sResponsivePaddingClasses",
+                dependentOn: this.getView(),
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                onClose: (sAction) => {
+                    if (sAction === MessageBox.Action.OK) {
+                        idJogo? 
+                            this.navegarPara(nomeRotaDetalhes, idJogo)
+                            : this.navegarPara(nomeRotaListagem)
+                    }
+                }
+            });
+        },
+
         salvarJogo: function () {
             const jogo = this._pegarValorDosCampos();
             const urlAdicionarOuAtualizarJogo = "/api/JogoControlador";
@@ -105,11 +127,11 @@ sap.ui.define([
             }
 
             if (this.validacao.validarTela(jogo, viewAdicionarJogo))
-                this.fazerRequisicaoPostOuPatch(urlAdicionarOuAtualizarJogo, opcoes, jogo.nome, viewAdicionarJogo);
+                this.fazerRequisicaoPostOuPatch(urlAdicionarOuAtualizarJogo, opcoes, jogo, viewAdicionarJogo);
         },
 
         cancelarAdicaoDeJogo: function () {
-            this._voltarParaTelaDeListagem();
+            this._mostrarMensagemDeAtencao();
         },
 
         colocarValorNoInput: function (jogo) {
