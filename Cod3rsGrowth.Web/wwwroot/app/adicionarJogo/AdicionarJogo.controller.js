@@ -48,7 +48,7 @@ sap.ui.define([
             idJogo = evento.getParameters().arguments.jogoId;
         },
 
-        _colocarValorNoInput: function (jogo) {
+        colocarValorNoInput: function (jogo) {
             const generos = this.getView().byId(selectGeneroId).getItems();
             const generoQueVaiSerSelecionadoNoSelect = generos.find(genero => genero.mProperties.text === jogo.genero);
             
@@ -93,10 +93,6 @@ sap.ui.define([
                 jogo.id = idJogo;
 
             return jogo;
-        },
-
-        _voltarParaTelaDeListagem: function () {
-            this.getRouter().navTo("appJogo", {}, true);
         },
 
         _mudarTituloDaPagina: function (titulo) {

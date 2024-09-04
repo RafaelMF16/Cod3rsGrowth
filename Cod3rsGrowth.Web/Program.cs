@@ -1,4 +1,3 @@
-using Cod3rsGrowth.Infra;
 using Cod3rsGrowth.Infra.Repositorio;
 using Cod3rsGrowth.Web.Injecao;
 using FluentMigrator.Runner;
@@ -53,14 +52,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-if (args?.FirstOrDefault() == argumentoBancoDeDadosDeTestes)
-{
-    using (var escopo = app.Services.CreateScope())
-    {
-        var contextoBancoDeDados = escopo.ServiceProvider.GetRequiredService<DbCod3rsGrowth>();
-        DeletarJogosRepositorio.DeletarJogosAdicionadosEmTeste(contextoBancoDeDados);
-    }
-}
 
 app.Run();

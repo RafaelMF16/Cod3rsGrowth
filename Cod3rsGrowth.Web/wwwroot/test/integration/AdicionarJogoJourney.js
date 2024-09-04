@@ -101,7 +101,6 @@ sap.ui.define([
 		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoSalvar();
 		When.paginaAdicionarOuEditarJogo.aoClicarNoBotaoDeOkNaCaixaDeMensagemDeSucesso();
 		
-
 		//Asserções
 		Then.paginaAdicionarOuEditarJogo.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)")
 

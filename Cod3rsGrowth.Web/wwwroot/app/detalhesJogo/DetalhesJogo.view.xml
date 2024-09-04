@@ -74,15 +74,25 @@
                 <form:toolbar>
                     <OverflowToolbar >
                         <Title 
+                            id="idDetalhesTitulo"
+                            text="{i18n>detalhesJogoTitulo}"
+                            titleStyle="H4"/>
+                        <Title 
                             id="idJogoNomeTitulo"
-                            text="{i18n>detalhesJogoTitulo} {jogo>/nome}"
+                            text="{jogo>/nome}"
                             titleStyle="H4"/>
                         <ToolbarSpacer />
                         <Button 
                             text="{i18n>detalhesBotaoEditarTexto}"
                             icon="sap-icon://edit"
                             iconFirst="false"
-                            press="aoClicarIrParaEdicao"/>
+                            press=".aoClicarIrParaEdicao"/>
+                        <Button 
+                            text="{i18n>detalhesBotaoRemoverTexto}"
+                            icon="sap-icon://delete"
+                            iconFirst="false"
+                            press=".aoClicarRemoverJogo"
+                            type="Reject"/>
                     </OverflowToolbar>
                 </form:toolbar>
                 <form:content>
