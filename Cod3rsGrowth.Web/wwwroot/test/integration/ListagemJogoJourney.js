@@ -122,7 +122,7 @@ sap.ui.define([
 		//Asserções
 		Then
 			.paginaJogo
-			.aTabelaDeveTerQuantidadeDeItemsCorrespondente(4);
+			.aTabelaDeveTerQuantidadeDeItemsCorrespondente(3);
 	});
 
 	opaTest("Deve poder filtrar por preço mínimo, preço máximo e gênero", function (Given, When, Then) {

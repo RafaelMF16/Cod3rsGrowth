@@ -93,15 +93,14 @@ sap.ui.define([
 					});
 				},
 
-				aoClicarNoBotaoCancelar: function () {
+				aoClicarNosBotoesDaCaixaDeMensagem: function (textoBotao) {
 					return this.waitFor({
 						controlType: "sap.m.Button",
-						viewName: nomeDaViewDetalhesJogo,
 						matchers: new Properties({
-							text: "Cancelar"
+							text: textoBotao
 						}),
 						actions: new Press(),
-						errorMessage: "O botão de cancelar não foi encontrado"
+						errorMessage: "O botão de Sim/Não não foi encontrado"
 					});
 				},
 

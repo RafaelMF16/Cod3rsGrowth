@@ -11,13 +11,13 @@
             <Toolbar>
                 <FlexBox >
                     <Button 
-                        id="idAdicionarJogoBotaoNavBack"
+                        id="idDetalhesJogoBotaoNavBack"
                         icon="sap-icon://nav-back"
-                        press=".onNavBack">
+                        press=".navegarParaListagem">
                     </Button>
                 </FlexBox>
                 <FlexBox 
-                    id="idFlexBoxHeader"
+                    id="idDetalhesFlexBoxHeader"
                     height="100%"
                     width="100%"
                     justifyContent="SpaceBetween"
@@ -27,26 +27,26 @@
                         titleStyle="H3"
                         class="sapUiResponsiveMargin"/>
                     <MenuButton
-                        id="idMenuBotaoHeader"
+                        id="idDetalhesMenuBotaoHeader"
                         type="Transparent"
                         icon="sap-icon://action-settings"  
                         menuPosition="EndBottom"> 
                         <menu>
                             <Menu >
                                 <MenuItem
-                                    id="idBotaoDeAparencia"
+                                    id="idDetalhesBotaoDeAparencia"
                                     text="Aparência" 
                                     icon="sap-icon://palette">
                                     <items>
                                         <MenuItem 
                                             key="botaModoClaro"
-                                            id="idBotaoModoClaro"
+                                            id="idDetalhesBotaoModoClaro"
                                             icon="sap-icon://light-mode" 
                                             text="Claro"
                                             press=".alternarTema"/>
                                         <MenuItem 
                                             key="botaoModoEscuro"
-                                            id="idBotaoModoEscuro"
+                                            id="idDetalhesBotaoModoEscuro"
                                             icon="sap-icon://dark-mode" 
                                             text="Escuro"
                                             press=".alternarTema"/>
@@ -65,7 +65,7 @@
             direction="Column"
             backgroundDesign="Transparent">
             <form:SimpleForm 
-                id="formAdicionarJogo"
+                id="formDetalhesJogo"
                 maxContainerCols="2"
                 editable="true"
                 layout="ResponsiveGridLayout"

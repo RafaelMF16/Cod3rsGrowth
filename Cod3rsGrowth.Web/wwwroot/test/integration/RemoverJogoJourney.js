@@ -45,11 +45,11 @@ sap.ui.define([
 			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Aviso")
 	});
 
-    opaTest("Deve poder clicar no botão cancelar da caixa de mensagem de aviso", function (Given, When, Then) {
+    opaTest("Deve poder clicar no botão não da caixa de mensagem de aviso", function (Given, When, Then) {
         //Ações
 		When
 			.paginaDetalhesOuRemoverJogo
-			.aoClicarNoBotaoCancelar();
+			.aoClicarNosBotoesDaCaixaDeMensagem("Não");
 
 		//Asserções
 		Then
@@ -65,7 +65,7 @@ sap.ui.define([
 			
 		When
 			.paginaDetalhesOuRemoverJogo
-			.aoClicarNoBotaoOk();
+			.aoClicarNosBotoesDaCaixaDeMensagem("Sim");
 
 		//Asserções
 		Then

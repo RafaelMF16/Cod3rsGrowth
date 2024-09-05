@@ -18,7 +18,7 @@
                     </Button>
                 </FlexBox>
                 <FlexBox 
-                    id="idFlexBoxHeader"
+                    id="idAdicionarFlexBoxHeader"
                     height="100%"
                     width="100%"
                     justifyContent="SpaceBetween"
@@ -28,26 +28,26 @@
                         titleStyle="H3"
                         class="sapUiResponsiveMargin"/>
                     <MenuButton
-                        id="idMenuBotaoHeader"
+                        id="idAdicionarMenuBotaoHeader"
                         type="Transparent"
                         icon="sap-icon://action-settings"  
                         menuPosition="EndBottom"> 
                         <menu>
                             <Menu >
                                 <MenuItem
-                                    id="idBotaoDeAparencia"
+                                    id="idAdicionarBotaoDeAparencia"
                                     text="Aparência" 
                                     icon="sap-icon://palette">
                                     <items>
                                         <MenuItem 
                                             key="botaModoClaro"
-                                            id="idBotaoModoClaro"
+                                            id="idAdicionarBotaoModoClaro"
                                             icon="sap-icon://light-mode" 
                                             text="Claro"
                                             press=".alternarTema"/>
                                         <MenuItem 
                                             key="botaoModoEscuro"
-                                            id="idBotaoModoEscuro"
+                                            id="idAdicionarBotaoModoEscuro"
                                             icon="sap-icon://dark-mode" 
                                             text="Escuro"
                                             press=".alternarTema"/>

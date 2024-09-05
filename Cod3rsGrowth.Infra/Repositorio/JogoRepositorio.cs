@@ -19,7 +19,7 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public void Adicionar(Jogo jogo)
         {
-            bancoDeDados.Insert(jogo);
+            jogo.Id = bancoDeDados.InsertWithInt32Identity(jogo);
         }
 
         public void Atualizar(Jogo jogo)

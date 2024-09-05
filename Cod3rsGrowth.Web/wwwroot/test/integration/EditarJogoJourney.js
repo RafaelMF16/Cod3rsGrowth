@@ -167,15 +167,11 @@ sap.ui.define([
 		//Asserções
 		Then
 			.paginaAdicionarOuEditarJogo
-			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
+			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes:");
 	});
 
-    opaTest("Deve poder voltar para tela de listagem ao clicar no botão cancelar", function (Given, When, Then) {
+    opaTest("Deve poder voltar para tela de detalhes ao editar jogo", function (Given, When, Then) {
         //Ações
-        When
-			.paginaAdicionarOuEditarJogo
-			.aoClicarNoItemDaTabela("Rust");
-
         When
 			.paginaAdicionarOuEditarJogo
 			.aoClicarNoBotaoEditar();
@@ -184,22 +180,18 @@ sap.ui.define([
 			.paginaAdicionarOuEditarJogo
 			.aoClicarNoBotaoDeCancelar();
 
+		When
+			.paginaAdicionarOuEditarJogo
+			.aoClicarNoBotaoSim();
+
 		//Asserções
 		Then
 			.paginaAdicionarOuEditarJogo
-			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)");
+			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes:");
 	});
 
     opaTest("Deve poder voltar para tela de listagem ao clicar no botao nav back", function (Given, When, Then) {
         //Ações
-        When
-			.paginaAdicionarOuEditarJogo
-			.aoClicarNoItemDaTabela("Rust");
-
-        When
-			.paginaAdicionarOuEditarJogo
-			.aoClicarNoBotaoEditar();
-			
         When
 			.paginaAdicionarOuEditarJogo
 			.aoClicarNoBotaoNavBack();

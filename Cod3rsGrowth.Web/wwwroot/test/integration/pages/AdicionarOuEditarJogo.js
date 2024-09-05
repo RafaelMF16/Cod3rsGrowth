@@ -161,7 +161,6 @@ sap.ui.define([
 				aoClicarNoBotaoEditar: function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
-						viewName: nomeDaViewDetalhesJogo,
 						matchers: [
 							new Properties({
 								text: "Editar"
@@ -175,7 +174,6 @@ sap.ui.define([
 				aoClicarNoBotaoNavBack: function () {
 					return this.waitFor({
 						controlType : "sap.m.Button",
-						viewName: nomeDaViewAdicionarOuEditarJogo,
 						matchers: [
 							new Properties({
 								icon: "sap-icon://nav-back"
@@ -183,6 +181,18 @@ sap.ui.define([
 						],
 						actions: new Press(),
 						errorMessage: "Não foi possível clicar no botão de nav back"
+					})
+				},
+
+				aoClicarNoBotaoSim: function () {
+					return this.waitFor({
+						controlType: "sap.m.Button",
+						matchers: new PropertyStrictEquals({
+							name: "text",
+							value: "Sim"
+						}),
+						actions: new Press(),
+						errorMessage: "Não foi possível clicar no botão Sim"
 					})
 				}
 			},

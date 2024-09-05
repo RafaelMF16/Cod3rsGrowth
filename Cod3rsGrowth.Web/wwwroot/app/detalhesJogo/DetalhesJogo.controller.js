@@ -1,8 +1,7 @@
 sap.ui.define([
     'ui5/codersgrowth/app/BaseController',
-    '../model/formatter',
-    'sap/m/MessageBox'
-], function (BaseController, formatter, MessageBox) {
+    '../model/formatter'
+], function (BaseController, formatter) {
     'use strict';
 
     var idJogo = "";
@@ -39,36 +38,18 @@ sap.ui.define([
 
         _pegarNomeDoJogo: function () {
             const idJogoNomeTitulo = "idJogoNomeTitulo";
-            let jogoNome = this.getView().byId(idJogoNomeTitulo).getText();
+            const jogoNome = this.getView().byId(idJogoNomeTitulo).getText();
             
             return jogoNome;
         },
 
-        _mostrarMensagemDeAtencao: function () {
+        _prepararMensagemDeAtencao: function () {
             const viewDetalhesJogo = this.getView();
             const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
-            const opcoes = {
-                method: 'DELETE',
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            };
+            const jogoNome = this._pegarNomeDoJogo();
+            const mensagem = `Tem certeza que deseja remover o ${jogoNome}`
 
-            let jogoNome = this._pegarNomeDoJogo();
-
-            MessageBox.warning(`Tem certeza que deseja remover o ${jogoNome}?`, {
-                title: propriedadesI18n.getText("tituloMessageBoxAtencao"),
-                id: "messageBoxAtencaoId",
-                styleClass: "sResponsivePaddingClasses",
-                dependentOn: this.getView(),
-                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                onClose: (sAction) => {
-                    if (sAction === MessageBox.Action.OK) {
-                        const urlDeletarJogo = `/api/JogoControlador/${idJogo}`
-                        this.fazerRequisicaoDelete(urlDeletarJogo, opcoes, jogoNome, viewDetalhesJogo);
-                    }
-                }
-            });
+            this.mostrarMensagemDeAviso(viewDetalhesJogo, propriedadesI18n, mensagem, idJogo, jogoNome);
         },
 
         aoClicarIrParaEdicao: function () {
@@ -77,7 +58,13 @@ sap.ui.define([
         },
 
         aoClicarRemoverJogo: function () {
-            this._mostrarMensagemDeAtencao();
+            this._prepararMensagemDeAtencao();
+        },
+
+        navegarParaListagem: function () {
+            const rotaListagem = "appListagemJogo"
+            this.getRouter()
+                .navTo(rotaListagem, {}, true);
         }
-    })
-})
+    });
+});

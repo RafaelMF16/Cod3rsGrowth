@@ -23,6 +23,10 @@ sap.ui.define([
 			.paginaAdicionarOuEditarJogo
 			.aoClicarNoBotaoDeCancelar();
 
+		When
+			.paginaAdicionarOuEditarJogo
+			.aoClicarNoBotaoSim();
+
 		//Asserções
 		Then
 			.paginaAdicionarOuEditarJogo
@@ -193,7 +197,7 @@ sap.ui.define([
 		//Asserções
 		Then
 			.paginaAdicionarOuEditarJogo
-			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Jogos (21)")
+			.aTelaComTituloCorrespondenteFoiCarregadaCorretamente("Detalhes:")
 
 		//FinalizarJornada
 		Then
