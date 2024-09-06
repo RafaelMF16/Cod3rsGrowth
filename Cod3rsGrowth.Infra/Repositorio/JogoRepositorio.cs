@@ -19,7 +19,7 @@ namespace Cod3rsGrowth.Infra.Repositorio
 
         public void Adicionar(Jogo jogo)
         {
-            bancoDeDados.Insert(jogo);
+            jogo.Id = bancoDeDados.InsertWithInt32Identity(jogo);
         }
 
         public void Atualizar(Jogo jogo)
@@ -54,7 +54,7 @@ namespace Cod3rsGrowth.Infra.Repositorio
             if (filtro?.PrecoMin != null && filtro?.PrecoMin > valorPadrao)
                 jogos = jogos.Where(j => j.Preco >= filtro.PrecoMin);
 
-            if (filtro?.PrecoMax != null && filtro?.PrecoMax > valorPadrao)
+            if (filtro?.PrecoMax != null && filtro?.PrecoMax >= valorPadrao)
                 jogos = jogos.Where(j => j.Preco <= filtro.PrecoMax);
 
             return jogos.ToList();

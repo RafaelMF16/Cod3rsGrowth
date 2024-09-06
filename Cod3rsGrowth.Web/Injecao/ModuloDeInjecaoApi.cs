@@ -1,14 +1,15 @@
 ﻿using Cod3rsGrowth.Dominio.Entidades;
+using Cod3rsGrowth.Dominio.EnumGenero;
+using Cod3rsGrowth.Dominio.Migracao;
+using Cod3rsGrowth.Infra;
 using Cod3rsGrowth.Infra.Interfaces;
 using Cod3rsGrowth.Infra.Repositorio;
-using Cod3rsGrowth.Infra;
 using Cod3rsGrowth.Servico.Servicos;
 using Cod3rsGrowth.Servico.Validadores;
-using FluentValidation;
-using LinqToDB.AspNet;
-using LinqToDB;
-using Cod3rsGrowth.Dominio.Migracao;
 using FluentMigrator.Runner;
+using FluentValidation;
+using LinqToDB;
+using LinqToDB.AspNet;
 
 namespace Cod3rsGrowth.Web.Injecao
 {
@@ -16,7 +17,7 @@ namespace Cod3rsGrowth.Web.Injecao
     {
         public static void AdicionarServicosAoEscopo(this WebApplicationBuilder builder)
         {
-            const string nomeVariavelAmbiente = "ConnectionString";
+            var nomeVariavelAmbiente = ConnectionString.connectionString;
             var stringConexao = Environment.GetEnvironmentVariable(nomeVariavelAmbiente)
                 ?? throw new Exception($"Variavel de ambiente [{nomeVariavelAmbiente}] não encontrada");
 
@@ -30,6 +31,19 @@ namespace Cod3rsGrowth.Web.Injecao
             builder.Services.AddScoped<IValidator<TesteDeJogo>, TesteDeJogoValidador>();
             builder.Services.AddScoped<IJogoRepositorio, JogoRepositorio>();
             builder.Services.AddScoped<ITesteDeJogoRepositorio, TesteDeJogoRepositorio>();
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddMvc().AddJsonOptions(x =>
+            {
+                x.JsonSerializerOptions.Converters.Add(new EnumConverter<Genero>());
+            });
+
+            builder.Services.AddCors(p => p.AddPolicy("SapApp", builder =>
+            {
+                builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+            }));
 
             builder.Services.AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb

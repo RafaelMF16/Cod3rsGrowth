@@ -38,7 +38,7 @@ namespace Cod3rsGrowth.Web.Controllers
         {
             _servicoJogo.Adicionar(jogo);
 
-            return Ok();
+            return Ok(jogo);
         }
 
         [HttpPatch]

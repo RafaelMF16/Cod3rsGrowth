@@ -1,0 +1,100 @@
+{
+	"_version": "1.58.0",
+	"sap.app": {
+		"id": "ui5.codersgrowth",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{aplicativoTitulo}}",
+		"description": "{{aplicativoDescricao}}",
+		"type": "application",
+		"applicationVersion": {
+			"version": "1.0.0"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"dependencies": {
+			"minUI5Version": "1.108.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "ui5.codersgrowth.i18n.i18n",
+					"supportedLocales": [""],
+					"fallbackLocale": ""
+				}
+			}
+		},
+		"rootView": {
+			"viewName": "ui5.codersgrowth.app.App",
+			"type": "XML",
+			"async": true,
+			"id": "app"
+		},
+		"routing": {
+         	"config": {
+				"routerClass": "sap.m.routing.Router",
+				"type": "View",
+				"viewType": "XML",
+				"path": "ui5.codersgrowth.app",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"transition": "slide",
+				"bypassed": {
+					"target": "paginaNaoEncontrada"
+				},
+				"async": true
+         	},
+         	"routes": [{
+				"pattern": "",
+				"name": "appListagemJogo",
+				"target": "listagemJogo"
+         	}, {
+				"pattern": "AdicionarJogo/:jogoId:",
+				"name": "appAdicionarJogo",
+				"target": "adicionarJogo"
+			}, {
+				"pattern": "DetalhesJogo/{jogoId}",
+				"name": "appDetalhesJogo",
+				"target": "detalhesJogo"
+			}],
+         	"targets": {
+				"listagemJogo": {
+					"path": "ui5.codersgrowth.app.listagemJogo",
+					"id": "jogo",
+					"name": "ListagemJogo",
+					"level" : 1
+            	},
+				"paginaNaoEncontrada": {
+					"path": "ui5.codersgrowth.app.paginaNaoEncontrada",
+					"id": "paginaNaoEncontrada",
+					"name": "PaginaNaoEncontrada",
+					"transition":"slide"
+				},
+				"adicionarJogo": {
+					"path": "ui5.codersgrowth.app.adicionarJogo",
+					"id": "adicionarJogo",
+					"name": "AdicionarJogo",
+					"transition":"slide"
+				},
+				"detalhesJogo": {
+					"path": "ui5.codersgrowth.app.detalhesJogo",
+					"id": "detalhesJogo",
+					"name": "DetalhesJogo",
+					"transition":"slide"
+				}
+			}
+      	}
+	}
+}
