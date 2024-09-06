@@ -8,7 +8,7 @@ namespace Cod3rsGrowth.Dominio.Migracao
         public override void Up()
         {
             Create.Table("Jogo")
-                .WithColumn("Id").AsInt64().PrimaryKey().Identity()
+                .WithColumn("Id").AsInt32().PrimaryKey().Identity()
                 .WithColumn("Nome").AsString().NotNullable()
                 .WithColumn("Genero").AsInt16().NotNullable()
                 .WithColumn("Preco").AsDecimal(6, 2);

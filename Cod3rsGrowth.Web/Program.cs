@@ -1,15 +1,18 @@
+using Cod3rsGrowth.Infra.Repositorio;
 using Cod3rsGrowth.Web.Injecao;
 using FluentMigrator.Runner;
+using Microsoft.Extensions.FileProviders;
+
+const string argumentoBancoDeDadosDeTestes = "BancoDeDadosTeste";
 
 var builder = WebApplication.CreateBuilder(args);
 
-var loggerFactory = new LoggerFactory();
+if (args.FirstOrDefault() == argumentoBancoDeDadosDeTestes)
+{
+    const string stringDeConexaoDoBancoDeDadosDeTestes = "ConnectionStringBancoDeDadosDeTestes";
+    ConnectionString.connectionString = stringDeConexaoDoBancoDeDadosDeTestes;
+}
 
-var servicos = new ServiceCollection();
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.AdicionarServicosAoEscopo();
 
 var app = builder.Build();
@@ -27,6 +30,22 @@ using (var escopo = app.Services.CreateScope())
     var executarMigracao = escopo.ServiceProvider.GetRequiredService<IMigrationRunner>();
     executarMigracao.MigrateUp();
 }
+
+app.UseStaticFiles(new StaticFileOptions 
+{
+    ServeUnknownFileTypes = true 
+});
+
+app.UseFileServer(new FileServerOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
+    EnableDirectoryBrowsing = true
+});
+
+app.UseRouting();
+
+app.UseCors("SapApp");
 
 app.UseHttpsRedirection();
 

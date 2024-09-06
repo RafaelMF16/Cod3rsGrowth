@@ -4,49 +4,58 @@ namespace Cod3rsGrowth.Dominio.EnumGenero
 {
     public enum Genero
     {
-        [Description("Padrão caso enum não seja definido")]
+        [Description("Não definido")]
         NAODEFINIDO,
 
-        [Description("Jogo de tiro em primeira pessoa")]
+        [Description("FPS")]
         FPS,
 
-        [Description("Jogo de competição eliminatória entre jogadores em um cenário de sobrevivência")]
+        [Description("Battle Royale")]
         BATTLEROYALE,
 
-        [Description("Jogo de batalha em equipes dentro de arenas")]
+        [Description("Moba")]
         MOBA,
 
-        [Description("Jogo de interpretação de personagens")]
+        [Description("RPG")]
         RPG,
 
-        [Description("Jogo de interpretação de personagens aonde o jogador tem liberdade para explorar um mundo virtual aberto")]
+        [Description("MMORPG")]
         MMORPG,
 
-        [Description("Jogo de aventura em primeira pessoa")]
+        [Description("FPA")]
         FPA,
 
-        [Description("Jogo de estratégia em tempo real")]
+        [Description("RTS")]
         RTS,
 
-        [Description("Jogo aonde jogadores se enfrentam em batalhas reais em um mundo virtual")]
+        [Description("PVP")]
         PVP,
 
-        [Description("Jogo aonde uma experiência real é simulada em um mundo virtual")]
+        [Description("Simulador")]
         SIMULADOR,
 
-        [Description("Jogo que coloca jogadores em situações extremas aonde o objetivo é sobreviver")]
+        [Description("Sobrevivência")]
         SOBREVIVENCIA,
 
-        [Description("Jogo de tiro em terceira pessoa")]
+        [Description("TPS")]
         TPS,
 
-        [Description("Jogo que permite ao jogador explorar um mundo virtual aberto")]
+        [Description("Mundo Aberto")]
         MUNDOABERTO,
 
-        [Description("Jogo de combate entre personagens")]
+        [Description("Luta")]
         LUTA,
 
-        [Description("Jogo de corrida entre meios de transporte")]
-        CORRIDA
+        [Description("Corrida")]
+        CORRIDA,
+
+        [Description("Terror")]
+        TERROR,
+
+        [Description("RogueLike")]
+        ROGUELIKE,
+
+        [Description("Aventura")]
+        AVENTURA
     }
 }
