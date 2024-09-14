@@ -1,13 +1,16 @@
 sap.ui.define([
     'ui5/codersgrowth/app/BaseController',
-    '../model/formatter'
-], function (BaseController, formatter) {
+    '../model/formatter',
+    'ui5/codersgrowth/app/servicos/validacao',
+    'sap/ui/model/json/JSONModel'
+], function (BaseController, formatter, validacao, JSONModel) {
     'use strict';
 
     var idJogo = "";
 
     return BaseController.extend("ui5.codersgrowth.app.detalhesJogo.DetalhesJogo", {
         formatter: formatter,
+        validacao: validacao,
 
         onInit: function() {
             this.getRouter().getRoute("appDetalhesJogo").attachMatched(this._aoCoincidirRota, this);
@@ -18,9 +21,34 @@ sap.ui.define([
 
             const viewDetalhesJogo = this.getView();
             const jogo = "jogo";
-            const urlObterPorId = `/api/JogoControlador/${idJogo}`
+            const urlObterPorId = `/api/JogoControlador/${idJogo}`;
+            const urlObterTodosTestes = "/api/TesteDeJogoControlador";
+            const listaDeTestes = "listaDeTestes"
 
             this.fazerRequisicaoGet(urlObterPorId, jogo, viewDetalhesJogo);
+            
+            this._pegarFilhosDoJogo(urlObterTodosTestes, listaDeTestes, viewDetalhesJogo);
+        },
+
+        _pegarFilhosDoJogo: function(url, nomeLista, view){
+            fetch(url)
+			   .then(respostaApi => {
+					if (!respostaApi.ok) {
+						respostaApi.json()
+							.then(respostaApi => {
+						   		this.validacao.mostrarMensagemDeErro(respostaApi, view)
+							});
+					}
+				  	return respostaApi.json();
+				})
+			   .then(respostaApi => {
+                    respostaApi = respostaApi.filter((avaliacao) => avaliacao.idJogo == idJogo);
+
+					const dataModel = new JSONModel();
+				  	dataModel.setData(respostaApi);
+					 
+				  	this.getView().setModel(dataModel, nomeLista);
+				});
         },
 
         _obterIdJogoPelaRota(evento) {

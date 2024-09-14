@@ -5,85 +5,53 @@
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true">
-    <Page>
+    <Page >
         <customHeader>
-            <Toolbar>
+            <Toolbar >
                 <FlexBox 
-                    id="idFlexBoxHeader"
+                    height="100%"
+                    width="16%"
+                    alignItems="Center"
+                    justifyContent="SpaceBetween">
+                    <Button 
+                        icon="sap-icon://nav-back"/>
+                    <Title 
+                        text="{i18n>tituloListagemJogo}"/>
+                </FlexBox>
+                <FlexBox
                     height="100%"
                     width="100%"
-                    justifyContent="SpaceBetween"
-                    alignItems="Center">
-                    <Title 
-                        text="{i18n>paginaJogoTitulo}"
-                        titleStyle="H3"
-                        class="sapUiResponsiveMargin"/>
-                    <MenuButton
-                        id="idMenuBotaoHeader"
-                        type="Transparent"
-                        icon="sap-icon://action-settings"  
-                        menuPosition="EndBottom"> 
-                        <menu>
-                            <Menu >
-                                <MenuItem
-                                    id="idBotaoDeAparencia"
-                                    text="Aparência" 
-                                    icon="sap-icon://palette">
-                                    <items>
-                                        <MenuItem 
-                                            key="botaModoClaro"
-                                            id="idBotaoModoClaro"
-                                            icon="sap-icon://light-mode" 
-                                            text="Claro"
-                                            press=".alternarTema"/>
-                                        <MenuItem 
-                                            key="botaoModoEscuro"
-                                            id="idBotaoModoEscuro"
-                                            icon="sap-icon://dark-mode" 
-                                            text="Escuro"
-                                            press=".alternarTema"/>
-                                    </items>
-                                </MenuItem>
-                            </Menu>
-                        </menu>
-                    </MenuButton>
+                    alignItems="Center"
+                    justifyContent="End">
+                    <Button 
+                        icon="sap-icon://home"/>
                 </FlexBox>
             </Toolbar>
         </customHeader>
         <Table
-            headerText="{i18n>tabelaJogoTitulo}"
-            id="idTabelaJogo"
-            fixedLayout="false"
-            class="sapUiResponsiveMargin"
-            width="auto"
+            headerText="{i18n>tabelaJogoTitulo}"            
+            inset="true"
+            class="sapUiNoMargin"
             items="{listaJogos>/}"
             growing="true"
             growingThreshold="10"
-            sticky="ColumnHeaders,HeaderToolbar"
+            sticky="HeaderToolbar"
             updateFinished=".atualizarTitulo">
             <headerToolbar>
-                <OverflowToolbar 
-                    id="idTabelaHeader"
-                    design="Transparent">
+                <OverflowToolbar >
                     <Title 
                         id="idTabelaJogoTitulo"
                         text= ""
                         titleStyle="H4"/>
-                    <ToolbarSpacer/>
+                    <ToolbarSpacer />
                     <SearchField 
-                        id="idCampoDePesquisaNome"
                         width="20%"
-                        liveChange=".pegarValorDoCampoDePesquisa">
-                        <layoutData>
-                            <OverflowToolbarLayoutData
-                                priority="NeverOverflow"/>
-                        </layoutData>
-                    </SearchField>
+                        liveChange=".pegarValorDoCampoDePesquisa"/>
                     <ToolbarSeparator />
                     <Label 
-                        text="{i18n>LabelGenero}"/>
+                        text="{i18n>textoLabelGeneroTabelaJogo}"
+                        showColon="true"/>
                     <Select 
-                        id="idCampoDeSelecaoGenero"
                         width="12%"
                         items="{listaGeneros>/}"
                         change=".pegarValorDoSelect">
@@ -96,53 +64,42 @@
                     </Select>
                     <ToolbarSeparator />
                     <Label 
-                        text="{i18n>LabelPrecoMin}"/>
+                        text="{i18n>textoLabelPrecoMinTabelaJogo}"
+                        showColon="true"/>
                     <Input 
-                        id="idInputPrecoMin"
                         type="Number"
                         liveChange=".pegarValorDoCampoPrecoMin"
                         width="8%"/>
                     <Label 
-                        text="{i18n>LabelPrecoMax}"/>
+                        text="{i18n>textoLabelPrecoMaxTabelaJogo}"
+                        showColon="true"/>
                     <Input 
-                        id="idInputPrecoMax"
                         type="Number"
                         liveChange=".pegarValorDoCampoPrecoMax"
                         width="8%"/>
                     <ToolbarSeparator />
                     <Button 
-                        id="idBotaoAdicionar"
                         text="{i18n>botaoAdicionar}"
                         icon="sap-icon://sys-add"
-                        type="Ghost"
-                        iconFirst="false"
                         press=".aoClicarIrParaTelaDeAdicionarJogo"/>
                 </OverflowToolbar>
             </headerToolbar>
             <columns>
-                <Column 
-                    minScreenWidth="Small"
-                    demandPopin="true"
-                    vAlign="Middle"
-                    hAlign="Begin">
+                <Column >
                     <Text 
-                        text="{i18n>colunaNomeTabelaJogo}"/>
+                        text="{i18n>textoColunaNomeTabelaJogo}"/>
                 </Column>
                 <Column
-                    minScreenWidth="Small"
-                    demandPopin="true"
                     vAlign="Middle"
                     hAlign="Center">
                     <Text 
-                        text="{i18n>colunaGeneroTabelaJogo}"/>
+                        text="{i18n>textoColunaGeneroTabelaJogo}"/>
                 </Column>
                 <Column
-                    minScreenWidth="Small"
-                    demandPopin="true"
                     vAlign="Middle"
                     hAlign="Center">
                     <Text 
-                        text="{i18n>colunaPrecoTabelaJogo}"/>
+                        text="{i18n>textoColunaPrecoTabelaJogo}"/>
                 </Column>
             </columns>
             <items>

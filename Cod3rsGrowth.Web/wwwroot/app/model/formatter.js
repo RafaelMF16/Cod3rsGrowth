@@ -18,7 +18,7 @@ sap.ui.define([], () => {
             const enumNaoDefinido = "Não definido";
 
             if (descricao === enumNaoDefinido){
-                return propriedadesI18n.getText("todosOsGeneros");
+                return propriedadesI18n.getText("textoDoValorPadraoDoSelectFiltroGenero");
             }
 
             return descricao;
@@ -29,10 +29,21 @@ sap.ui.define([], () => {
             const enumNaoDefinido = "Não definido";
 
             if (descricao === enumNaoDefinido){
-                return propriedadesI18n.getText("SelecioneUmGenero");
+                return propriedadesI18n.getText("textoDoValorPadraoDoSelectGeneroAdicionarJogo");
             }
 
             return descricao;
+        },
+
+        formatarStatus(status){
+            const propriedadesI18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            
+            if (status === true){
+                return propriedadesI18n.getText("textostatusAprovado");
+            }
+            else {
+                return propriedadesI18n.getText("textostatusReprovado");
+            }
         }
     }
 })
