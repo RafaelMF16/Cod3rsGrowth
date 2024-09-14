@@ -1,7 +1,8 @@
 sap.ui.define([
-   "ui5/codersgrowth/app/BaseController",
-   "../model/formatter"
-], (BaseController, formatter) => {
+   'ui5/codersgrowth/app/BaseController',
+   '../model/formatter',
+   'ui5/codersgrowth/common/ConstantesDaRota'
+], (BaseController, formatter, ConstantesDaRota) => {
    "use strict";
 
    var valorFiltroNome = "";
@@ -21,9 +22,9 @@ sap.ui.define([
          const urlObterGeneros = "/api/GeneroControlador";
          const nomeListaJogos = "listaJogos";
          const nomeListaGeneros = "listaGeneros";
-         
-         this.fazerRequisicaoGet(urlObterTodos, nomeListaJogos);
 
+         this.fazerRequisicaoGet(urlObterTodos, nomeListaJogos);
+         
          this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros);
       },
 
@@ -45,20 +46,8 @@ sap.ui.define([
             query.precoMax = valorFiltroPrecoMax;
 
          let urlObterTodosComFiltros = `/api/JogoControlador?${new URLSearchParams(query)}`;
-
+         
          this.fazerRequisicaoGet(urlObterTodosComFiltros, nomeListaJogos, viewJogo);
-      },
-
-      _navegarParaDetalhes(id){
-         const rotaDetalhes = 'appDetalhesJogo';
-         this._navegarPara(rotaDetalhes, id);
-      },
-
-      _navegarPara(nomeRota, id){
-         this.getRouter()
-            .navTo(nomeRota, {
-               jogoId: id
-            }, true);
       },
 
       _obterIdJogo(evento){
@@ -96,12 +85,14 @@ sap.ui.define([
       },
 
       atualizarTitulo: function (oEvent) {
-         let tabelaJogoTitulo,
-				tabelaJogo = oEvent.getSource(),
-				itemsDaTabelaJogo = oEvent.getParameter("total");
-            const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
+         let tabelaJogoTitulo;
+         let tabelaJogo = oEvent.getSource();
+			let itemsDaTabelaJogo = oEvent.getParameter("total");
+
+         const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
+
 			if (itemsDaTabelaJogo && tabelaJogo.getBinding("items").isLengthFinal()) {
-				tabelaJogoTitulo = propriedadesI18n.getText("contadorDeItemsTitulo", [itemsDaTabelaJogo]);
+				tabelaJogoTitulo = propriedadesI18n.getText("tituloTabelaJogoComContadorDeItens", [itemsDaTabelaJogo]);
 			} else {
 				tabelaJogoTitulo = propriedadesI18n.getText("tabelaJogoTitulo");
 			}
@@ -109,13 +100,13 @@ sap.ui.define([
       },
 
       aoClicarIrParaTelaDeAdicionarJogo: function () {
-         const rotaCriar = 'appAdicionarJogo';
-         this._navegarPara(rotaCriar);
+         this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_ADICIONAR_JOGO);
       },
 
       aoClicarNavegarParaDetalhes(oEvent){
          const idJogo = this._obterIdJogo(oEvent);
-         this._navegarParaDetalhes(idJogo);
+         
+         this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo);
       },
    });
 });

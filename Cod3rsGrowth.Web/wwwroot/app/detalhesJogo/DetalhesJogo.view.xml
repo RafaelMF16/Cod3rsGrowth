@@ -1,4 +1,4 @@
-<mvc:View xmlns:uxap="sap.uxap" 
+<mvc:View xmlns:unified="sap.ui.unified" xmlns:calendar="sap.ui.unified.calendar" xmlns:uxap="sap.uxap" 
     controllerName="ui5.codersgrowth.app.detalhesJogo.DetalhesJogo"
     xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
@@ -112,6 +112,94 @@
                         text="{jogo>/genero}"/>
                 </form:content>
             </form:SimpleForm>
+            <Table
+            headerText="{i18n>tabelaJogoTitulo}"
+            fixedLayout="false"
+            class="sapUiResponsiveMargin"
+            width="auto"
+            items="{listaDeTestes>/}"
+            growing="true"
+            growingThreshold="10"
+            sticky="ColumnHeaders,HeaderToolbar"
+            updateFinished=".atualizarTitulo">
+            <headerToolbar>
+                <OverflowToolbar 
+                    design="Transparent">
+                    <Title 
+                        text= "Avaliações"
+                        titleStyle="H4"/>
+                    <ToolbarSpacer/>
+                    <SearchField 
+                        width="20%"
+                        liveChange="">
+                        <layoutData>
+                            <OverflowToolbarLayoutData
+                                priority="NeverOverflow"/>
+                        </layoutData>
+                    </SearchField>
+                    <ToolbarSeparator />
+                    <Button 
+                        text="{i18n>botaoAdicionar}"
+                        icon="sap-icon://sys-add"
+                        type="Ghost"
+                        iconFirst="false"
+                        press=""/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column 
+                    minScreenWidth="Small"
+                    demandPopin="true"
+                    vAlign="Middle"
+                    hAlign="Begin">
+                    <Text 
+                        text="{i18n>colunaResponsavelTabelaTestes}"/>
+                </Column>
+                <Column
+                    minScreenWidth="Small"
+                    demandPopin="true"
+                    vAlign="Middle"
+                    hAlign="Center">
+                    <Text 
+                        text="{i18n>colunaNotaTabelaTestes}"/>
+                </Column>
+                <Column
+                    minScreenWidth="Small"
+                    demandPopin="true"
+                    vAlign="Middle"
+                    hAlign="Center">
+                    <Text 
+                        text="{i18n>colunaAprovadoTabelaTestes}"/>
+                </Column>
+                <Column
+                    minScreenWidth="Small"
+                    demandPopin="true"
+                    vAlign="Middle"
+                    hAlign="Center">
+                    <Text 
+                        text="{i18n>colunaDataTabelaTestes}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem 
+                    type="Navigation"
+                    press=".aoClicarNavegarParaDetalhes">
+                    <cells>
+                        <ObjectIdentifier 
+                            title="{listaDeTestes>nomeResponsavelDoTeste}"/>
+                        <Text
+                            text="{listaDeTestes>nota}"/>
+                        <Text 
+                            text="{
+                                path: 'listaDeTestes>aprovado',
+                                formatter: '.formatter.formatarStatus'
+                            }"/>
+                        <Text 
+                            text="{listaDeTestes>dataRealizacaoTeste}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
         </FlexBox>
     </Page>
 </mvc:View>

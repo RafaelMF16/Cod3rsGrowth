@@ -1,8 +1,9 @@
 sap.ui.define([
     'ui5/codersgrowth/app/BaseController',
     '../model/formatter',
-    '../servicos/validacao'
-], function(BaseController, formatter, validacao) {
+    '../servicos/validacao',
+    'ui5/codersgrowth/common/ConstantesDaRota'
+], function(BaseController, formatter, validacao, ConstantesDaRota) {
     'use strict';
 
     const inputNomeId = "idInputNome";
@@ -127,5 +128,9 @@ sap.ui.define([
             this.getView().byId(inputPrecoId).setValue(jogo.preco);
             this.getView().byId(selectGeneroId).setSelectedItem(generoQueVaiSerSelecionadoNoSelect);
         },
+
+        aoClicarVoltarParaTelaDeListagem: function () {
+            this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS);
+        }
     });
 });

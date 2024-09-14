@@ -1,16 +1,16 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"sap/ui/core/routing/History",
-	"sap/ui/core/UIComponent",
-	"sap/ui/model/json/JSONModel",
-	"sap/m/MessageBox",
-	"ui5/codersgrowth/app/servicos/validacao",
+	'sap/ui/core/mvc/Controller',
+	'sap/ui/core/UIComponent',
+	'sap/ui/model/json/JSONModel',
+	'sap/m/MessageBox',
+	'ui5/codersgrowth/app/servicos/validacao',
 	'sap/m/Dialog',
     'sap/m/Button',
     'sap/m/library',
     'sap/m/Text',
-    'sap/ui/core/library'
-], function(Controller, History, UIComponent, JSONModel, MessageBox, validacao, Dialog, Button, mobileLibrary, Text, coreLibrary) {
+    'sap/ui/core/library',
+	'ui5/codersgrowth/common/ConstantesDaRota'
+], function(Controller, UIComponent, JSONModel, MessageBox, validacao, Dialog, Button, mobileLibrary, Text, coreLibrary, ConstantesDaRota) {
 	"use strict";
 	
 	return Controller.extend("ui5.codersgrowth.app.BaseController", {
@@ -21,6 +21,8 @@ sap.ui.define([
 		},
 
 		_mostrarMensagemDeSucesso: function (mensagemDeSucesso, idJogo) {
+			const rotaListagemJogo = "appListagemJogo";
+
             MessageBox.success(mensagemDeSucesso, {
                 id: "messageBoxSucesso",
                 styleClass: "sResponsivePaddingClasses",
@@ -29,23 +31,22 @@ sap.ui.define([
                 onClose: (sAction) => {
                     if (sAction === MessageBox.Action.OK) {
 						!!idJogo 
-							? this.navegarPara(idJogo)
-							: this.navegarPara()
+							? this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo)
+							: this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS)
                     }
                 }
              });
         },
 
-		navegarPara: function (idJogo) {
-			const rotaDetalhes = "appDetalhesJogo";
-			const rotaListagem = "appListagemJogo";
-
+		navegarPara:function (rota, idJogo) {
 			!!idJogo
-				? this.getRouter().navTo(rotaDetalhes, {jogoId: idJogo}, true)
-				: this.getRouter().navTo(rotaListagem, {}, true)
-        },
+				? this.getRouter().navTo(rota, {
+					jogoId: idJogo
+				}, true)
+				: this.getRouter().navTo(rota, {}, true);
+		},
 
-		fazerRequisicaoGet: function (url, nomeLista, view) {
+		fazerRequisicaoGet: function (url, nomeLista, view, idJogo) {
 			fetch(url)
 			   .then(respostaApi => {
 					if (!respostaApi.ok) {
@@ -131,19 +132,6 @@ sap.ui.define([
 			   sap.ui.getCore().applyTheme(nomeModoClaro);
 		},
 
-		onNavBack: function () {
-			var oHistory, sPreviousHash;
-			
-			oHistory = History.getInstance();
-			sPreviousHash = oHistory.getPreviousHash();
-
-			if (sPreviousHash !== undefined) {
-				window.history.go(-1);
-			} else {
-				this.getRouter().navTo("appListagemJogo", {}, true);
-			}
-		},
-
 		mostrarMensagemDeAviso: function(view, propriedadesI18n, mensagemDeAviso, idJogo, nomeJogo){
             const url = `/api/JogoControlador/${idJogo}`;
                 this.mensagemDeCancelarEmpresa = new Dialog({
@@ -170,6 +158,6 @@ sap.ui.define([
                     })
                 });
             this.mensagemDeCancelarEmpresa.open();
-         }
+         },
 	});
 });

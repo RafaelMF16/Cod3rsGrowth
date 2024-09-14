@@ -9,53 +9,25 @@
     displayBlock="true">
     <Page>
         <customHeader>
-            <Toolbar>
-                <FlexBox >
-                    <Button 
-                        id="idAdicionarJogoBotaoNavBack"
-                        icon="sap-icon://nav-back"
-                        press=".onNavBack">
-                    </Button>
-                </FlexBox>
+            <Toolbar >
                 <FlexBox 
-                    id="idAdicionarFlexBoxHeader"
+                    height="100%"
+                    width="10%"
+                    alignItems="Center"
+                    justifyContent="SpaceBetween">
+                    <Button 
+                        icon="sap-icon://nav-back"
+                        press=".aoClicarVoltarParaTelaDeListagem"/>
+                    <Title 
+                        text="{i18n>tituloPaginaAdicionarJogo}"/>
+                </FlexBox>
+                <FlexBox
                     height="100%"
                     width="100%"
-                    justifyContent="SpaceBetween"
-                    alignItems="Center">
-                    <Title 
-                        text="{i18n>paginaJogoTitulo}"
-                        titleStyle="H3"
-                        class="sapUiResponsiveMargin"/>
-                    <MenuButton
-                        id="idAdicionarMenuBotaoHeader"
-                        type="Transparent"
-                        icon="sap-icon://action-settings"  
-                        menuPosition="EndBottom"> 
-                        <menu>
-                            <Menu >
-                                <MenuItem
-                                    id="idAdicionarBotaoDeAparencia"
-                                    text="Aparência" 
-                                    icon="sap-icon://palette">
-                                    <items>
-                                        <MenuItem 
-                                            key="botaModoClaro"
-                                            id="idAdicionarBotaoModoClaro"
-                                            icon="sap-icon://light-mode" 
-                                            text="Claro"
-                                            press=".alternarTema"/>
-                                        <MenuItem 
-                                            key="botaoModoEscuro"
-                                            id="idAdicionarBotaoModoEscuro"
-                                            icon="sap-icon://dark-mode" 
-                                            text="Escuro"
-                                            press=".alternarTema"/>
-                                    </items>
-                                </MenuItem>
-                            </Menu>
-                        </menu>
-                    </MenuButton>
+                    alignItems="Center"
+                    justifyContent="End">
+                    <Button 
+                        icon="sap-icon://home"/>
                 </FlexBox>
             </Toolbar>
         </customHeader>
