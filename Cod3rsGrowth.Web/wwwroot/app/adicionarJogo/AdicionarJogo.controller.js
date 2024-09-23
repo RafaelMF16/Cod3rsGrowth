@@ -2,71 +2,78 @@ sap.ui.define([
     'ui5/codersgrowth/app/BaseController',
     '../model/formatter',
     '../servicos/validacao',
-    'ui5/codersgrowth/common/ConstantesDaRota'
-], function(BaseController, formatter, validacao, ConstantesDaRota) {
+    'ui5/codersgrowth/common/ConstantesDaRota',
+    'ui5/codersgrowth/common/ConstantesDoBanco'
+], function(BaseController, formatter, validacao, ConstantesDaRota, ConstantesDoBanco) {
     'use strict';
 
-    const inputNomeId = "idInputNome";
-    const inputPrecoId = "idInputPreco";
-    const selectGeneroId = "idSelectGenero";
-    const tituloPaginaAdicionarOuEditar = "idTituloPaginaAdicionar";
+    const InputNomeId = "idInputNome";
+    const InputPrecoId = "idInputPreco";
+    const SelectGeneroId = "idSelectGenero";
+    const TituloPaginaAdicionarOuEditar = "tituloPaginasAdicionarOuEditar";
+    
     var idJogo = "";
     
     return BaseController.extend("ui5.codersgrowth.app.adicionarJogo.AdicionarJogo",{
         formatter: formatter,
         validacao: validacao,
+        constantesDoBanco: ConstantesDoBanco,
 
         onInit: function () {
             this.getRouter().getRoute("appAdicionarJogo").attachMatched(this._aoCoincidirRota, this);
         },
 
         _aoCoincidirRota: function (oEvent) {
-            const urlObterGeneros = "/api/GeneroControlador";
             const nomeListaGeneros = "listaGeneros";
-            const valueStatePadrao = "None";
-            const viewAdicionarJogo = this.getView();
             const tituloPaginaEditar = "Editar Jogo";
             const titutloPaginaAdicionar = "Adicionar Jogo";
-
+            const viewAdicionarJogo = this._obterViewAdicionarJogo();
+            
             this._obterIdJogoPelaRota(oEvent);
-
-            this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros, viewAdicionarJogo);
+            
+            this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_GENERO, nomeListaGeneros, viewAdicionarJogo);
             
             if (idJogo){
-                const urlObterPorId = `/api/JogoControlador/${idJogo}`;
+                const urlObterPorId = ConstantesDoBanco.CAMINHO_PARA_API_JOGO + `/${idJogo}`;
 
                 this._mudarTituloDaPagina(tituloPaginaEditar);
-                this._limparValueState(valueStatePadrao);
+                this._limparValueState();
                 this.fazerRequisicaoObterPorId(urlObterPorId, viewAdicionarJogo);
             } else {
                 this._mudarTituloDaPagina(titutloPaginaAdicionar);
-                this._limparCampos(inputNomeId, inputPrecoId, selectGeneroId);
-                this._limparValueState(valueStatePadrao);
+                this._limparCampos();
+                this._limparValueState();
             }
+        },
+
+        _obterViewAdicionarJogo(){
+            return this.getView();
         },
 
         _obterIdJogoPelaRota(evento) {
             idJogo = evento.getParameters().arguments.jogoId;
         },
 
-        _limparCampos: function (inputNomeId, inputPrecoId, selectGeneroId) {
-            this.getView().byId(inputNomeId).setValue("");
-            this.getView().byId(inputPrecoId).setValue();
-            this.getView().byId(selectGeneroId).setSelectedKey();
+        _limparCampos: function () {
+            this.getView().byId(InputNomeId).setValue("");
+            this.getView().byId(InputPrecoId).setValue();
+            this.getView().byId(SelectGeneroId).setSelectedKey();
         },
 
-        _limparValueState: function (valueState) {
-            this.getView().byId(inputNomeId).setValueState(valueState);
-            this.getView().byId(inputPrecoId).setValueState(valueState);
-            this.getView().byId(selectGeneroId).setValueState(valueState);
+        _limparValueState: function () {
+            const valueStatePadrao = "None";
+
+            this.getView().byId(InputNomeId).setValueState(valueStatePadrao);
+            this.getView().byId(InputPrecoId).setValueState(valueStatePadrao);
+            this.getView().byId(SelectGeneroId).setValueState(valueStatePadrao);
         },
 
         _pegarValorDosCampos: function () {
             const generoNaoDefinido = "NAODEFINIDO";
 
-            let valorInputNome = this.getView().byId(inputNomeId).getValue();
-            let valorInputPreco = this.getView().byId(inputPrecoId).getValue();
-            let valorSelectGenero = parseInt(this.getView().byId(selectGeneroId).getSelectedKey());
+            let valorInputNome = this.getView().byId(InputNomeId).getValue();
+            let valorInputPreco = this.getView().byId(InputPrecoId).getValue();
+            let valorSelectGenero = parseInt(this.getView().byId(SelectGeneroId).getSelectedKey());
 
             let jogo = {};
 
@@ -86,7 +93,7 @@ sap.ui.define([
         },
 
         _mudarTituloDaPagina: function (titulo) {
-            this.getView().byId(tituloPaginaAdicionarOuEditar).setText(titulo)
+            this.getView().byId(TituloPaginaAdicionarOuEditar).setText(titulo);
         },
 
         _prepararMensagemDeAtencao: function () {
@@ -98,7 +105,6 @@ sap.ui.define([
 
         salvarJogo: function () {
             const jogo = this._pegarValorDosCampos();
-            const urlAdicionarOuAtualizarJogo = "/api/JogoControlador";
             const viewAdicionarJogo = this.getView();
             const opcoes = {
                 method: 'POST',
@@ -113,7 +119,7 @@ sap.ui.define([
             }
 
             if (this.validacao.validarTela(jogo, viewAdicionarJogo))
-                this.fazerRequisicaoPostOuPatch(urlAdicionarOuAtualizarJogo, opcoes, jogo, viewAdicionarJogo);
+                this.fazerRequisicaoPostOuPatch(ConstantesDoBanco.CAMINHO_PARA_API_JOGO, opcoes, jogo, viewAdicionarJogo);
         },
 
         cancelarAdicaoDeJogo: function () {
@@ -121,12 +127,12 @@ sap.ui.define([
         },
 
         colocarValorNoInput: function (jogo) {
-            const generos = this.getView().byId(selectGeneroId).getItems();
+            const generos = this.getView().byId(SelectGeneroId).getItems();
             const generoQueVaiSerSelecionadoNoSelect = generos.find(genero => genero.mProperties.text === jogo.genero);
             
-            this.getView().byId(inputNomeId).setValue(jogo.nome);
-            this.getView().byId(inputPrecoId).setValue(jogo.preco);
-            this.getView().byId(selectGeneroId).setSelectedItem(generoQueVaiSerSelecionadoNoSelect);
+            this.getView().byId(InputNomeId).setValue(jogo.nome);
+            this.getView().byId(InputPrecoId).setValue(jogo.preco);
+            this.getView().byId(SelectGeneroId).setSelectedItem(generoQueVaiSerSelecionadoNoSelect);
         },
 
         aoClicarVoltarParaTelaDeListagem: function () {

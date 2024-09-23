@@ -12,84 +12,75 @@
             <Toolbar >
                 <FlexBox 
                     height="100%"
-                    width="10%"
+                    width="100%"
                     alignItems="Center"
                     justifyContent="SpaceBetween">
                     <Button 
                         icon="sap-icon://nav-back"
                         press=".aoClicarVoltarParaTelaDeListagem"/>
                     <Title 
-                        text="{i18n>tituloPaginaAdicionarJogo}"/>
-                </FlexBox>
-                <FlexBox
-                    height="100%"
-                    width="100%"
-                    alignItems="Center"
-                    justifyContent="End">
+                        text="{i18n>tituloGeral}"
+                        titleStyle= "H3"/>
                     <Button 
                         icon="sap-icon://home"/>
                 </FlexBox>
             </Toolbar>
         </customHeader>
         <FlexBox 
-            class= "sapUiResponsiveMargin"
+            class= "sapUiTinyMargin"
             width="auto"
-            justifyContent="SpaceBetween"
+            height="100%"
             direction="Column"
             backgroundDesign="Transparent">
             <form:SimpleForm 
-                id="formAdicionarJogo"
-                maxContainerCols="2"
                 editable="true"
                 layout="ResponsiveGridLayout"
                 labelSpanM="1"
-                emptySpanL="8">
+                emptySpanL="9">
                 <form:toolbar>
                     <OverflowToolbar >
-                        <Title 
-                            id="idTituloPaginaAdicionar"
-                            text="{i18n>formAdicionarJogoTitulo}"
+                        <Title
+                            id="tituloPaginasAdicionarOuEditar"
                             titleStyle="H4"/>
                         <ToolbarSpacer />
                         <Button 
-                            id="idBotaoSalvarCriacaoJogo"
                             text="{i18n>adicionarJogoBotaoSalvarTexto}"
                             icon="sap-icon://save"
-                            iconFirst="false"
                             press=".salvarJogo"/>
                         <Button 
-                            id="idBotaoCancelarCriacaoJogo"
                             text="{i18n>adicionarJogoBotaoCancelarTexto}"
                             icon="sap-icon://sys-cancel-2"
-                            iconFirst="false"
                             press=".cancelarAdicaoDeJogo"/>
                     </OverflowToolbar>
                 </form:toolbar>
                 <form:content>
                     <Label 
                         text="{i18n>adicionarJogoLabelNomeTexto}" 
-                        required="true"/>
+                        required="true"
+                        design="Bold"/>
                     <Input
-                        placeholder="{i18n>placeholderInputNome}"
                         id="idInputNome"
+                        placeholder="{i18n>placeholderInputNome}"
                         required="true"
-                        valueStateText="{i18n>campoNomeVazioTexto}"/>
+                        valueStateText="{i18n>campoNomeVazioTexto}"
+                        value="{nomeModeloJogo>/nome}"/>
                     <Label 
-                        text="{i18n>adicionarJogoLabelPrecoTexto}"/>
+                        text="{i18n>adicionarJogoLabelPrecoTexto}"
+                        design="Bold"/>
                     <Input 
-                        placeholder="{i18n>placeholderInputPreco}"
                         id="idInputPreco"
-                        required="true"
+                        placeholder="{i18n>placeholderInputPreco}"
                         type="Number"
                         valueStateText="{i18n>campoPrecoVazioTexto}"/>
                         <Label 
                         text="{i18n>adicionarJogoLabelGeneroTexto}"
-                        required="true"/>
+                        required="true"
+                        design="Bold"/>
                     <Select 
                         id="idSelectGenero"
                         required="true"
                         items="{listaGeneros>/}"
-                        width="50%"
+                        width="100%"
                         valueStateText="{i18n>selectGeneroNaoDefinidoTexto}">
                         <core:ListItem 
                             key="{listaGeneros>key}"

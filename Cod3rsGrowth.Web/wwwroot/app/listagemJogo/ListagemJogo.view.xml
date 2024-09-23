@@ -10,19 +10,15 @@
             <Toolbar >
                 <FlexBox 
                     height="100%"
-                    width="16%"
+                    width="100%"
                     alignItems="Center"
                     justifyContent="SpaceBetween">
                     <Button 
-                        icon="sap-icon://nav-back"/>
+                        icon="sap-icon://nav-back"
+                        press=".aoClicarVoltarParaTelaDeListagem"/>
                     <Title 
-                        text="{i18n>tituloListagemJogo}"/>
-                </FlexBox>
-                <FlexBox
-                    height="100%"
-                    width="100%"
-                    alignItems="Center"
-                    justifyContent="End">
+                        text="{i18n>tituloGeral}"
+                        titleStyle= "H3"/>
                     <Button 
                         icon="sap-icon://home"/>
                 </FlexBox>
@@ -30,29 +26,30 @@
         </customHeader>
         <Table
             headerText="{i18n>tabelaJogoTitulo}"            
-            inset="true"
-            class="sapUiNoMargin"
+            inset="false"
+            class="sapUiTinyMargin"
             items="{listaJogos>/}"
             growing="true"
             growingThreshold="10"
             sticky="HeaderToolbar"
-            updateFinished=".atualizarTitulo">
+            updateFinished=".atualizarTitulo"
+            width="auto"
+            contextualWidth="Auto">
             <headerToolbar>
                 <OverflowToolbar >
                     <Title 
                         id="idTabelaJogoTitulo"
-                        text= ""
                         titleStyle="H4"/>
                     <ToolbarSpacer />
                     <SearchField 
-                        width="20%"
+                        width="30%"
                         liveChange=".pegarValorDoCampoDePesquisa"/>
                     <ToolbarSeparator />
                     <Label 
                         text="{i18n>textoLabelGeneroTabelaJogo}"
                         showColon="true"/>
                     <Select 
-                        width="12%"
+                        width="15%"
                         items="{listaGeneros>/}"
                         change=".pegarValorDoSelect">
                         <core:ListItem 
@@ -69,14 +66,14 @@
                     <Input 
                         type="Number"
                         liveChange=".pegarValorDoCampoPrecoMin"
-                        width="8%"/>
+                        width="5%"/>
                     <Label 
                         text="{i18n>textoLabelPrecoMaxTabelaJogo}"
                         showColon="true"/>
                     <Input 
                         type="Number"
                         liveChange=".pegarValorDoCampoPrecoMax"
-                        width="8%"/>
+                        width="5%"/>
                     <ToolbarSeparator />
                     <Button 
                         text="{i18n>botaoAdicionar}"

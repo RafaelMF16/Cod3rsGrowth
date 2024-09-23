@@ -134,7 +134,7 @@ sap.ui.define([
 
 		mostrarMensagemDeAviso: function(view, propriedadesI18n, mensagemDeAviso, idJogo, nomeJogo){
             const url = `/api/JogoControlador/${idJogo}`;
-                this.mensagemDeCancelarEmpresa = new Dialog({
+                this.mensagemDeAviso = new Dialog({
                     type: mobileLibrary.DialogType.Message,
                     title: propriedadesI18n.getText("tituloMessageBoxAtencao"),
                     state: coreLibrary.ValueState.Warning,
@@ -143,21 +143,28 @@ sap.ui.define([
                         type: mobileLibrary.ButtonType.Negative,
                         text: propriedadesI18n.getText("textoBotaoSimMessageBoxAtencao"),
                         press: function () {
-                        	this.mensagemDeCancelarEmpresa.close();
-                        	!!nomeJogo
-								? this.fazerRequisicaoDelete(url, nomeJogo, view)
-								: this.navegarPara(idJogo);
+                        	this.mensagemDeAviso.close();
+
+							if (!!nomeJogo){
+								this.fazerRequisicaoDelete(url, nomeJogo, view);
+							}
+							else if (!!idJogo){
+								this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo);
+							}
+                        	else {
+								this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS)
+							}
                         }.bind(this)
                     }),
                     endButton: new Button({
                         type: mobileLibrary.ButtonType.Success,
                         text: propriedadesI18n.getText("textoBotaoNaoMessageBoxAtencao"),
                         press: function () {
-                            this.mensagemDeCancelarEmpresa.close();
+                            this.mensagemDeAviso.close();
                         }.bind(this)
                     })
                 });
-            this.mensagemDeCancelarEmpresa.open();
+            this.mensagemDeAviso.open();
          },
 	});
 });
