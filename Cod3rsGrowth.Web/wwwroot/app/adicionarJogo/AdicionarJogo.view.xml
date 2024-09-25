@@ -7,7 +7,7 @@
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true">
-    <Page>
+    <Page >
         <customHeader>
             <Toolbar >
                 <FlexBox 
