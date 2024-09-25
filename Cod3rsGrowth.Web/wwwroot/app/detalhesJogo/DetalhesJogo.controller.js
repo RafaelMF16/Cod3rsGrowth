@@ -2,8 +2,10 @@ sap.ui.define([
     'ui5/codersgrowth/app/BaseController',
     '../model/formatter',
     'ui5/codersgrowth/app/servicos/validacao',
-    'sap/ui/model/json/JSONModel'
-], function (BaseController, formatter, validacao, JSONModel) {
+    'sap/ui/model/json/JSONModel',
+    'ui5/codersgrowth/common/ConstantesDoBanco',
+    'ui5/codersgrowth/common/ConstantesDaRota'
+], function (BaseController, formatter, validacao, JSONModel, ConstantesDoBanco, ConstantesDaRota) {
     'use strict';
 
     var idJogo = "";
@@ -11,6 +13,7 @@ sap.ui.define([
     return BaseController.extend("ui5.codersgrowth.app.detalhesJogo.DetalhesJogo", {
         formatter: formatter,
         validacao: validacao,
+        constantesDoBanco: ConstantesDoBanco,
 
         onInit: function() {
             this.getRouter().getRoute("appDetalhesJogo").attachMatched(this._aoCoincidirRota, this);
@@ -21,47 +24,15 @@ sap.ui.define([
 
             const viewDetalhesJogo = this.getView();
             const jogo = "jogo";
-            const urlObterPorId = `/api/JogoControlador/${idJogo}`;
-            const urlObterTodosTestes = "/api/TesteDeJogoControlador";
-            const listaDeTestes = "listaDeTestes"
+            const urlObterPorId = ConstantesDoBanco.CAMINHO_PARA_API_JOGO + `/${idJogo}`;
 
             this.fazerRequisicaoGet(urlObterPorId, jogo, viewDetalhesJogo);
-            
-            this._pegarFilhosDoJogo(urlObterTodosTestes, listaDeTestes, viewDetalhesJogo);
-        },
-
-        _pegarFilhosDoJogo: function(url, nomeLista, view){
-            fetch(url)
-			   .then(respostaApi => {
-					if (!respostaApi.ok) {
-						respostaApi.json()
-							.then(respostaApi => {
-						   		this.validacao.mostrarMensagemDeErro(respostaApi, view)
-							});
-					}
-				  	return respostaApi.json();
-				})
-			   .then(respostaApi => {
-                    respostaApi = respostaApi.filter((avaliacao) => avaliacao.idJogo == idJogo);
-
-					const dataModel = new JSONModel();
-				  	dataModel.setData(respostaApi);
-					 
-				  	this.getView().setModel(dataModel, nomeLista);
-				});
         },
 
         _obterIdJogoPelaRota(evento) {
             const idJogo = evento.getParameters().arguments.jogoId;
 
             return idJogo;
-        },
-
-        _navegarPara(nomeRota){
-            this.getRouter()
-                .navTo(nomeRota, {
-                    jogoId: idJogo
-                }, true);
         },
 
         _pegarNomeDoJogo: function () {
@@ -81,18 +52,15 @@ sap.ui.define([
         },
 
         aoClicarIrParaEdicao: function () {
-            const rotaAdicionarJogo = "appAdicionarJogo";
-            this._navegarPara(rotaAdicionarJogo);
+            this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_ADICIONAR_JOGO, idJogo);
         },
 
         aoClicarRemoverJogo: function () {
             this._prepararMensagemDeAtencao();
         },
 
-        navegarParaListagem: function () {
-            const rotaListagem = "appListagemJogo"
-            this.getRouter()
-                .navTo(rotaListagem, {}, true);
+        aoClicarVoltarParaTelaDeListagem: function () {
+            this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS);
         }
     });
 });

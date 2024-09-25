@@ -136,7 +136,9 @@ sap.ui.define([
         },
 
         aoClicarVoltarParaTelaDeListagem: function () {
-            this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS);
+            !!idJogo
+                ? this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo)
+                : this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS);
         }
     });
 });

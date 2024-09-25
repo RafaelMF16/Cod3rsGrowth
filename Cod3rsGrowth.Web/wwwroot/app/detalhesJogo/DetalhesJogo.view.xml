@@ -6,7 +6,7 @@
 	xmlns:form="sap.ui.layout.form"
 	xmlns:macros="sap.fe.macros"
     displayBlock="true">
-    <Page>
+    <Page >
         <customHeader>
             <Toolbar >
                 <FlexBox 
@@ -16,48 +16,43 @@
                     justifyContent="SpaceBetween">
                     <Button 
                         icon="sap-icon://nav-back"
-                        press=".navegarParaListagem"/>
+                        press=".aoClicarVoltarParaTelaDeListagem"/>
                     <Title 
                         text="{i18n>tituloGeral}"
-                        titleStyle= "H4"/>
+                        titleStyle= "H3"/>
                     <Button 
                         icon="sap-icon://home"/>
                 </FlexBox>
             </Toolbar>
         </customHeader>
         <FlexBox 
-            class= "sapUiResponsiveMargin"
+            class= "sapUiTinyMargin"
             width="auto"
-            justifyContent="SpaceBetween"
+            height="100%"
             direction="Column"
             backgroundDesign="Transparent">
             <form:SimpleForm 
-                id="formDetalhesJogo"
-                maxContainerCols="2"
                 editable="true"
                 layout="ResponsiveGridLayout"
                 labelSpanM="1"
-                emptySpanL="8">
+                emptySpanL="9">
                 <form:toolbar>
                     <OverflowToolbar >
                         <Title 
-                            id="idDetalhesTitulo"
-                            text="{i18n>detalhesJogoTitulo}"
+                            text="{i18n>tituloDetalhesTexto}"
                             titleStyle="H4"/>
-                        <Title 
-                            id="idJogoNomeTitulo"
+                        <Title
+                            id= "idJogoNomeTitulo"
                             text="{jogo>/nome}"
                             titleStyle="H4"/>
                         <ToolbarSpacer />
                         <Button 
                             text="{i18n>detalhesBotaoEditarTexto}"
                             icon="sap-icon://edit"
-                            iconFirst="false"
                             press=".aoClicarIrParaEdicao"/>
                         <Button 
                             text="{i18n>detalhesBotaoRemoverTexto}"
                             icon="sap-icon://delete"
-                            iconFirst="false"
                             press=".aoClicarRemoverJogo"/>
                     </OverflowToolbar>
                 </form:toolbar>
@@ -66,107 +61,14 @@
                         text="{i18n>detalhesLabelPrecoTexto}"
                         design="Bold"/>
                     <Text 
-                        id="idJogoPrecoTexto"
-                        text="{
-                            path: 'jogo>/preco',
-                            formatter: '.formatter.formatarJogosGratis'
-                        }"/>
+                        text="{jogo>/preco}"/>
                     <Label 
                         text="{i18n>detalhesLabelGeneroTexto}"
                         design="Bold"/>
                     <Text 
-                        id="idJogoGeneroTexto"
                         text="{jogo>/genero}"/>
                 </form:content>
             </form:SimpleForm>
-            <Table
-            headerText="{i18n>tabelaJogoTitulo}"
-            fixedLayout="false"
-            class="sapUiResponsiveMargin"
-            width="auto"
-            items="{listaDeTestes>/}"
-            growing="true"
-            growingThreshold="10"
-            sticky="ColumnHeaders,HeaderToolbar"
-            updateFinished=".atualizarTitulo">
-            <headerToolbar>
-                <OverflowToolbar 
-                    design="Transparent">
-                    <Title 
-                        text= "Avaliações"
-                        titleStyle="H4"/>
-                    <ToolbarSpacer/>
-                    <SearchField 
-                        width="20%"
-                        liveChange="">
-                        <layoutData>
-                            <OverflowToolbarLayoutData
-                                priority="NeverOverflow"/>
-                        </layoutData>
-                    </SearchField>
-                    <ToolbarSeparator />
-                    <Button 
-                        text="{i18n>botaoAdicionar}"
-                        icon="sap-icon://sys-add"
-                        type="Ghost"
-                        iconFirst="false"
-                        press=""/>
-                </OverflowToolbar>
-            </headerToolbar>
-            <columns>
-                <Column 
-                    minScreenWidth="Small"
-                    demandPopin="true"
-                    vAlign="Middle"
-                    hAlign="Begin">
-                    <Text 
-                        text="{i18n>colunaResponsavelTabelaTestes}"/>
-                </Column>
-                <Column
-                    minScreenWidth="Small"
-                    demandPopin="true"
-                    vAlign="Middle"
-                    hAlign="Center">
-                    <Text 
-                        text="{i18n>colunaNotaTabelaTestes}"/>
-                </Column>
-                <Column
-                    minScreenWidth="Small"
-                    demandPopin="true"
-                    vAlign="Middle"
-                    hAlign="Center">
-                    <Text 
-                        text="{i18n>colunaAprovadoTabelaTestes}"/>
-                </Column>
-                <Column
-                    minScreenWidth="Small"
-                    demandPopin="true"
-                    vAlign="Middle"
-                    hAlign="Center">
-                    <Text 
-                        text="{i18n>colunaDataTabelaTestes}"/>
-                </Column>
-            </columns>
-            <items>
-                <ColumnListItem 
-                    type="Navigation"
-                    press=".aoClicarNavegarParaDetalhes">
-                    <cells>
-                        <ObjectIdentifier 
-                            title="{listaDeTestes>nomeResponsavelDoTeste}"/>
-                        <Text
-                            text="{listaDeTestes>nota}"/>
-                        <Text 
-                            text="{
-                                path: 'listaDeTestes>aprovado',
-                                formatter: '.formatter.formatarStatus'
-                            }"/>
-                        <Text 
-                            text="{listaDeTestes>dataRealizacaoTeste}"/>
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
         </FlexBox>
     </Page>
 </mvc:View>
