@@ -9,6 +9,11 @@ sap.ui.define([
     'use strict';
 
     var idJogo = "";
+    var valorFiltroNomeResponsavel = "";
+    var valorFiltroStatusAprovado = "";
+    var valorFiltroStatusReprovado = "";
+    var valorFiltroDataMin = "";
+    var valorFiltroDataMax = "";
 
     return BaseController.extend("ui5.codersgrowth.app.detalhesJogo.DetalhesJogo", {
         formatter: formatter,
@@ -23,10 +28,34 @@ sap.ui.define([
             idJogo = this._obterIdJogoPelaRota(evento);
 
             const viewDetalhesJogo = this.getView();
-            const jogo = "jogo";
+            const modelojogo = "jogo";
             const urlObterPorId = ConstantesDoBanco.CAMINHO_PARA_API_JOGO + `/${idJogo}`;
+            const nomeModeloListaAvaliacoes = "listaDeAvaliacoes";
+            
+            this.fazerRequisicaoGet(urlObterPorId, modelojogo, viewDetalhesJogo);
+            this._mostrarAvaliacoesDoJogo(ConstantesDoBanco.CAMINHO_PARA_API_AVALIACAO, nomeModeloListaAvaliacoes);
+        },
 
-            this.fazerRequisicaoGet(urlObterPorId, jogo, viewDetalhesJogo);
+        _mostrarAvaliacoesDoJogo: function(url, nomeModelo) {
+            fetch(url)
+			    .then(respostaApi => {
+					if (!respostaApi.ok) {
+						respostaApi.json()
+							.then(respostaApi => {
+						   		this.validacao.mostrarMensagemDeErro(respostaApi, this.getView())
+							});
+					}
+				  	return respostaApi.json();
+				})
+			    .then(respostaApi => {
+					const dataModel = new JSONModel();
+                    
+                    respostaApi = respostaApi.filter((avaliacao) => avaliacao.idJogo == idJogo);
+
+				  	dataModel.setData(respostaApi);
+
+				  	this.getView().setModel(dataModel, nomeModelo);
+			    });
         },
 
         _obterIdJogoPelaRota(evento) {
@@ -51,6 +80,31 @@ sap.ui.define([
             this.mostrarMensagemDeAviso(viewDetalhesJogo, propriedadesI18n, mensagem, idJogo, jogoNome);
         },
 
+        _filtrarJogos: function () {
+            const nomeModelo = "listaDeAvaliacoes";
+            
+            let query = {};
+   
+            if (valorFiltroNomeResponsavel)
+               query.nomeResponsavelTeste = valorFiltroNomeResponsavel;
+   
+            if (valorFiltroStatusAprovado)
+               query.aprovado = valorFiltroStatusAprovado;
+
+            if (valorFiltroStatusReprovado)
+                query.reprovado = valorFiltroStatusReprovado;
+   
+            if (valorFiltroDataMin)
+               query.dataMinRealizacaoTeste = valorFiltroDataMin;
+   
+            if (valorFiltroDataMax)
+               query.dataMaxRealizacaoTeste = valorFiltroDataMax;
+   
+            let urlObterTodosComFiltros = ConstantesDoBanco.CAMINHO_PARA_API_AVALIACAO + `?${new URLSearchParams(query)}`;
+
+            this._mostrarAvaliacoesDoJogo(urlObterTodosComFiltros, nomeModelo);
+        },
+
         aoClicarIrParaEdicao: function () {
             this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_ADICIONAR_JOGO, idJogo);
         },
@@ -61,6 +115,24 @@ sap.ui.define([
 
         aoClicarVoltarParaTelaDeListagem: function () {
             this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS);
+        },
+
+        pegarValorDoCampoDePesquisa: function (oEvent) {
+            valorFiltroNomeResponsavel = oEvent.getSource().getValue();
+            
+            this._filtrarJogos();
+         },
+
+        pegarValorDoSelectStatus: function (oEvent) {
+            const statusAprovado = "Aprovado";
+            const statusReprovado = "Reprovado";
+            const statusTodos = "";
+            const valorDoStatus = oEvent.getSource().getSelectedItem().mProperties.text;
+
+            if (valorDoStatus === statusAprovado)
+                valorFiltroStatusAprovado = true;
+            else if (valorDoStatus === statusReprovado)
+                valorFiltroStatusReprovado = true         
         }
     });
 });

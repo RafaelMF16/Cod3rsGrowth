@@ -35,15 +35,33 @@ sap.ui.define([], () => {
             return descricao;
         },
 
-        formatarStatus(status){
+        formatarStatusTexto(status){
             const propriedadesI18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             
             if (status === true){
-                return propriedadesI18n.getText("textostatusAprovado");
+                return propriedadesI18n.getText("textoStatusAprovado");
             }
-            else {
-                return propriedadesI18n.getText("textostatusReprovado");
-            }
+            
+            return propriedadesI18n.getText("textoStatusReprovado");
+        },
+
+        formatarStatus(status){
+            const propriedadesI18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+
+            if (status === true)
+                return propriedadesI18n.getText("statusAprovado");
+
+            return propriedadesI18n.getText("statusReprovado");
+        },
+
+        formatarData(dataRealizacao) {
+            let data = new Date(dataRealizacao);
+
+            let dia = data.getDate().toString().padStart(2, "0");
+            let mes = (data.getMonth() + 1).toString().padStart(2, "0");
+            let ano = data.getFullYear();
+
+            return `${dia}/${mes}/${ano}`
         }
     }
 })

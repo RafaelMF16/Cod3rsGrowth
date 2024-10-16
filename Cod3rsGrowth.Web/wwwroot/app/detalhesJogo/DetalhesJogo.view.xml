@@ -1,4 +1,4 @@
-<mvc:View xmlns:unified="sap.ui.unified" xmlns:calendar="sap.ui.unified.calendar" xmlns:uxap="sap.uxap" 
+<mvc:View xmlns:core="sap.ui.core" xmlns:unified="sap.ui.unified" xmlns:calendar="sap.ui.unified.calendar" xmlns:uxap="sap.uxap" 
     controllerName="ui5.codersgrowth.app.detalhesJogo.DetalhesJogo"
     xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
@@ -61,7 +61,10 @@
                         text="{i18n>detalhesLabelPrecoTexto}"
                         design="Bold"/>
                     <Text 
-                        text="{jogo>/preco}"/>
+                        text="{
+                            path: 'jogo>/preco',
+                            formatter: '.formatter.formatarJogosGratis'
+                        }"/>
                     <Label 
                         text="{i18n>detalhesLabelGeneroTexto}"
                         design="Bold"/>
@@ -69,6 +72,120 @@
                         text="{jogo>/genero}"/>
                 </form:content>
             </form:SimpleForm>
+            <Table       
+                inset="false"
+                class="sapUiSmallMarginTop"
+                items="{listaDeAvaliacoes>/}"
+                growing="true"
+                growingThreshold="10"
+                sticky="HeaderToolbar"
+                width="auto"
+                contextualWidth="Auto">
+                <headerToolbar>
+                    <OverflowToolbar >
+                        <Title
+                            text="{i18n>tabelaAvaliacaoTitulo}"
+                            titleStyle="H4"/>
+                        <ToolbarSpacer />
+                        <SearchField 
+                            width="20%"
+                            liveChange=".pegarValorDoCampoDePesquisa"/>
+                        <ToolbarSeparator />
+                        <Label 
+                            text="{i18n>textoLabelSelectStatus}"
+                            showColon="true"
+                            design="Bold"/>
+                        <Select 
+                            width="10%"
+                            change=".pegarValorDoSelectStatus">
+                            <items>
+                                <core:Item 
+                                    text="{i18n>textoItemTodos}"/>
+                                <core:Item 
+                                    text="{i18n>textoItemAprovado}"/>
+                                <core:Item 
+                                    text="{i18n>textoItemReprovado}"/>
+                            </items>
+                        </Select>
+                        <ToolbarSeparator />
+                        <Label 
+                            text="{i18n>textoLabelDataMinima}"
+                            showColon="true"
+                            design="Bold"/>
+                        <DatePicker 
+                            width="11%"
+                            change=".pegarValorDaDataMin"/>
+                        <Label 
+                            text="{i18n>textoLabelDataMaxima}"
+                            showColon="true"
+                            design="Bold"/>
+                        <DatePicker 
+                            width="11%"
+                            change=".pegarValorDaDataMax"/>
+                        <ToolbarSeparator />
+                        <Button 
+                            text="{i18n>botaoAdicionar}"
+                            icon="sap-icon://sys-add"
+                            press=""/>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column >
+                        <Text 
+                            text="{i18n>textoColunaNomeResponsavelTabelaAvaliacao}"/>
+                    </Column>
+                    <Column
+                        vAlign="Middle"
+                        hAlign="Center">
+                        <Text 
+                            text="{i18n>textoColunaDescricaoTabelaAvaliacao}"/>
+                    </Column>
+                    <Column
+                        vAlign="Middle"
+                        hAlign="Center">
+                        <Text 
+                            text="{i18n>textoColunaNotaTabelaAvaliacao}"/>
+                    </Column>
+                    <Column
+                        vAlign="Middle"
+                        hAlign="Center">
+                        <Text 
+                            text="{i18n>textoColunaStatusTabelaAvaliacao}"/>
+                    </Column>
+                    <Column
+                        vAlign="Middle"
+                        hAlign="Center">
+                        <Text 
+                            text="{i18n>textoColunaDataTabelaAvaliacao}"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem >
+                        <cells>
+                            <ObjectIdentifier 
+                                title="{listaDeAvaliacoes>nomeResponsavelDoTeste}"/>
+                            <Text
+                                text="{listaDeAvaliacoes>descricao}"/>
+                            <ObjectNumber 
+                                number="{listaDeAvaliacoes>nota}"/>
+                            <ObjectStatus 
+                                text="{
+                                    path: 'listaDeAvaliacoes>aprovado',
+                                    formatter: '.formatter.formatarStatusTexto'
+                                }"
+                                state="{
+                                    path: 'listaDeAvaliacoes>aprovado',
+                                    formatter: '.formatter.formatarStatus'
+                                }"/>
+                            <Text 
+                                text="{
+                                    path: 'listaDeAvaliacoes>dataRealizacaoTeste',
+                                    formatter: '.formatter.formatarData'
+                                }"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
         </FlexBox>
     </Page>
 </mvc:View>

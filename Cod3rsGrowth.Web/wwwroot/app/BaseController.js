@@ -46,7 +46,7 @@ sap.ui.define([
 				: this.getRouter().navTo(rota, {}, true);
 		},
 
-		fazerRequisicaoGet: function (url, nomeLista, view, idJogo) {
+		fazerRequisicaoGet: function (url, nomeLista, view) {
 			fetch(url)
 			   .then(respostaApi => {
 					if (!respostaApi.ok) {
