@@ -1,0 +1,98 @@
+<core:FragmentDefinition
+    displayBlock="true"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    xmlns:s="sap.f.semantic"
+    xmlns:l="sap.ui.layout"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:t="sap.ui.table"
+    xmlns:uxap="sap.uxap"
+    xmlns="sap.m"
+    height="100%"
+    busyIndicatorDelay="0">
+    <f:DynamicPage 
+        preserveHeaderStateOnScroll="true">
+        <f:title>
+            <f:DynamicPageTitle >
+                <f:heading>
+                    <Title 
+                        text="{i18n>ListagemJogos.Titulo}"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <List 
+                items="{listaJogos>/}"
+                headerText="{i18n>tabelaJogoTitulo}"
+                inset="false"
+                class="sapUiTinyMargin"
+                sticky="HeaderToolbar"
+                updateFinished=".atualizarTitulo"
+                width="auto"
+                growingThreshold="10"
+                growing="true"
+                itemPress=".aoSelecionarJogo">
+                <headerToolbar>
+                    <OverflowToolbar >
+                        <Title 
+                            id="idTabelaJogoTitulo"
+                            titleStyle="H4"/>
+                        <ToolbarSpacer />
+                        <SearchField 
+                            width="auto"
+                            liveChange=".pegarValorDoCampoDePesquisa"/>
+                        <ToolbarSeparator />
+                        <Label 
+                            text="{i18n>textoLabelGeneroTabelaJogo}"
+                            showColon="true"/>
+                        <Select 
+                            width="auto"
+                            items="{listaGeneros>/}"
+                            change=".pegarValorDoSelect">
+                            <core:ListItem 
+                                key="{listaGeneros>key}"
+                                text="{
+                                    path: 'listaGeneros>descricao',
+                                    formatter: '.formatter.formatarValorPadraoSelectParaTelaDeListagem'
+                                }"/>
+                        </Select>
+                        <ToolbarSeparator />
+                        <Label 
+                            text="{i18n>textoLabelPrecoMinTabelaJogo}"
+                            showColon="true"/>
+                        <Input 
+                            type="Number"
+                            liveChange=".pegarValorDoCampoPrecoMin"
+                            width="5%"/>
+                        <Label 
+                            text="{i18n>textoLabelPrecoMaxTabelaJogo}"
+                            showColon="true"/>
+                        <Input 
+                            type="Number"
+                            liveChange=".pegarValorDoCampoPrecoMax"
+                            width="5%"/>
+                        <ToolbarSeparator />
+                        <Button 
+                            type="Transparent"
+                            icon="sap-icon://add"
+                            press=".aoClicarIrParaTelaDeAdicionarJogo"
+                            tooltip="{i18n>Common.Adicionar}"/>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <ObjectListItem 
+                    title="{listaJogos>nome}"
+                    type="Active">
+                    <ObjectAttribute 
+                        text="{listaJogos>genero}"/>
+                    <ObjectAttribute 
+                        text="{
+                            path: 'listaJogos>preco',
+                            formatter: '.formatter.formatarJogosGratis'
+                        }"/>
+                </ObjectListItem>
+            </List>
+        </f:content>
+    </f:DynamicPage>
+</core:FragmentDefinition>

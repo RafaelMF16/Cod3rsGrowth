@@ -12,9 +12,16 @@ sap.ui.define([
 	'ui5/codersgrowth/common/ConstantesDaRota'
 ], function(Controller, UIComponent, JSONModel, MessageBox, validacao, Dialog, Button, mobileLibrary, Text, coreLibrary, ConstantesDaRota) {
 	"use strict";
+
+	const NOME_MODELO_JOGO = "jogo";
+	const NOME_MODELO_JOGOS = "listaJogos";
+	const NOME_MODELO_GENEROS = "listaGeneros";
 	
 	return Controller.extend("ui5.codersgrowth.app.BaseController", {
 		validacao: validacao,
+		nomeModeloJogo: NOME_MODELO_JOGO,
+		nomeModeloJogos: NOME_MODELO_JOGOS,
+		nomeModeloGeneros: NOME_MODELO_GENEROS,
 		
 		getRouter : function () {
 			return UIComponent.getRouterFor(this);
@@ -44,6 +51,17 @@ sap.ui.define([
 					jogoId: idJogo
 				}, true)
 				: this.getRouter().navTo(rota, {}, true);
+		},
+
+		debounce: function (funcao, tempoDeEspera){
+			let timeout;
+
+			return function(...args){
+				const contexto = this;
+				clearTimeout(timeout);
+
+				timeout = setTimeout(() => funcao.apply(contexto, args), tempoDeEspera);
+			}
 		},
 
 		fazerRequisicaoGet: function (url, nomeLista, view) {

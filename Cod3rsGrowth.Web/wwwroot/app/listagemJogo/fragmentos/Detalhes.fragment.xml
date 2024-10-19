@@ -1,0 +1,66 @@
+<core:FragmentDefinition xmlns:form="sap.ui.layout.form"
+    displayBlock="true"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    xmlns:s="sap.f.semantic"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:t="sap.ui.table"
+    xmlns:uxap="sap.uxap"
+    xmlns="sap.m"
+    height="100%"
+    busyIndicatorDelay="0">
+	<uxap:ObjectPageLayout >
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle >
+                <uxap:heading>
+                    <Title 
+                        text="{jogo>/nome}" />
+                </uxap:heading>
+
+                <uxap:actions>
+                    <Button
+                        id="idIrParaEdicao"
+                        press="aoClicarEditarParametrosDoEmitente"
+                        icon="sap-icon://edit"
+                        tooltip="{i18n>Common.Editar}"
+                        type="Transparent" />
+
+                    <Button
+                        id="idFecharEmitente"
+                        press="aoClicarFecharDetalhesJogo"
+                        icon="sap-icon://decline"
+                        tooltip="{i18n>Common.Fechar}"
+                        type="Transparent" />
+                </uxap:actions>
+            </uxap:ObjectPageDynamicHeaderTitle> 
+        </uxap:headerTitle>
+
+        <uxap:headerContent>
+            <FlexBox
+                height="100px"
+                alignItems="Center"
+                justifyContent="SpaceBetween"
+                class="sapUiNoMargin">
+                <layout:VerticalLayout 
+                    class="sapUiNoMargin">
+                    <ObjectAttribute
+                        title="{i18n>Common.Genero}"
+                        text="{jogo>/genero}"
+                        active="false"
+                        class="sapUiTinyMarginTopBottom"/>
+
+                    <ObjectAttribute
+                        title="{i18n>Common.Preco}"
+                        text="{ 
+                            path: 'jogo>/preco', 
+                            formatter: '.formatter.formatarJogosGratis'
+                        }"
+                        active="false"
+                        class="sapUiTinyMarginTopBottom"/>
+                </layout:VerticalLayout>
+            </FlexBox>
+        </uxap:headerContent>
+    </uxap:ObjectPageLayout>
+</core:FragmentDefinition>

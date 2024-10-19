@@ -1,31 +1,32 @@
 sap.ui.define([
    'ui5/codersgrowth/app/BaseController',
    '../model/formatter',
-   'ui5/codersgrowth/common/ConstantesDaRota'
-], (BaseController, formatter, ConstantesDaRota) => {
+   'ui5/codersgrowth/common/ConstantesDaRota',
+   'ui5/codersgrowth/common/ConstantesDoBanco'
+], (BaseController, formatter, ConstantesDaRota, ConstantesDoBanco) => {
    "use strict";
 
-   var valorFiltroNome = "";
-   var valorFiltroPrecoMin = "";
-   var valorFiltroPrecoMax = "";
-   var valorFiltroGenero = "";
-
+   const VALOR_NULO = null;
+   
    return BaseController.extend("ui5.codersgrowth.app.listagemJogo.ListagemJogo", {
       formatter: formatter,
+      valorFiltroNome: VALOR_NULO,
+      valorFiltroGenero: VALOR_NULO,
+      valorFiltroPrecoMin: VALOR_NULO,
+      valorFiltroPrecoMax: VALOR_NULO,
+      idJogo: VALOR_NULO,
+      
 
       onInit: function () {
          this.getRouter().getRoute("appListagemJogo").attachMatched(this._aoCoincidirRota, this);
+
+         this.debouncedFiltrarJogos = this.debounce(this._filtrarJogos.bind(this), 300);
       },
 
       _aoCoincidirRota: function () {
-         const urlObterTodos = "/api/JogoControlador";
-         const urlObterGeneros = "/api/GeneroControlador";
-         const nomeListaJogos = "listaJogos";
-         const nomeListaGeneros = "listaGeneros";
-
-         this.fazerRequisicaoGet(urlObterTodos, nomeListaJogos);
+         this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_JOGO, this.nomeModeloJogos);
          
-         this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros);
+         this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_GENERO, this.nomeModeloGeneros);
       },
 
       _filtrarJogos: function () {
@@ -33,69 +34,70 @@ sap.ui.define([
          const viewJogo = this.getView();
          let query = {};
 
-         if (valorFiltroNome)
-            query.nome = valorFiltroNome;
+         if (this.valorFiltroNome)
+            query.nome = this.valorFiltroNome;
 
-         if (valorFiltroGenero)
-            query.genero = valorFiltroGenero;
+         if (this.valorFiltroGenero)
+            query.genero = this.valorFiltroGenero;
 
-         if (valorFiltroPrecoMin)
-            query.precoMin = valorFiltroPrecoMin;
+         if (this.valorFiltroPrecoMin)
+            query.precoMin = this.valorFiltroPrecoMin;
 
-         if (valorFiltroPrecoMax)
-            query.precoMax = valorFiltroPrecoMax;
+         if (this.valorFiltroPrecoMax)
+            query.precoMax = this.valorFiltroPrecoMax;
 
-         let urlObterTodosComFiltros = `/api/JogoControlador?${new URLSearchParams(query)}`;
+         let urlObterTodosComFiltros = `${ConstantesDoBanco.CAMINHO_PARA_API_JOGO}?${new URLSearchParams(query)}`;
          
          this.fazerRequisicaoGet(urlObterTodosComFiltros, nomeListaJogos, viewJogo);
       },
 
-      _obterIdJogo(evento){
-         const contexto = 'listaJogos';
-         const propriedadeId = 'id';
-         let idJogo = evento.getSource()
-            .getBindingContext(contexto)
-            .getProperty(propriedadeId);
+      _alteraValorDoLayoutDaPagina: function (layout) {
+         this.getView().byId("idLayout").setLayout(layout);
+      },
 
-         return idJogo;
+      _carregarJogo: function (idJogo) {
+         const urlObterPorId = `${ConstantesDoBanco.CAMINHO_PARA_API_JOGO}/${idJogo}`;
+         const viewDetalhesJogo = this.getView();
+
+         this.fazerRequisicaoGet(urlObterPorId, this.nomeModeloJogo, viewDetalhesJogo);
       },
 
       pegarValorDoSelect: function (oEvent) {
-         valorFiltroGenero = oEvent.getSource().getSelectedKey();
+         this.valorFiltroGenero = oEvent.getSource().getSelectedKey();
 
-         this._filtrarJogos();
+         this._filtrarJogos(); 
       },
 
       pegarValorDoCampoDePesquisa: function (oEvent) {
-         valorFiltroNome = oEvent.getSource().getValue();
-         
-         this._filtrarJogos();
+         this.valorFiltroNome = oEvent.getSource().getValue();
+
+         this.debouncedFiltrarJogos(); 
       },
 
       pegarValorDoCampoPrecoMin: function (oEvent) {
-         valorFiltroPrecoMin = oEvent.getSource().getValue();
+         this.valorFiltroPrecoMin = oEvent.getSource().getValue();
          
-         this._filtrarJogos();
+         this.debouncedFiltrarJogos(); 
       },
 
       pegarValorDoCampoPrecoMax: function (oEvent) {
-         valorFiltroPrecoMax = oEvent.getSource().getValue();
+         this.valorFiltroPrecoMax = oEvent.getSource().getValue();
 
-         this._filtrarJogos();
+         this.debouncedFiltrarJogos(); 
       },
 
       atualizarTitulo: function (oEvent) {
          let tabelaJogoTitulo;
          let tabelaJogo = oEvent.getSource();
-			let itemsDaTabelaJogo = oEvent.getParameter("total");
+         let itemsDaTabelaJogo = oEvent.getParameter("total");
 
          const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
 
-			if (itemsDaTabelaJogo && tabelaJogo.getBinding("items").isLengthFinal()) {
-				tabelaJogoTitulo = propriedadesI18n.getText("tituloTabelaJogoComContadorDeItens", [itemsDaTabelaJogo]);
-			} else {
-				tabelaJogoTitulo = propriedadesI18n.getText("tabelaJogoTitulo");
-			}
+         if (itemsDaTabelaJogo && tabelaJogo.getBinding("items").isLengthFinal()) {
+            tabelaJogoTitulo = propriedadesI18n.getText("tituloTabelaJogoComContadorDeItens", [itemsDaTabelaJogo]);
+         } else {
+            tabelaJogoTitulo = propriedadesI18n.getText("tabelaJogoTitulo");
+         }
          this.getView().byId("idTabelaJogoTitulo").setProperty("text", tabelaJogoTitulo);
       },
 
@@ -103,10 +105,23 @@ sap.ui.define([
          this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_ADICIONAR_JOGO);
       },
 
-      aoClicarNavegarParaDetalhes(oEvent){
-         const idJogo = this._obterIdJogo(oEvent);
-         
-         this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo);
+      aoClicarFecharDetalhesJogo: function () {
+         this._alteraValorDoLayoutDaPagina(this.LayoutUmaColuna);
       },
+
+      aoSelecionarJogo: function (evento) {
+         let parametro = "listItem";
+         let propriedade = "id";
+         this.idJogo = evento
+            .getParameter(parametro)
+            .getBindingContext("listaJogos")
+            .getProperty(propriedade);
+
+         this._carregarJogo(this.idJogo);
+
+         this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, this.idJogo);
+
+         this._alteraValorDoLayoutDaPagina("TwoColumnsMidExpanded");
+      }
    });
 });
