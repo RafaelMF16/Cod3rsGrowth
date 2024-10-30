@@ -1,112 +1,118 @@
 sap.ui.define([
    'ui5/codersgrowth/app/BaseController',
    '../model/formatter',
-   'ui5/codersgrowth/common/ConstantesDaRota'
-], (BaseController, formatter, ConstantesDaRota) => {
+   'ui5/codersgrowth/common/ConstantesDaRota',
+   'ui5/codersgrowth/common/ConstantesDoBanco'
+], (BaseController, formatter, ConstantesDaRota, ConstantesDoBanco) => {
    "use strict";
 
-   var valorFiltroNome = "";
-   var valorFiltroPrecoMin = "";
-   var valorFiltroPrecoMax = "";
-   var valorFiltroGenero = "";
+   const NAMESPACE_DA_CONTROLLER_LISTAGEM_JOGO = "ui5.codersgrowth.app.listagemJogo.ListagemJogo";
+   const VALOR_NULO = null;
+   const TEMPO_DE_ESPERA_EM_MS = 400;
 
-   return BaseController.extend("ui5.codersgrowth.app.listagemJogo.ListagemJogo", {
+   return BaseController.extend(NAMESPACE_DA_CONTROLLER_LISTAGEM_JOGO, {
       formatter: formatter,
+      valorFiltroNome: VALOR_NULO,
+      valorFiltroPrecoMin: VALOR_NULO,
+      valorFiltroPrecoMax: VALOR_NULO,
+      valorFiltroGenero: VALOR_NULO,
+      tempoDeEspera: TEMPO_DE_ESPERA_EM_MS,
 
       onInit: function () {
          this.getRouter().getRoute("appListagemJogo").attachMatched(this._aoCoincidirRota, this);
+
+         this.debouncedFiltrarJogos = this.debounce(this._filtrarJogos.bind(this), this.tempoDeEspera);
       },
 
       _aoCoincidirRota: function () {
-         const urlObterTodos = "/api/JogoControlador";
-         const urlObterGeneros = "/api/GeneroControlador";
-         const nomeListaJogos = "listaJogos";
-         const nomeListaGeneros = "listaGeneros";
+         this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_JOGO, this.nomeModeloJogos);
+         this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_GENERO, this.nomeModeloGeneros);
+      },
 
-         this.fazerRequisicaoGet(urlObterTodos, nomeListaJogos);
-         
-         this.fazerRequisicaoGet(urlObterGeneros, nomeListaGeneros);
+      _modeloFiltroJogo: function (jsonModel) {
+         const nomeModeloFiltro = "filtros"
+         return this.modelo(nomeModeloFiltro, jsonModel);
       },
 
       _filtrarJogos: function () {
-         const nomeListaJogos = "listaJogos";
          const viewJogo = this.getView();
          let query = {};
 
-         if (valorFiltroNome)
-            query.nome = valorFiltroNome;
+         if (this.valorFiltroNome)
+            query.nome = this.valorFiltroNome;
 
-         if (valorFiltroGenero)
-            query.genero = valorFiltroGenero;
+         if (this.valorFiltroGenero)
+            query.genero = this.valorFiltroGenero;
 
-         if (valorFiltroPrecoMin)
-            query.precoMin = valorFiltroPrecoMin;
+         if (this.valorFiltroPrecoMin)
+            query.precoMin = this.valorFiltroPrecoMin;
 
-         if (valorFiltroPrecoMax)
-            query.precoMax = valorFiltroPrecoMax;
+         if (this.valorFiltroPrecoMax)
+            query.precoMax = this.valorFiltroPrecoMax;
 
-         let urlObterTodosComFiltros = `/api/JogoControlador?${new URLSearchParams(query)}`;
+         let urlObterTodosComFiltros = `${ConstantesDoBanco.CAMINHO_PARA_API_JOGO}?${new URLSearchParams(query)}`;
          
-         this.fazerRequisicaoGet(urlObterTodosComFiltros, nomeListaJogos, viewJogo);
+         this.fazerRequisicaoGet(urlObterTodosComFiltros, this.nomeModeloJogos, viewJogo);
       },
 
       _obterIdJogo(evento){
-         const contexto = 'listaJogos';
-         const propriedadeId = 'id';
-         let idJogo = evento.getSource()
-            .getBindingContext(contexto)
+         const parametro = "listItem";
+         const propriedadeId = "id";
+         let jogoId = evento
+            .getParameter(parametro)
+            .getBindingContext(this.nomeModeloJogos)
             .getProperty(propriedadeId);
 
-         return idJogo;
+         return jogoId;
       },
 
-      pegarValorDoSelect: function (oEvent) {
-         valorFiltroGenero = oEvent.getSource().getSelectedKey();
+      aoSelecionarGenero: function (oEvent) {
+         this.valorFiltroGenero = oEvent.getSource().getSelectedKey();
 
          this._filtrarJogos();
       },
 
-      pegarValorDoCampoDePesquisa: function (oEvent) {
-         valorFiltroNome = oEvent.getSource().getValue();
+      aoPesquisarNome: function (oEvent) {
+         this.valorFiltroNome = oEvent.getSource().getValue();
          
-         this._filtrarJogos();
+         this.debouncedFiltrarJogos();
       },
 
-      pegarValorDoCampoPrecoMin: function (oEvent) {
-         valorFiltroPrecoMin = oEvent.getSource().getValue();
+      aoPesquisarPrecoMin: function (oEvent) {
+         this.valorFiltroPrecoMin = oEvent.getSource().getValue();
          
-         this._filtrarJogos();
+         this.debouncedFiltrarJogos();
       },
 
-      pegarValorDoCampoPrecoMax: function (oEvent) {
-         valorFiltroPrecoMax = oEvent.getSource().getValue();
+      aoPesquisarPrecoMax: function (oEvent) {
+         this.valorFiltroPrecoMax = oEvent.getSource().getValue();
 
-         this._filtrarJogos();
+         this.debouncedFiltrarJogos();
       },
 
       atualizarTitulo: function (oEvent) {
-         let tabelaJogoTitulo;
-         let tabelaJogo = oEvent.getSource();
-			let itemsDaTabelaJogo = oEvent.getParameter("total");
+         let listaJogoTitulo;
+         let listaJogo = oEvent.getSource();
+			let itemsDaListaJogo = oEvent.getParameter("total");
 
          const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
 
-			if (itemsDaTabelaJogo && tabelaJogo.getBinding("items").isLengthFinal()) {
-				tabelaJogoTitulo = propriedadesI18n.getText("tituloTabelaJogoComContadorDeItens", [itemsDaTabelaJogo]);
+			if (itemsDaListaJogo && listaJogo.getBinding("items").isLengthFinal()) {
+				listaJogoTitulo = propriedadesI18n.getText("tituloTabelaJogoComContadorDeItens", [itemsDaListaJogo]);
 			} else {
-				tabelaJogoTitulo = propriedadesI18n.getText("tabelaJogoTitulo");
+				listaJogoTitulo = propriedadesI18n.getText("lista.Jogos.Titulo");
 			}
-         this.getView().byId("idTabelaJogoTitulo").setProperty("text", tabelaJogoTitulo);
+         this.getView().byId("idListaJogoTitulo").setProperty("text", listaJogoTitulo);
       },
 
       aoClicarIrParaTelaDeAdicionarJogo: function () {
          this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_ADICIONAR_JOGO);
       },
 
-      aoClicarNavegarParaDetalhes(oEvent){
-         const idJogo = this._obterIdJogo(oEvent);
+      aoSelecionarJogo(oEvent){
+         let jogoId = this._obterIdJogo(oEvent);
          
-         this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo);
+         this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, jogoId);
       },
    });
 });

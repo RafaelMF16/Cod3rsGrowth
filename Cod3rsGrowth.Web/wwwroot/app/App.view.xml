@@ -1,7 +1,9 @@
-<mvc:View
+<mvc:View 
+	xmlns:tnt="sap.tnt"
 	controllerName="ui5.codersgrowth.app.App"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:html="http://www.w3.org/1999/xhtml"
 	displayBlock="true">
 	<App id="app"/>
 </mvc:View>

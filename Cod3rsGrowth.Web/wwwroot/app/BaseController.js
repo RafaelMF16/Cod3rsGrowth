@@ -12,9 +12,14 @@ sap.ui.define([
 	'ui5/codersgrowth/common/ConstantesDaRota'
 ], function(Controller, UIComponent, JSONModel, MessageBox, validacao, Dialog, Button, mobileLibrary, Text, coreLibrary, ConstantesDaRota) {
 	"use strict";
+
+	const NOME_MODELO_JOGOS = "jogos";
+	const NOME_MODELO_GENEROS = "generos";
 	
 	return Controller.extend("ui5.codersgrowth.app.BaseController", {
 		validacao: validacao,
+		nomeModeloJogos: NOME_MODELO_JOGOS,
+		nomeModeloGeneros: NOME_MODELO_GENEROS,
 		
 		getRouter : function () {
 			return UIComponent.getRouterFor(this);
@@ -117,6 +122,23 @@ sap.ui.define([
 						? respostaApi.json().then(respostaApi => this.validacao.mostrarMensagemDeErro(respostaApi, view))
 						: this._mostrarMensagemDeSucesso(mensagemDeSucessoRequisicaoDelete);
 				});
+		},
+
+		debounce: function (funcao, tempoDeEspera){
+			let timeout;
+
+			return function(...args){
+				const contexto = this;
+				clearTimeout(timeout);
+
+				timeout = setTimeout(() => funcao.apply(contexto, args), tempoDeEspera);
+			}
+		},
+
+		modelo: function (nome, modelo) {
+			let view = this.getView();
+			if (modelo) view.setModel(modelo, nome);
+			return view.getModel(nome);
 		},
 
 		alternarTema: function (oEvent) {

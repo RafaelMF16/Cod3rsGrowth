@@ -1,121 +1,23 @@
-<mvc:View 
+<mvc:View xmlns:uxap="sap.uxap" 
     xmlns:core="sap.ui.core" 
     xmlns:f="sap.f" 
     controllerName="ui5.codersgrowth.app.listagemJogo.ListagemJogo"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true">
-    <Page >
-        <customHeader>
-            <Toolbar >
-                <FlexBox 
-                    height="100%"
-                    width="100%"
-                    alignItems="Center"
-                    justifyContent="SpaceBetween">
-                    <Button 
-                        icon="sap-icon://nav-back"
-                        press=".aoClicarVoltarParaTelaDeListagem"/>
+    <f:DynamicPage >
+        <f:title>
+            <f:DynamicPageTitle >
+                <f:heading>
                     <Title 
-                        text="{i18n>tituloGeral}"
+                        text="{i18n>listagemJogo.Titulo}"
                         titleStyle= "H3"/>
-                    <Button 
-                        icon="sap-icon://home"/>
-                </FlexBox>
-            </Toolbar>
-        </customHeader>
-        <Table
-            headerText="{i18n>tabelaJogoTitulo}"            
-            inset="false"
-            class="sapUiTinyMargin"
-            items="{listaJogos>/}"
-            growing="true"
-            growingThreshold="10"
-            sticky="HeaderToolbar"
-            updateFinished=".atualizarTitulo"
-            width="auto"
-            contextualWidth="Auto">
-            <headerToolbar>
-                <OverflowToolbar >
-                    <Title 
-                        id="idTabelaJogoTitulo"
-                        titleStyle="H4"/>
-                    <ToolbarSpacer />
-                    <SearchField 
-                        width="30%"
-                        liveChange=".pegarValorDoCampoDePesquisa"/>
-                    <ToolbarSeparator />
-                    <Label 
-                        text="{i18n>textoLabelGeneroTabelaJogo}"
-                        showColon="true"/>
-                    <Select 
-                        width="15%"
-                        items="{listaGeneros>/}"
-                        change=".pegarValorDoSelect">
-                        <core:ListItem 
-                            key="{listaGeneros>key}"
-                            text="{
-                                path: 'listaGeneros>descricao',
-                                formatter: '.formatter.formatarValorPadraoSelectParaTelaDeListagem'
-                            }"/>
-                    </Select>
-                    <ToolbarSeparator />
-                    <Label 
-                        text="{i18n>textoLabelPrecoMinTabelaJogo}"
-                        showColon="true"/>
-                    <Input 
-                        type="Number"
-                        liveChange=".pegarValorDoCampoPrecoMin"
-                        width="5%"/>
-                    <Label 
-                        text="{i18n>textoLabelPrecoMaxTabelaJogo}"
-                        showColon="true"/>
-                    <Input 
-                        type="Number"
-                        liveChange=".pegarValorDoCampoPrecoMax"
-                        width="5%"/>
-                    <ToolbarSeparator />
-                    <Button 
-                        text="{i18n>botaoAdicionar}"
-                        icon="sap-icon://sys-add"
-                        press=".aoClicarIrParaTelaDeAdicionarJogo"/>
-                </OverflowToolbar>
-            </headerToolbar>
-            <columns>
-                <Column >
-                    <Text 
-                        text="{i18n>textoColunaNomeTabelaJogo}"/>
-                </Column>
-                <Column
-                    vAlign="Middle"
-                    hAlign="Center">
-                    <Text 
-                        text="{i18n>textoColunaGeneroTabelaJogo}"/>
-                </Column>
-                <Column
-                    vAlign="Middle"
-                    hAlign="Center">
-                    <Text 
-                        text="{i18n>textoColunaPrecoTabelaJogo}"/>
-                </Column>
-            </columns>
-            <items>
-                <ColumnListItem 
-                    type="Navigation"
-                    press=".aoClicarNavegarParaDetalhes">
-                    <cells>
-                        <ObjectIdentifier 
-                            title="{listaJogos>nome}"/>
-                        <Text
-                            text="{listaJogos>genero}"/>
-                        <ObjectNumber 
-                            number="{
-                                path: 'listaJogos>preco',
-                                formatter: '.formatter.formatarJogosGratis'
-                            }"/>
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
-    </Page>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <core:Fragment fragmentName="ui5.codersgrowth.app.listagemJogo.fragments.Lista"/>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>
