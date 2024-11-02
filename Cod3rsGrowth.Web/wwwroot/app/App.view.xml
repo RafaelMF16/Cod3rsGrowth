@@ -16,5 +16,8 @@
 				</FlexBox>
 			</tnt:ToolHeader>
 		</tnt:header>
+		<tnt:mainContents>
+			<App id="app"/>
+		</tnt:mainContents>
 	</tnt:ToolPage>
 </mvc:View>

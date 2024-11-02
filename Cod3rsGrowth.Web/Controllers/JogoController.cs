@@ -7,11 +7,11 @@ namespace Cod3rsGrowth.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JogoControlador : ControllerBase
+    public class JogoController : ControllerBase
     {
         private readonly ServicoJogo _servicoJogo;
 
-        public JogoControlador(ServicoJogo servicoJogo)
+        public JogoController(ServicoJogo servicoJogo)
         {
             _servicoJogo = servicoJogo
                 ?? throw new Exception($"Erro ao obter o serviço {typeof(ServicoJogo)}");

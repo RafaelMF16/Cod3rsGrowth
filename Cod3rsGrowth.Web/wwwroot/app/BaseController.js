@@ -16,13 +16,11 @@ sap.ui.define([
 
 	const NOME_MODELO_JOGOS = "jogos";
 	const NOME_MODELO_GENEROS = "generos";
-	const VALOR_NULO = null;
 	
 	return Controller.extend("ui5.codersgrowth.app.BaseController", {
 		validacao: validacao,
 		nomeModeloJogos: NOME_MODELO_JOGOS,
 		nomeModeloGeneros: NOME_MODELO_GENEROS,
-		valorNulo: VALOR_NULO,
 		
 		getRouter : function () {
 			return UIComponent.getRouterFor(this);
@@ -52,79 +50,6 @@ sap.ui.define([
 					idJogo: idJogo
 				}, true)
 				: this.getRouter().navTo(rota, {}, true);
-		},
-
-		fazerRequisicaoGet: function (url, nomeLista, view, idJogo) {
-			fetch(url)
-			   .then(respostaApi => {
-					if (!respostaApi.ok) {
-						respostaApi.json()
-							.then(respostaApi => {
-						   		this.validacao.mostrarMensagemDeErro(respostaApi, view)
-							});
-					}
-				  	return respostaApi.json();
-				})
-			   .then(respostaApi => {
-					const dataModel = new JSONModel();
-				  	dataModel.setData(respostaApi);
-					 
-				  	this.getView().setModel(dataModel, nomeLista);
-				});
-		},
-
-		fazerRequisicaoPostOuPatch: function (url, opcoes, jogo, view) {
-			const mensagemDeSucessoRequisicaoPostOuPatch = `${jogo.nome} foi salvo com sucesso`;
-			
-			fetch(url, opcoes)
-			   .then(respostaApi => {
-					if (!respostaApi.ok) {
-						respostaApi.json()
-							.then(respostaApi => {
-						   		this.validacao.mostrarMensagemDeErro(respostaApi, view)
-							});
-					}
-					else {
-						!!jogo.id
-							? this._mostrarMensagemDeSucesso(mensagemDeSucessoRequisicaoPostOuPatch, jogo.id)
-							: respostaApi.json().then(respostaApi => 
-								this._mostrarMensagemDeSucesso(mensagemDeSucessoRequisicaoPostOuPatch, respostaApi.id))
-					}
-				})
-		},
-
-		fazerRequisicaoObterPorId: function (url, view) {
-            fetch(url)
-                .then(respostaApi => {
-                    if(!respostaApi.ok) {
-                        respostaApi.json()
-                            .then(respostaApi => {
-                                this.validacao.mostrarMensagemDeErro(respostaApi, view);
-                            });
-                    }
-                    return respostaApi.json();
-                })
-                .then(respostaApi => {
-					const jogo = respostaApi;
-					this.colocarValorNoInput(jogo);
-                });
-        },
-
-		fazerRequisicaoDelete: function (url, jogoNome, view) {
-			const mensagemDeSucessoRequisicaoDelete = `${jogoNome} foi deletado com sucesso`
-			const opcoes = {
-                method: 'DELETE',
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            };
-
-			fetch(url, opcoes)
-				.then(respostaApi => { 
-					return !respostaApi.ok
-						? respostaApi.json().then(respostaApi => this.validacao.mostrarMensagemDeErro(respostaApi, view))
-						: this._mostrarMensagemDeSucesso(mensagemDeSucessoRequisicaoDelete);
-				});
 		},
 
 		debounce: function (funcao, tempoDeEspera){
