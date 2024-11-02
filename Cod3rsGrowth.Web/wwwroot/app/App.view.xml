@@ -5,5 +5,16 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	displayBlock="true">
-	<App id="app"/>
+	<tnt:ToolPage 
+		id="idToolPage">
+		<tnt:header>
+			<tnt:ToolHeader >
+				<FlexBox 
+					alignItems="Center">
+					<Text 
+						text="{i18n>App.Nome}"/>
+				</FlexBox>
+			</tnt:ToolHeader>
+		</tnt:header>
+	</tnt:ToolPage>
 </mvc:View>

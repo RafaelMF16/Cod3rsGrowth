@@ -11,9 +11,9 @@ sap.ui.define([
 	const nomeDaViewAdicionarOuEditarJogo = "adicionarJogo.AdicionarJogo";
 	const nomeDaViewJogo = "listagemJogo.ListagemJogo";
 	const nomeDaViewDetalhesJogo = "detalhesJogo.DetalhesJogo"
-	const botaoCancelarCriacaoJogoId = "idBotaoCancelarCriacaoJogo";
+	const botaoCancelarCriacaoidJogo = "idBotaoCancelarCriacaoJogo";
 	const botaAdicionarId = "idBotaoAdicionar";
-	const botaoSalvarCriacaoJogoId = "idBotaoSalvarCriacaoJogo";
+	const botaoSalvarCriacaoidJogo = "idBotaoSalvarCriacaoJogo";
 	const inputNomeId = "idInputNome";
 	const inputPrecoId = "idInputPreco";
 	const selectGeneroId = "idSelectGenero";
@@ -23,7 +23,7 @@ sap.ui.define([
 			actions: {
 				aoClicarNoBotaoDeCancelar: function () {
 					return this.waitFor({
-						id: botaoCancelarCriacaoJogoId,
+						id: botaoCancelarCriacaoidJogo,
 						viewName: nomeDaViewAdicionarOuEditarJogo,
 						actions: new Press(),
 						errorMessage: "O botão de cancelar não foi encontrado"
@@ -41,7 +41,7 @@ sap.ui.define([
 
 				aoClicarNoBotaoSalvar: function () {
 					return this.waitFor({
-						id: botaoSalvarCriacaoJogoId,
+						id: botaoSalvarCriacaoidJogo,
 						viewName: nomeDaViewAdicionarOuEditarJogo,
 						actions: new Press(),
 						errorMessage: "Botão salvar na tela de criação não foi encontrado"

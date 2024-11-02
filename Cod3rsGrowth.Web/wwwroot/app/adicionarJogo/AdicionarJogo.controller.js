@@ -3,142 +3,90 @@ sap.ui.define([
     '../model/formatter',
     '../servicos/validacao',
     'ui5/codersgrowth/common/ConstantesDaRota',
-    'ui5/codersgrowth/common/ConstantesDoBanco'
-], function(BaseController, formatter, validacao, ConstantesDaRota, ConstantesDoBanco) {
+    'ui5/codersgrowth/common/ConstantesDoBanco',
+    'sap/ui/model/json/JSONModel'
+], function(BaseController, formatter, validacao, ConstantesDaRota, ConstantesDoBanco, JSONModel) {
     'use strict';
 
-    const InputNomeId = "idInputNome";
-    const InputPrecoId = "idInputPreco";
-    const SelectGeneroId = "idSelectGenero";
-    const TituloPaginaAdicionarOuEditar = "tituloPaginasAdicionarOuEditar";
+    const NAMESPACE_CONTROLLER_ADICIONAR = "ui5.codersgrowth.app.adicionarJogo.AdicionarJogo";
     
-    var idJogo = "";
-    
-    return BaseController.extend("ui5.codersgrowth.app.adicionarJogo.AdicionarJogo",{
+    return BaseController.extend(NAMESPACE_CONTROLLER_ADICIONAR,{
         formatter: formatter,
         validacao: validacao,
-        constantesDoBanco: ConstantesDoBanco,
 
         onInit: function () {
             this.getRouter().getRoute("appAdicionarJogo").attachMatched(this._aoCoincidirRota, this);
         },
 
-        _aoCoincidirRota: function (oEvent) {
-            const nomeListaGeneros = "listaGeneros";
-            const tituloPaginaEditar = "Editar Jogo";
-            const titutloPaginaAdicionar = "Adicionar Jogo";
-            const viewAdicionarJogo = this._obterViewAdicionarJogo();
-            
-            this._obterIdJogoPelaRota(oEvent);
-            
-            this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_GENERO, nomeListaGeneros, viewAdicionarJogo);
-            
-            if (idJogo){
-                const urlObterPorId = ConstantesDoBanco.CAMINHO_PARA_API_JOGO + `/${idJogo}`;
-
-                this._mudarTituloDaPagina(tituloPaginaEditar);
-                this._limparValueState();
-                this.fazerRequisicaoObterPorId(urlObterPorId, viewAdicionarJogo);
-            } else {
-                this._mudarTituloDaPagina(titutloPaginaAdicionar);
-                this._limparCampos();
-                this._limparValueState();
-            }
+        _aoCoincidirRota: function () {
+            this.exibirEspera(async () => {
+                await this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_GENERO, this.nomeModeloGeneros, this.getView());
+                this._inicializarModelos();
+            });
         },
 
-        _obterViewAdicionarJogo(){
-            return this.getView();
+        _inicializarModelos: function () {
+            this._modeloJogo(new JSONModel());
+            this._modeloValueState(new JSONModel({
+                valueStateNome: "None",
+                valueStatePreco: "None",
+                valueStateGenero: "None"
+            }));
         },
 
-        _obterIdJogoPelaRota(evento) {
-            idJogo = evento.getParameters().arguments.jogoId;
+        _modeloJogo: function (jsonModel) {
+            const nomeModeloJogo = "jogo";
+
+            return this.modelo(nomeModeloJogo, jsonModel);
         },
 
-        _limparCampos: function () {
-            this.getView().byId(InputNomeId).setValue("");
-            this.getView().byId(InputPrecoId).setValue();
-            this.getView().byId(SelectGeneroId).setSelectedKey();
-        },
+        _modeloValueState: function (jsonModel) {
+            const nomeModeloValueState = "camposValueState";
 
-        _limparValueState: function () {
-            const valueStatePadrao = "None";
-
-            this.getView().byId(InputNomeId).setValueState(valueStatePadrao);
-            this.getView().byId(InputPrecoId).setValueState(valueStatePadrao);
-            this.getView().byId(SelectGeneroId).setValueState(valueStatePadrao);
-        },
-
-        _pegarValorDosCampos: function () {
-            const generoNaoDefinido = "NAODEFINIDO";
-
-            let valorInputNome = this.getView().byId(InputNomeId).getValue();
-            let valorInputPreco = this.getView().byId(InputPrecoId).getValue();
-            let valorSelectGenero = parseInt(this.getView().byId(SelectGeneroId).getSelectedKey());
-
-            let jogo = {};
-
-            if (valorInputNome)
-                jogo.nome = valorInputNome;
-
-            if (valorInputPreco)
-                jogo.preco = valorInputPreco;
-
-            if (valorSelectGenero != generoNaoDefinido)
-                jogo.genero = valorSelectGenero;
-
-            if (idJogo)
-                jogo.id = idJogo;
-
-            return jogo;
-        },
-
-        _mudarTituloDaPagina: function (titulo) {
-            this.getView().byId(TituloPaginaAdicionarOuEditar).setText(titulo);
+            return this.modelo(nomeModeloValueState, jsonModel);
         },
 
         _prepararMensagemDeAtencao: function () {
             const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
             const mensagem = "Tem certeza que deseja cancelar?"
-            const viewAdicionarJogo = this.getView();
-            this.mostrarMensagemDeAviso(viewAdicionarJogo, propriedadesI18n, mensagem, idJogo);
+
+            this.mostrarMensagemDeAviso(this.getView(), propriedadesI18n, mensagem, this.idJogo);
         },
 
-        salvarJogo: function () {
-            const jogo = this._pegarValorDosCampos();
-            const viewAdicionarJogo = this.getView();
-            const opcoes = {
-                method: 'POST',
-                body: JSON.stringify(jogo),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            };
+        _converterGeneroParaInteiro: function (dadosModelo) {
+            !!dadosModelo.genero 
+                ? dadosModelo.genero = parseInt(dadosModelo.genero)
+                : dadosModelo.genero = dadosModelo.genero;
+        },
+
+        _fazerValidacao: function (modeloValueState) {
+            let dadosModeloJogo = this._modeloJogo().getData();
             
-            if (idJogo) {
-                opcoes.method = 'PATCH'
-            }
-
-            if (this.validacao.validarTela(jogo, viewAdicionarJogo))
-                this.fazerRequisicaoPostOuPatch(ConstantesDoBanco.CAMINHO_PARA_API_JOGO, opcoes, jogo, viewAdicionarJogo);
-        },
-
-        cancelarAdicaoDeJogo: function () {
-            this._prepararMensagemDeAtencao();
-        },
-
-        colocarValorNoInput: function (jogo) {
-            const generos = this.getView().byId(SelectGeneroId).getItems();
-            const generoQueVaiSerSelecionadoNoSelect = generos.find(genero => genero.mProperties.text === jogo.genero);
+            this._converterGeneroParaInteiro(dadosModeloJogo);
             
-            this.getView().byId(InputNomeId).setValue(jogo.nome);
-            this.getView().byId(InputPrecoId).setValue(jogo.preco);
-            this.getView().byId(SelectGeneroId).setSelectedItem(generoQueVaiSerSelecionadoNoSelect);
+            return this.validacao.validarTela(dadosModeloJogo, modeloValueState.getData());
         },
 
-        aoClicarVoltarParaTelaDeListagem: function () {
-            !!idJogo
-                ? this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo)
-                : this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS);
+        _salvarJogo: function () {
+            let modeloValueState = this._modeloValueState();
+            let ehValido = this._fazerValidacao(modeloValueState);
+
+            modeloValueState.refresh();
+
+            if (ehValido)
+                this.fazerRequisicaoPostOuPatch(ConstantesDoBanco.CAMINHO_PARA_API_JOGO, opcoes, jogo, this.getView());
+        },
+
+        aoClicarSalvarJogo: function () {
+            this.exibirEspera(() => this._salvarJogo());
+        },
+
+        aoClicarCancelarAdicaoDoJogo: function () {
+            this.exibirEspera(() => this._prepararMensagemDeAtencao());
+        },
+
+        aoClicarNavegarParaListagem: function () {
+            this.exibirEspera(() => this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS));
         }
     });
 });

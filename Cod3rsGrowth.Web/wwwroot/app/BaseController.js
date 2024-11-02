@@ -9,17 +9,20 @@ sap.ui.define([
     'sap/m/library',
     'sap/m/Text',
     'sap/ui/core/library',
-	'ui5/codersgrowth/common/ConstantesDaRota'
-], function(Controller, UIComponent, JSONModel, MessageBox, validacao, Dialog, Button, mobileLibrary, Text, coreLibrary, ConstantesDaRota) {
+	'ui5/codersgrowth/common/ConstantesDaRota',
+	'sap/ui/core/BusyIndicator'
+], function(Controller, UIComponent, JSONModel, MessageBox, validacao, Dialog, Button, mobileLibrary, Text, coreLibrary, ConstantesDaRota, BusyIndicator) {
 	"use strict";
 
 	const NOME_MODELO_JOGOS = "jogos";
 	const NOME_MODELO_GENEROS = "generos";
+	const VALOR_NULO = null;
 	
 	return Controller.extend("ui5.codersgrowth.app.BaseController", {
 		validacao: validacao,
 		nomeModeloJogos: NOME_MODELO_JOGOS,
 		nomeModeloGeneros: NOME_MODELO_GENEROS,
+		valorNulo: VALOR_NULO,
 		
 		getRouter : function () {
 			return UIComponent.getRouterFor(this);
@@ -46,7 +49,7 @@ sap.ui.define([
 		navegarPara:function (rota, idJogo) {
 			!!idJogo
 				? this.getRouter().navTo(rota, {
-					jogoId: idJogo
+					idJogo: idJogo
 				}, true)
 				: this.getRouter().navTo(rota, {}, true);
 		},
@@ -188,5 +191,25 @@ sap.ui.define([
                 });
             this.mensagemDeAviso.open();
          },
+
+		 exibirEspera: function (action) {
+			const delay = 0;
+			const timeout = 500;
+			
+			BusyIndicator.show(delay);
+		
+			return Promise.all([
+				Promise.resolve(action()),                
+				new Promise(resolve => setTimeout(resolve, timeout)) 
+			])
+			.then(([result]) => {
+				BusyIndicator.hide(); 
+				return result; 
+			})
+			.catch((error) => {
+				BusyIndicator.hide(); 
+				throw error; 
+			});
+		}
 	});
 });
