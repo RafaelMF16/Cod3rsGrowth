@@ -11,7 +11,7 @@ sap.ui.define([
 
 	const nomeDaViewJogo = "listagemJogo.ListagemJogo";
 	const nomeDaViewAdicionarJogo = "adicionarJogo.AdicionarJogo";
-	const tabelaJogoId = "idTabelaJogo";
+	const tabelaidJogo = "idTabelaJogo";
 	const tabelaJogoTituloId = "idTabelaJogoTitulo";
 	const campoDePesquisaPorNomeId = "idCampoDePesquisaNome";
 	const campoDeSelecaoGeneroId = "idCampoDeSelecaoGenero";
@@ -26,7 +26,7 @@ sap.ui.define([
 			actions: {
 				aoApertarEmMais: function () {
 					return this.waitFor({
-						id: tabelaJogoId,
+						id: tabelaidJogo,
 						viewName: nomeDaViewJogo,
 						actions: new Press(),
 						errorMessage: "A tabela não tem botão para carregar mais items"
@@ -180,7 +180,7 @@ sap.ui.define([
 			assertions: {
 				aTabelaDeveTerPaginacao: function () {
 					return this.waitFor({
-						id: tabelaJogoId,
+						id: tabelaidJogo,
 						viewName: nomeDaViewJogo,
 						matchers: new AggregationLengthEquals({
 							name: "items",
@@ -211,7 +211,7 @@ sap.ui.define([
 
 				aTabelaDeveTerQuantidadeDeItemsCorrespondente: function (quantidade) {
 					return this.waitFor({
-						id: tabelaJogoId,
+						id: tabelaidJogo,
 						viewName: nomeDaViewJogo,
 						check: function(tabela){
 							return tabela.getItems().length === quantidade

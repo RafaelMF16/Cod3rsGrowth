@@ -2,39 +2,38 @@ sap.ui.define([
    'ui5/codersgrowth/app/BaseController',
    '../model/formatter',
    'ui5/codersgrowth/common/ConstantesDaRota',
-   'ui5/codersgrowth/common/ConstantesDoBanco'
+   'ui5/codersgrowth/common/ConstantesDoBanco',
 ], (BaseController, formatter, ConstantesDaRota, ConstantesDoBanco) => {
    "use strict";
 
    const NAMESPACE_DA_CONTROLLER_LISTAGEM_JOGO = "ui5.codersgrowth.app.listagemJogo.ListagemJogo";
-   const VALOR_NULO = null;
-   const TEMPO_DE_ESPERA_EM_MS = 400;
+   
 
    return BaseController.extend(NAMESPACE_DA_CONTROLLER_LISTAGEM_JOGO, {
       formatter: formatter,
-      valorFiltroNome: VALOR_NULO,
-      valorFiltroPrecoMin: VALOR_NULO,
-      valorFiltroPrecoMax: VALOR_NULO,
-      valorFiltroGenero: VALOR_NULO,
-      tempoDeEspera: TEMPO_DE_ESPERA_EM_MS,
+      valorFiltroNome: this.valorNulo,
+      valorFiltroPrecoMin: this.valorNulo,
+      valorFiltroPrecoMax: this.valorNulo,
+      valorFiltroGenero: this.valorNulo,
 
       onInit: function () {
+         const tempoDeEspera = 400;
+
          this.getRouter().getRoute("appListagemJogo").attachMatched(this._aoCoincidirRota, this);
 
-         this.debouncedFiltrarJogos = this.debounce(this._filtrarJogos.bind(this), this.tempoDeEspera);
+         this.debouncedFiltrarJogos = this.debounce(this._filtrarJogos.bind(this), tempoDeEspera);
       },
 
       _aoCoincidirRota: function () {
-         this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_JOGO, this.nomeModeloJogos);
-         this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_GENERO, this.nomeModeloGeneros);
+         this.exibirEspera(async () => {
+            await Promise.all([
+               this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_JOGO, this.nomeModeloJogos),
+               this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_GENERO, this.nomeModeloGeneros)
+            ]);
+         });
       },
 
-      _modeloFiltroJogo: function (jsonModel) {
-         const nomeModeloFiltro = "filtros"
-         return this.modelo(nomeModeloFiltro, jsonModel);
-      },
-
-      _filtrarJogos: function () {
+      _filtrarJogos: async function () {
          const viewJogo = this.getView();
          let query = {};
 
@@ -52,48 +51,48 @@ sap.ui.define([
 
          let urlObterTodosComFiltros = `${ConstantesDoBanco.CAMINHO_PARA_API_JOGO}?${new URLSearchParams(query)}`;
          
-         this.fazerRequisicaoGet(urlObterTodosComFiltros, this.nomeModeloJogos, viewJogo);
+         await this.fazerRequisicaoGet(urlObterTodosComFiltros, this.nomeModeloJogos, viewJogo);
       },
 
       _obterIdJogo(evento){
          const parametro = "listItem";
          const propriedadeId = "id";
-         let jogoId = evento
+         let idJogo = evento
             .getParameter(parametro)
             .getBindingContext(this.nomeModeloJogos)
             .getProperty(propriedadeId);
 
-         return jogoId;
+         return idJogo;
       },
 
-      aoSelecionarGenero: function (oEvent) {
-         this.valorFiltroGenero = oEvent.getSource().getSelectedKey();
+      aoSelecionarGenero: function (evento) {
+         this.valorFiltroGenero = evento.getSource().getSelectedKey();
 
-         this._filtrarJogos();
+         return this._filtrarJogos();
       },
 
-      aoPesquisarNome: function (oEvent) {
-         this.valorFiltroNome = oEvent.getSource().getValue();
+      aoPesquisarNome: function (evento) {
+         this.valorFiltroNome = evento.getSource().getValue();
+            
+         this.debouncedFiltrarJogos();
+      },
+
+      aoPesquisarPrecoMin: function (evento) {
+         this.valorFiltroPrecoMin = evento.getSource().getValue();
          
          this.debouncedFiltrarJogos();
       },
 
-      aoPesquisarPrecoMin: function (oEvent) {
-         this.valorFiltroPrecoMin = oEvent.getSource().getValue();
-         
-         this.debouncedFiltrarJogos();
-      },
-
-      aoPesquisarPrecoMax: function (oEvent) {
-         this.valorFiltroPrecoMax = oEvent.getSource().getValue();
+      aoPesquisarPrecoMax: function (evento) {
+         this.valorFiltroPrecoMax = evento.getSource().getValue();
 
          this.debouncedFiltrarJogos();
       },
 
-      atualizarTitulo: function (oEvent) {
+      atualizarTitulo: function (evento) {
          let listaJogoTitulo;
-         let listaJogo = oEvent.getSource();
-			let itemsDaListaJogo = oEvent.getParameter("total");
+         let listaJogo = evento.getSource();
+			let itemsDaListaJogo = evento.getParameter("total");
 
          const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
 
@@ -106,13 +105,15 @@ sap.ui.define([
       },
 
       aoClicarIrParaTelaDeAdicionarJogo: function () {
-         this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_ADICIONAR_JOGO);
+         this.exibirEspera(() => this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_ADICIONAR_JOGO));
       },
 
-      aoSelecionarJogo(oEvent){
-         let jogoId = this._obterIdJogo(oEvent);
-         
-         this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, jogoId);
+      aoSelecionarJogo(evento){
+         this.exibirEspera(() => {
+            let idJogo = this._obterIdJogo(evento);
+            
+            this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo);
+         });
       },
    });
 });

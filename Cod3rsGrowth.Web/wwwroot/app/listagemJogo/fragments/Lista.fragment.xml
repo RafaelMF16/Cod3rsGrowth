@@ -9,10 +9,10 @@
         items="{jogos>/}"
         headerText="{i18n>lista.Jogos.Titulo}"
         inset="false"
-        class="sapUiTinyMargin"
+        class="sapUiNoMargin"
         sticky="HeaderToolbar"
         updateFinished=".atualizarTitulo"
-        width="auto"
+        width="100%"
         growingThreshold="10"
         growing="true"
         itemPress="aoSelecionarJogo">

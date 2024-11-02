@@ -6,16 +6,6 @@
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true">
     <f:DynamicPage >
-        <f:title>
-            <f:DynamicPageTitle >
-                <f:heading>
-                    <Title 
-                        text="{i18n>listagemJogo.Titulo}"
-                        titleStyle= "H3"/>
-                </f:heading>
-            </f:DynamicPageTitle>
-        </f:title>
-
         <f:content>
             <core:Fragment fragmentName="ui5.codersgrowth.app.listagemJogo.fragments.Lista"/>
         </f:content>

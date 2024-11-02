@@ -35,37 +35,28 @@ sap.ui.define([
 			}
 		},
 
-        validarTela: function (jogo, view) {
-            const inputNomeId = "idInputNome";
-            const inputPrecoId = "idInputPreco";
-            const selectGeneroId = "idSelectGenero";
+        validarTela: function (jogo, modeloValueState) {
             const valueStateDeErro = "Error";
             const valueStatePadrao = "None";
             const stringVazia = "";
-
-            if (!jogo.nome || jogo.nome.trim() === stringVazia) {
-                view.byId(inputNomeId).setValueState(valueStateDeErro);
-            }
-            else {
-                view.byId(inputNomeId).setValueState(valueStatePadrao);
-            }
-                
-            if (!jogo.preco || jogo.preco.trim() === stringVazia) {
-                view.byId(inputPrecoId).setValueState(valueStateDeErro);
-            }
-            else {
-                view.byId(inputPrecoId).setValueState(valueStatePadrao);
-            }
-
-            if (!jogo.genero) {
-                view.byId(selectGeneroId).setValueState(valueStateDeErro);
-            }
-            else {
-                view.byId(selectGeneroId).setValueState(valueStatePadrao);
-            }
-
+            const generoNaoDefinido = 0;
+            
+            !jogo.nome || jogo.nome.trim() === stringVazia
+                ? modeloValueState.valueStateNome = valueStateDeErro
+                : modeloValueState.valueStateNome = valueStatePadrao
+              
+            !jogo.preco || jogo.preco.trim() === stringVazia
+                ? modeloValueState.valueStatePreco = valueStateDeErro
+                : modeloValueState.valueStatePreco = valueStatePadrao
+            
+            !jogo.genero || jogo.genero === generoNaoDefinido
+                ? modeloValueState.valueStateGenero = valueStateDeErro
+                : modeloValueState.valueStateGenero = valueStatePadrao
+            
             if (jogo.nome && jogo.preco && jogo.genero)
                 return true;
+            else
+                return false;
         },
     })
 })

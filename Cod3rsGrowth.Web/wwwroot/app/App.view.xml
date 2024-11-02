@@ -5,5 +5,43 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	displayBlock="true">
-	<App id="app"/>
+	<tnt:ToolPage 
+		id="idToolPage">
+		<tnt:header>
+			<tnt:ToolHeader >
+				<FlexBox 
+					alignItems="Center">
+					<Text 
+						text="{i18n>App.Nome}"/>
+				</FlexBox>
+			</tnt:ToolHeader>
+		</tnt:header>
+		<!-- <tnt:sideContent>
+			<tnt:SideNavigation 
+				expanded="true"
+				itemSelect="aoSelecionarItem">
+				<tnt:NavigationList >
+					<tnt:NavigationListItem 
+						icon="sap-icon://arrow-right"
+						text="{i18n>NavigationListItem.Jogos}"
+						expanded="false"
+						key="listagemJogo">
+					</tnt:NavigationListItem>
+				</tnt:NavigationList>
+
+			</tnt:SideNavigation>
+		</tnt:sideContent> -->
+		<tnt:mainContents>
+			<NavContainer >
+				<pages>
+					<ScrollContainer 
+						horizontal="false"
+						vertical="true"
+						height="100%">
+						<App id="app"/>
+					</ScrollContainer>
+				</pages>
+			</NavContainer>
+		</tnt:mainContents>
+	</tnt:ToolPage>
 </mvc:View>

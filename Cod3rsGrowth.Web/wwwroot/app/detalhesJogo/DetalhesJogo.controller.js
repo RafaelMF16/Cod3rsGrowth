@@ -30,7 +30,7 @@ sap.ui.define([
         },
 
         _obterIdJogoPelaRota(evento) {
-            const idJogo = evento.getParameters().arguments.jogoId;
+            const idJogo = evento.getParameters().arguments.idJogo;
 
             return idJogo;
         },
