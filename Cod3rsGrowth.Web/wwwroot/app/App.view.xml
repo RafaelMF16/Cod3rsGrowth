@@ -16,32 +16,5 @@
 				</FlexBox>
 			</tnt:ToolHeader>
 		</tnt:header>
-		<!-- <tnt:sideContent>
-			<tnt:SideNavigation 
-				expanded="true"
-				itemSelect="aoSelecionarItem">
-				<tnt:NavigationList >
-					<tnt:NavigationListItem 
-						icon="sap-icon://arrow-right"
-						text="{i18n>NavigationListItem.Jogos}"
-						expanded="false"
-						key="listagemJogo">
-					</tnt:NavigationListItem>
-				</tnt:NavigationList>
-
-			</tnt:SideNavigation>
-		</tnt:sideContent> -->
-		<tnt:mainContents>
-			<NavContainer >
-				<pages>
-					<ScrollContainer 
-						horizontal="false"
-						vertical="true"
-						height="100%">
-						<App id="app"/>
-					</ScrollContainer>
-				</pages>
-			</NavContainer>
-		</tnt:mainContents>
 	</tnt:ToolPage>
 </mvc:View>
