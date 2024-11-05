@@ -27,24 +27,25 @@ sap.ui.define([
             return HttpApiClient.obterTodos(url, view);
         },
 
-        obterPorId: function (id) {
-            let uri = HttpApiClient.converterEmUrl(URL_DA_CONTROLLER, id);
-            return HttpApiClient.get(uri);
+        obterPorId: function (id, view) {
+            let url = `${ConstantesDoBanco.CAMINHO_PARA_API_JOGO}/${id}`;
+            return HttpApiClient.get(url, view);
         },
 
-        remover: function (id) {
-            let uri = HttpApiClient.converterEmUrl(URL_DA_CONTROLLER, id);
-            return HttpApiClient.delete(uri);
+        remover: function (id, view) {
+            let url = `${ConstantesDoBanco.CAMINHO_PARA_API_JOGO}/${id}`;
+            return HttpApiClient.delete(url, view);
         },
 
-        atualizar: function (id, dados) {
-            let uri = HttpApiClient.converterEmUrl(URL_DA_CONTROLLER, id);
-            return HttpApiClient.uploadPost(uri, dados);
+        atualizar: function (dados, view) {
+            let url = ConstantesDoBanco.CAMINHO_PARA_API_JOGO
+            return HttpApiClient.uploadPost(url, dados, view);
         },
+        
+        criar: function (dados, view) {
+            let url = ConstantesDoBanco.CAMINHO_PARA_API_JOGO;
 
-        criar: function (dados) {
-            let uri = HttpApiClient.converterEmUrl(URL_DA_CONTROLLER);
-            return HttpApiClient.uploadPost(uri, dados);
+            return HttpApiClient.criar(url, dados, view);
         },
 
     }

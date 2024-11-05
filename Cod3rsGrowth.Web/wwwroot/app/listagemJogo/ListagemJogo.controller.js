@@ -2,14 +2,12 @@ sap.ui.define([
    'ui5/codersgrowth/app/BaseController',
    '../model/formatter',
    'ui5/codersgrowth/common/ConstantesDaRota',
-   'ui5/codersgrowth/common/ConstantesDoBanco',
    'sap/ui/model/json/JSONModel',
    '../repositorio/RepositorioJogo'
 ], (
    BaseController, 
    formatter, 
    ConstantesDaRota, 
-   ConstantesDoBanco,
    JSONModel,
    Repositorio
 ) => {
@@ -37,7 +35,7 @@ sap.ui.define([
          this.exibirEspera(async () => {
             await Promise.all([
                this._carregarJogos(),
-               this._carregarGeneros()
+               this.carregarGeneros()
             ]);
          });
       },
@@ -47,21 +45,10 @@ sap.ui.define([
          return this.modelo(nomeModeloJogos, jsonModel);
       },
 
-      _modeloGeneros: function (jsonModel) {
-         const nomeModeloGeneros = "generos";
-         return this.modelo(nomeModeloGeneros, jsonModel);
-      },
-
       _carregarJogos: async function (filtros) {
          const viewListagem = this.getView();
          let dados = await Repositorio.obterTodosJogos(filtros, viewListagem);
          this._modeloJogos(new JSONModel(dados));
-      },
-
-      _carregarGeneros: async function () {
-         const viewListagem = this.getView();
-         let dados = await Repositorio.obterTodosGeneros(viewListagem);
-         this._modeloGeneros(new JSONModel(dados));
       },
 
       _filtrarJogos: async function () {

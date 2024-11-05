@@ -3,9 +3,16 @@ sap.ui.define([
     '../model/formatter',
     '../servicos/validacao',
     'ui5/codersgrowth/common/ConstantesDaRota',
-    'ui5/codersgrowth/common/ConstantesDoBanco',
-    'sap/ui/model/json/JSONModel'
-], function(BaseController, formatter, validacao, ConstantesDaRota, ConstantesDoBanco, JSONModel) {
+    'sap/ui/model/json/JSONModel',
+    '../repositorio/RepositorioJogo'
+], function(
+    BaseController, 
+    formatter, 
+    validacao, 
+    ConstantesDaRota, 
+    JSONModel,
+    Repositorio
+) {
     'use strict';
 
     const NAMESPACE_CONTROLLER_ADICIONAR = "ui5.codersgrowth.app.adicionarJogo.AdicionarJogo";
@@ -20,7 +27,7 @@ sap.ui.define([
 
         _aoCoincidirRota: function () {
             this.exibirEspera(async () => {
-                await this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_GENERO, this.nomeModeloGeneros, this.getView());
+                await this.carregarGeneros();
                 this._inicializarModelos();
             });
         },
@@ -46,35 +53,33 @@ sap.ui.define([
             return this.modelo(nomeModeloValueState, jsonModel);
         },
 
-        _prepararMensagemDeAtencao: function () {
-            const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
-            const mensagem = "Tem certeza que deseja cancelar?"
-
-            this.mostrarMensagemDeAviso(this.getView(), propriedadesI18n, mensagem, this.idJogo);
-        },
-
         _converterGeneroParaInteiro: function (dadosModelo) {
             !!dadosModelo.genero 
                 ? dadosModelo.genero = parseInt(dadosModelo.genero)
                 : dadosModelo.genero = dadosModelo.genero;
         },
 
-        _fazerValidacao: function (modeloValueState) {
-            let dadosModeloJogo = this._modeloJogo().getData();
-            
+        _fazerValidacao: function (dadosModeloJogo, modeloValueState) {
             this._converterGeneroParaInteiro(dadosModeloJogo);
             
             return this.validacao.validarTela(dadosModeloJogo, modeloValueState.getData());
         },
 
+        _irParaDetalhes: function (idJogo) {
+            this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo);
+        },
+
         _salvarJogo: function () {
+            let dadosModeloJogo = this._modeloJogo().getData();
             let modeloValueState = this._modeloValueState();
-            let ehValido = this._fazerValidacao(modeloValueState);
+            let ehValido = this._fazerValidacao(dadosModeloJogo, modeloValueState);
 
             modeloValueState.refresh();
 
-            if (ehValido)
-                this.fazerRequisicaoPostOuPatch(ConstantesDoBanco.CAMINHO_PARA_API_JOGO, opcoes, jogo, this.getView());
+            if (ehValido){
+                Repositorio.criar(dadosModeloJogo, this.getView())
+                    .then(id => this._irParaDetalhes(id));
+            }
         },
 
         aoClicarSalvarJogo: function () {
@@ -82,7 +87,7 @@ sap.ui.define([
         },
 
         aoClicarCancelarAdicaoDoJogo: function () {
-            this.exibirEspera(() => this._prepararMensagemDeAtencao());
+            this.exibirEspera(() => this.mostrarMensagemDeAviso(this.getView()));
         },
 
         aoClicarNavegarParaListagem: function () {

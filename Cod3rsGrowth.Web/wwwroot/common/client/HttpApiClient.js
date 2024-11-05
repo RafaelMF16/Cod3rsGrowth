@@ -1,62 +1,113 @@
 sap.ui.define([
-	
-], function () {
+	'sap/m/MessageBox',
+    'sap/m/MessageToast'
+], function (
+    MessageBox,
+    MessageToast
+) {
 	"use strict";
+
+    const CONTENT_TYPE_JSON = "application/json";
 
 	return { 
         obterTodos: function (url, view) {
-            const erroAoObterDadosDaAPI = "Erro ao obter dados da API";
-
             return fetch(url)
                 .then(response => {
-                    if (response.ok)
-                        return response.json();
-                    else {
-                        return response.json()
-                            .then(error => {
-                                throw new Error(error.message || erroAoObterDadosDaAPI)
+                    if (!response.ok){
+                        response.json()
+                            .then(response => {
+                                this._exibirMensagemDeErro(response, view);
                             });
+                    } else {
+                        return response.json();
                     }
                 })
                 .catch(error => {
-                    this._exibirMensagemDeErro(error, view);
                     throw error;
-                })
+                });
         },
 
-        _exibirMensagemDeErro: function (erro, view) {
-            const propriedadesI18n = view.getModel("i18n").getResourceBundle();
-            const erroDeValidacao = "Erro de validação";
-        
-            const construirDetalhes = (status, detalhe) => {
-                return `
-                    <p><strong>${propriedadesI18n.getText("MessageBox.Erro.Status")}:</strong> ${status || "N/A"}</p>
-                    <p><strong>${propriedadesI18n.getText("MessageBox.Erro.Detalhes")}:</strong></p>
-                    <p>${detalhe || "Detalhes não disponíveis"}</p>
-                `;
+        criar: function (url, dados, view) {
+            const opcoes = {
+                method: 'POST',
+                headers: {
+                    Accept: CONTENT_TYPE_JSON,
+                    'Content-Type': CONTENT_TYPE_JSON
+                },
+                body: JSON.stringify(dados)
             };
+
+            return fetch(url, opcoes)
+                .then(response => {
+                    if (!response.ok){
+                        return response.json()
+                            .then(response => {
+                                this._exibirMensagemDeErro(response, view);
+                                throw new Error("Erro na requisição");
+                            });
+                    } else {
+                        this._exibirMensagemDeSucesso(view);
+                        return response.json()
+                            .then(response => response.id);                
+                    }
+                })
+                .catch(error => {
+                    throw error;
+                });
+        },
+
+        atualizar: function (url, dados, view) {
+            const opcoes = {
+                method: 'PATCH',
+                headers: {
+                    Accept: CONTENT_TYPE_JSON,
+                    'Content-Type': CONTENT_TYPE_JSON
+                },
+                body: JSON.stringify(dados)
+            };
+
+            return fetch(url, opcoes)
+                .then(response => {
+                    if (!response.ok){
+                        response.json()
+                            .then(response => {
+                                this._exibirMensagemDeErro(response, view);
+                            });
+                    } else {
+                        return response.json();                
+                    }
+                })
+                .catch(error => {
+                    throw error;
+                });
+        },
+
         
-            const opcoesMessageBox = {
+
+        _exibirMensagemDeErro: function (error, view) {
+            const erroDeValidacao = "Erro de validação"
+            const propriedadesI18n = view.getModel("i18n").getResourceBundle();
+            let mensagemDeErro = "";
+
+            if (error.Title === erroDeValidacao) {
+                mensagemDeErro = Object.values(error.Extensions.ErroDeValidacao).join("\r \n");
+            } else {
+                mensagemDeErro = "<p>Erro inesperado.</p>";
+            }
+        
+            MessageBox.error(mensagemDeErro, {
                 title: propriedadesI18n.getText("MessageBox.Erro.Titulo"),
+                id: "messageBoxErroAPI",
+                details: error.Detail,
                 styleClass: "sResponsivePaddingClasses",
                 dependentOn: view
-            };
+            });
+        },
         
-            if (erro?.Title === erroDeValidacao && erro.Extensions?.ErroDeValidacao) {
-                const mensagensDeErro = Object.values(erro.Extensions.ErroDeValidacao).join("\r\n");
-                
-                MessageBox.error(`${erro.Title}\n\n${mensagensDeErro}`, {
-                    ...opcoesMessageBox,
-                    id: "messageBoxErroDeValidacao",
-                    details: construirDetalhes(erro.Status, erro.Detail)
-                });
-            } else {
-                MessageBox.error(`${erro.Title || "Erro"}`, {
-                    ...opcoesMessageBox,
-                    id: "messageBoxErroInesperado",
-                    details: construirDetalhes(erro.Status, erro.Detail)
-                });
-            }
-        }        
+        _exibirMensagemDeSucesso: function (view) {
+            const propriedadesI18n = view.getModel("i18n").getResourceBundle();
+
+            MessageToast.show(propriedadesI18n.getText("MessageToast.OperacaoConcluidaComSucesso"));
+        }
     }
 });
