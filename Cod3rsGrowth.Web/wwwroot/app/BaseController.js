@@ -4,47 +4,45 @@ sap.ui.define([
 	'sap/ui/model/json/JSONModel',
 	'sap/m/MessageBox',
 	'ui5/codersgrowth/app/servicos/validacao',
-	'sap/m/Dialog',
-    'sap/m/Button',
-    'sap/m/library',
-    'sap/m/Text',
-    'sap/ui/core/library',
 	'ui5/codersgrowth/common/ConstantesDaRota',
-	'sap/ui/core/BusyIndicator'
-], function(Controller, UIComponent, JSONModel, MessageBox, validacao, Dialog, Button, mobileLibrary, Text, coreLibrary, ConstantesDaRota, BusyIndicator) {
+	'sap/ui/core/BusyIndicator',
+	'./repositorio/RepositorioJogo'
+], function(
+	Controller, 
+	UIComponent, 
+	JSONModel, 
+	MessageBox, 
+	validacao,  
+	ConstantesDaRota, 
+	BusyIndicator,
+	Repositorio
+) {
 	"use strict";
 
 	const NOME_MODELO_JOGOS = "jogos";
 	const NOME_MODELO_GENEROS = "generos";
-	const VALOR_NULO = null;
 	
 	return Controller.extend("ui5.codersgrowth.app.BaseController", {
 		validacao: validacao,
 		nomeModeloJogos: NOME_MODELO_JOGOS,
 		nomeModeloGeneros: NOME_MODELO_GENEROS,
-		valorNulo: VALOR_NULO,
 		
 		getRouter : function () {
 			return UIComponent.getRouterFor(this);
 		},
 
-		_mostrarMensagemDeSucesso: function (mensagemDeSucesso, idJogo) {
-			const rotaListagemJogo = "appListagemJogo";
+		modeloGeneros: function (jsonModel) {
+			const nomeModeloGeneros = "generos";
 
-            MessageBox.success(mensagemDeSucesso, {
-                id: "messageBoxSucesso",
-                styleClass: "sResponsivePaddingClasses",
-                dependentOn: this.getView(),
-                actions: [MessageBox.Action.OK],
-                onClose: (sAction) => {
-                    if (sAction === MessageBox.Action.OK) {
-						!!idJogo 
-							? this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo)
-							: this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS)
-                    }
-                }
-             });
-        },
+			return this.modelo(nomeModeloGeneros, jsonModel);
+		},
+
+		carregarGeneros: async function () {
+			const viewListagem = this.getView();
+			let dados = await Repositorio.obterTodosGeneros(viewListagem);
+
+			this.modeloGeneros(new JSONModel(dados));
+		},
 
 		navegarPara:function (rota, idJogo) {
 			!!idJogo
@@ -52,79 +50,6 @@ sap.ui.define([
 					idJogo: idJogo
 				}, true)
 				: this.getRouter().navTo(rota, {}, true);
-		},
-
-		fazerRequisicaoGet: function (url, nomeLista, view, idJogo) {
-			fetch(url)
-			   .then(respostaApi => {
-					if (!respostaApi.ok) {
-						respostaApi.json()
-							.then(respostaApi => {
-						   		this.validacao.mostrarMensagemDeErro(respostaApi, view)
-							});
-					}
-				  	return respostaApi.json();
-				})
-			   .then(respostaApi => {
-					const dataModel = new JSONModel();
-				  	dataModel.setData(respostaApi);
-					 
-				  	this.getView().setModel(dataModel, nomeLista);
-				});
-		},
-
-		fazerRequisicaoPostOuPatch: function (url, opcoes, jogo, view) {
-			const mensagemDeSucessoRequisicaoPostOuPatch = `${jogo.nome} foi salvo com sucesso`;
-			
-			fetch(url, opcoes)
-			   .then(respostaApi => {
-					if (!respostaApi.ok) {
-						respostaApi.json()
-							.then(respostaApi => {
-						   		this.validacao.mostrarMensagemDeErro(respostaApi, view)
-							});
-					}
-					else {
-						!!jogo.id
-							? this._mostrarMensagemDeSucesso(mensagemDeSucessoRequisicaoPostOuPatch, jogo.id)
-							: respostaApi.json().then(respostaApi => 
-								this._mostrarMensagemDeSucesso(mensagemDeSucessoRequisicaoPostOuPatch, respostaApi.id))
-					}
-				})
-		},
-
-		fazerRequisicaoObterPorId: function (url, view) {
-            fetch(url)
-                .then(respostaApi => {
-                    if(!respostaApi.ok) {
-                        respostaApi.json()
-                            .then(respostaApi => {
-                                this.validacao.mostrarMensagemDeErro(respostaApi, view);
-                            });
-                    }
-                    return respostaApi.json();
-                })
-                .then(respostaApi => {
-					const jogo = respostaApi;
-					this.colocarValorNoInput(jogo);
-                });
-        },
-
-		fazerRequisicaoDelete: function (url, jogoNome, view) {
-			const mensagemDeSucessoRequisicaoDelete = `${jogoNome} foi deletado com sucesso`
-			const opcoes = {
-                method: 'DELETE',
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            };
-
-			fetch(url, opcoes)
-				.then(respostaApi => { 
-					return !respostaApi.ok
-						? respostaApi.json().then(respostaApi => this.validacao.mostrarMensagemDeErro(respostaApi, view))
-						: this._mostrarMensagemDeSucesso(mensagemDeSucessoRequisicaoDelete);
-				});
 		},
 
 		debounce: function (funcao, tempoDeEspera){
@@ -157,40 +82,24 @@ sap.ui.define([
 			   sap.ui.getCore().applyTheme(nomeModoClaro);
 		},
 
-		mostrarMensagemDeAviso: function(view, propriedadesI18n, mensagemDeAviso, idJogo, nomeJogo){
-            const url = `/api/JogoControlador/${idJogo}`;
-                this.mensagemDeAviso = new Dialog({
-                    type: mobileLibrary.DialogType.Message,
-                    title: propriedadesI18n.getText("tituloMessageBoxAtencao"),
-                    state: coreLibrary.ValueState.Warning,
-                    content: new Text({ text: mensagemDeAviso }),
-                    beginButton: new Button({
-                        type: mobileLibrary.ButtonType.Negative,
-                        text: propriedadesI18n.getText("textoBotaoSimMessageBoxAtencao"),
-                        press: function () {
-                        	this.mensagemDeAviso.close();
+		mostrarMensagemDeAviso: function(view){
+			const propriedadesI18n = view.getModel("i18n").getResourceBundle();
+			const mensagemDeAviso = propriedadesI18n.getText("MessageBox.Aviso.TemCertezaQueDesejaCancelar");
 
-							if (!!nomeJogo){
-								this.fazerRequisicaoDelete(url, nomeJogo, view);
-							}
-							else if (!!idJogo){
-								this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo);
-							}
-                        	else {
-								this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS)
-							}
-                        }.bind(this)
-                    }),
-                    endButton: new Button({
-                        type: mobileLibrary.ButtonType.Success,
-                        text: propriedadesI18n.getText("textoBotaoNaoMessageBoxAtencao"),
-                        press: function () {
-                            this.mensagemDeAviso.close();
-                        }.bind(this)
-                    })
-                });
-            this.mensagemDeAviso.open();
-         },
+			MessageBox.warning(mensagemDeAviso, {
+				icon: MessageBox.Icon.WARNING,
+                title: propriedadesI18n.getText("MessageBox.Aviso.Titulo"),
+                id: "messageBoxAviso",
+				actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+				emphasizedAction: MessageBox.Action.YES,
+                styleClass: "sResponsivePaddingClasses",
+				onClose: (sAction) => {
+					if (sAction === sap.m.MessageBox.Action.YES)
+						this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS);
+				},
+                dependentOn: view
+            });
+        },
 
 		 exibirEspera: function (action) {
 			const delay = 0;

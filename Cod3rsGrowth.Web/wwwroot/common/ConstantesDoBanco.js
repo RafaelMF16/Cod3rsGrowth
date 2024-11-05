@@ -3,9 +3,9 @@ sap.ui.define([],
         'use strict';
     
         const constantesDoBanco = {
-            CAMINHO_PARA_API_JOGO: "/api/JogoControlador",
-            CAMINHO_PARA_API_AVALIACAO: "/api/TesteDeJogoControlador",
-            CAMINHO_PARA_API_GENERO: "/api/GeneroControlador"
+            CAMINHO_PARA_API_JOGO: "/api/Jogo",
+            CAMINHO_PARA_API_AVALIACAO: "/api/TesteDeJogo",
+            CAMINHO_PARA_API_GENERO: "/api/Genero"
         };
     
         return constantesDoBanco;

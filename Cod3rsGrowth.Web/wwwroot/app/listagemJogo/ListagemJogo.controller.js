@@ -2,19 +2,26 @@ sap.ui.define([
    'ui5/codersgrowth/app/BaseController',
    '../model/formatter',
    'ui5/codersgrowth/common/ConstantesDaRota',
-   'ui5/codersgrowth/common/ConstantesDoBanco',
-], (BaseController, formatter, ConstantesDaRota, ConstantesDoBanco) => {
+   'sap/ui/model/json/JSONModel',
+   '../repositorio/RepositorioJogo'
+], (
+   BaseController, 
+   formatter, 
+   ConstantesDaRota, 
+   JSONModel,
+   Repositorio
+) => {
    "use strict";
 
    const NAMESPACE_DA_CONTROLLER_LISTAGEM_JOGO = "ui5.codersgrowth.app.listagemJogo.ListagemJogo";
-   
+   const VALOR_NULO = null;
 
    return BaseController.extend(NAMESPACE_DA_CONTROLLER_LISTAGEM_JOGO, {
       formatter: formatter,
-      valorFiltroNome: this.valorNulo,
-      valorFiltroPrecoMin: this.valorNulo,
-      valorFiltroPrecoMax: this.valorNulo,
-      valorFiltroGenero: this.valorNulo,
+      valorFiltroNome: VALOR_NULO,
+      valorFiltroPrecoMin: VALOR_NULO,
+      valorFiltroPrecoMax: VALOR_NULO,
+      valorFiltroGenero: VALOR_NULO,
 
       onInit: function () {
          const tempoDeEspera = 400;
@@ -27,31 +34,42 @@ sap.ui.define([
       _aoCoincidirRota: function () {
          this.exibirEspera(async () => {
             await Promise.all([
-               this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_JOGO, this.nomeModeloJogos),
-               this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_GENERO, this.nomeModeloGeneros)
+               this._carregarJogos(),
+               this.carregarGeneros()
             ]);
          });
       },
 
+      _modeloJogos: function (jsonModel) {
+         const nomeModeloJogos = "jogos";
+         return this.modelo(nomeModeloJogos, jsonModel);
+      },
+
+      _carregarJogos: async function (filtros) {
+         const viewListagem = this.getView();
+         let dados = await Repositorio.obterTodosJogos(filtros, viewListagem);
+         this._modeloJogos(new JSONModel(dados));
+      },
+
       _filtrarJogos: async function () {
-         const viewJogo = this.getView();
-         let query = {};
+         const viewListagem = this.getView();
+         
+         let filtro = {};
 
          if (this.valorFiltroNome)
-            query.nome = this.valorFiltroNome;
+            filtro.nome = this.valorFiltroNome;
 
          if (this.valorFiltroGenero)
-            query.genero = this.valorFiltroGenero;
+            filtro.genero = this.valorFiltroGenero;
 
          if (this.valorFiltroPrecoMin)
-            query.precoMin = this.valorFiltroPrecoMin;
+            filtro.precoMin = this.valorFiltroPrecoMin;
 
          if (this.valorFiltroPrecoMax)
-            query.precoMax = this.valorFiltroPrecoMax;
-
-         let urlObterTodosComFiltros = `${ConstantesDoBanco.CAMINHO_PARA_API_JOGO}?${new URLSearchParams(query)}`;
+            filtro.precoMax = this.valorFiltroPrecoMax;
          
-         await this.fazerRequisicaoGet(urlObterTodosComFiltros, this.nomeModeloJogos, viewJogo);
+         let dados = await Repositorio.obterTodosJogos(filtro, viewListagem);
+         this._modeloJogos(new JSONModel(dados));
       },
 
       _obterIdJogo(evento){
