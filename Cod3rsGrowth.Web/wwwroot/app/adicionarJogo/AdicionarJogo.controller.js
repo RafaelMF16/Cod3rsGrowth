@@ -3,142 +3,141 @@ sap.ui.define([
     '../model/formatter',
     '../servicos/validacao',
     'ui5/codersgrowth/common/ConstantesDaRota',
-    'ui5/codersgrowth/common/ConstantesDoBanco'
-], function(BaseController, formatter, validacao, ConstantesDaRota, ConstantesDoBanco) {
+    'sap/ui/model/json/JSONModel',
+    '../repositorio/RepositorioJogo'
+], function(
+    BaseController, 
+    formatter, 
+    validacao, 
+    ConstantesDaRota, 
+    JSONModel,
+    Repositorio
+) {
     'use strict';
 
-    const InputNomeId = "idInputNome";
-    const InputPrecoId = "idInputPreco";
-    const SelectGeneroId = "idSelectGenero";
-    const TituloPaginaAdicionarOuEditar = "tituloPaginasAdicionarOuEditar";
+    const NAMESPACE_CONTROLLER_ADICIONAR = "ui5.codersgrowth.app.adicionarJogo.AdicionarJogo";
+    const TITULO_ADICIONAR_OU_EDITAR_ID = "idAdicionarOuEditarTitulo";
     
-    var idJogo = "";
-    
-    return BaseController.extend("ui5.codersgrowth.app.adicionarJogo.AdicionarJogo",{
+    return BaseController.extend(NAMESPACE_CONTROLLER_ADICIONAR,{
         formatter: formatter,
         validacao: validacao,
-        constantesDoBanco: ConstantesDoBanco,
+        idJogo: null,
 
         onInit: function () {
             this.getRouter().getRoute("appAdicionarJogo").attachMatched(this._aoCoincidirRota, this);
         },
 
-        _aoCoincidirRota: function (oEvent) {
-            const nomeListaGeneros = "listaGeneros";
-            const tituloPaginaEditar = "Editar Jogo";
-            const titutloPaginaAdicionar = "Adicionar Jogo";
-            const viewAdicionarJogo = this._obterViewAdicionarJogo();
-            
-            this._obterIdJogoPelaRota(oEvent);
-            
-            this.fazerRequisicaoGet(ConstantesDoBanco.CAMINHO_PARA_API_GENERO, nomeListaGeneros, viewAdicionarJogo);
-            
-            if (idJogo){
-                const urlObterPorId = ConstantesDoBanco.CAMINHO_PARA_API_JOGO + `/${idJogo}`;
+        _aoCoincidirRota: function (evento) {
+            this.exibirEspera(() => {
+                let ehEdicao = this._verificarSeEhEdicao(evento);
 
-                this._mudarTituloDaPagina(tituloPaginaEditar);
-                this._limparValueState();
-                this.fazerRequisicaoObterPorId(urlObterPorId, viewAdicionarJogo);
+                ehEdicao 
+                    ? this._prepararEdicao()
+                    : this._prepararAdicao();
+            });
+        },
+
+        _verificarSeEhEdicao: function (evento) {
+            if (!!evento.getParameters().arguments.idJogo){
+                this.idJogo = evento.getParameters().arguments.idJogo;
+                return true;
             } else {
-                this._mudarTituloDaPagina(titutloPaginaAdicionar);
-                this._limparCampos();
-                this._limparValueState();
+                return false;
             }
         },
 
-        _obterViewAdicionarJogo(){
-            return this.getView();
+        _prepararEdicao: async function () {
+            const editarTitulo = "Editar Jogo";
+            this._mudarTitulo(editarTitulo);
+            await this.carregarGeneros();
+            let jogo = await Repositorio.obterPorId(this.idJogo, this.getView());
+            let key = this._pegarKeyDoGenero(jogo.genero);
+            jogo.genero = key;
+            await this._inicializarModelos(jogo);
         },
 
-        _obterIdJogoPelaRota(evento) {
-            idJogo = evento.getParameters().arguments.jogoId;
+        _prepararAdicao: function () {
+            const adicionarTitulo = "Adicionar Jogo";
+            this._mudarTitulo(adicionarTitulo);
+            this.idJogo = null;
+            this.carregarGeneros();
+            this._inicializarModelos();
         },
 
-        _limparCampos: function () {
-            this.getView().byId(InputNomeId).setValue("");
-            this.getView().byId(InputPrecoId).setValue();
-            this.getView().byId(SelectGeneroId).setSelectedKey();
+        _pegarKeyDoGenero: function (jogoGenero) {
+            let dadosModeloGeneros = this.modeloGeneros().getData();
+            let genero = dadosModeloGeneros.find(genero => genero.descricao === jogoGenero);  
+            return genero.key;
         },
 
-        _limparValueState: function () {
-            const valueStatePadrao = "None";
-
-            this.getView().byId(InputNomeId).setValueState(valueStatePadrao);
-            this.getView().byId(InputPrecoId).setValueState(valueStatePadrao);
-            this.getView().byId(SelectGeneroId).setValueState(valueStatePadrao);
+        _mudarTitulo: function (titulo) {
+            this.byId(TITULO_ADICIONAR_OU_EDITAR_ID).setText(titulo)
         },
 
-        _pegarValorDosCampos: function () {
-            const generoNaoDefinido = "NAODEFINIDO";
+        _inicializarModelos: function (dados) {
+            !!dados
+                ? this.modeloJogo(new JSONModel(dados))
+                : this.modeloJogo(new JSONModel());
 
-            let valorInputNome = this.getView().byId(InputNomeId).getValue();
-            let valorInputPreco = this.getView().byId(InputPrecoId).getValue();
-            let valorSelectGenero = parseInt(this.getView().byId(SelectGeneroId).getSelectedKey());
-
-            let jogo = {};
-
-            if (valorInputNome)
-                jogo.nome = valorInputNome;
-
-            if (valorInputPreco)
-                jogo.preco = valorInputPreco;
-
-            if (valorSelectGenero != generoNaoDefinido)
-                jogo.genero = valorSelectGenero;
-
-            if (idJogo)
-                jogo.id = idJogo;
-
-            return jogo;
+            this._modeloValueState(new JSONModel({
+                valueStateNome: "None",
+                valueStatePreco: "None",
+                valueStateGenero: "None"
+            }));
         },
 
-        _mudarTituloDaPagina: function (titulo) {
-            this.getView().byId(TituloPaginaAdicionarOuEditar).setText(titulo);
+        _modeloValueState: function (jsonModel) {
+            const nomeModeloValueState = "camposValueState";
+
+            return this.modelo(nomeModeloValueState, jsonModel);
         },
 
-        _prepararMensagemDeAtencao: function () {
-            const propriedadesI18n = this.getView().getModel("i18n").getResourceBundle();
-            const mensagem = "Tem certeza que deseja cancelar?"
-            const viewAdicionarJogo = this.getView();
-            this.mostrarMensagemDeAviso(viewAdicionarJogo, propriedadesI18n, mensagem, idJogo);
+        _converterGeneroParaInteiro: function (dadosModelo) {
+            !!dadosModelo.genero 
+                ? dadosModelo.genero = parseInt(dadosModelo.genero)
+                : dadosModelo.genero = dadosModelo.genero;
         },
 
-        salvarJogo: function () {
-            const jogo = this._pegarValorDosCampos();
-            const viewAdicionarJogo = this.getView();
-            const opcoes = {
-                method: 'POST',
-                body: JSON.stringify(jogo),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
+        _fazerValidacao: function (dadosModeloJogo, modeloValueState) {
+            this._converterGeneroParaInteiro(dadosModeloJogo);
+            
+            return this.validacao.validarTela(dadosModeloJogo, modeloValueState.getData());
+        },
+
+        _irParaDetalhes: function (idJogo) {
+            this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo);
+        },
+
+        _salvarJogo: async function () {
+            let dadosModeloJogo = this.modeloJogo().getData();
+            let modeloValueState = this._modeloValueState();
+            let ehValido = this._fazerValidacao(dadosModeloJogo, modeloValueState);
+
+            modeloValueState.refresh();
+
+            if (ehValido){
+                if (!!this.idJogo){
+                    await Repositorio.atualizar(dadosModeloJogo, this.getView());
+                    this._irParaDetalhes(this.idJogo);
+                } else {
+                    await Repositorio.criar(dadosModeloJogo, this.getView())
+                        .then(id => this._irParaDetalhes(id));
                 }
-            };
-            
-            if (idJogo) {
-                opcoes.method = 'PATCH'
             }
-
-            if (this.validacao.validarTela(jogo, viewAdicionarJogo))
-                this.fazerRequisicaoPostOuPatch(ConstantesDoBanco.CAMINHO_PARA_API_JOGO, opcoes, jogo, viewAdicionarJogo);
         },
 
-        cancelarAdicaoDeJogo: function () {
-            this._prepararMensagemDeAtencao();
+        aoClicarSalvarJogo: function () {
+            this.exibirEspera(() => this._salvarJogo());
         },
 
-        colocarValorNoInput: function (jogo) {
-            const generos = this.getView().byId(SelectGeneroId).getItems();
-            const generoQueVaiSerSelecionadoNoSelect = generos.find(genero => genero.mProperties.text === jogo.genero);
-            
-            this.getView().byId(InputNomeId).setValue(jogo.nome);
-            this.getView().byId(InputPrecoId).setValue(jogo.preco);
-            this.getView().byId(SelectGeneroId).setSelectedItem(generoQueVaiSerSelecionadoNoSelect);
+        aoClicarCancelarAdicaoDoJogo: function () {
+            this.exibirEspera(() => {
+                this.mostrarMensagemDeAviso(this.getView(), this.idJogo)
+            });
         },
 
-        aoClicarVoltarParaTelaDeListagem: function () {
-            !!idJogo
-                ? this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo)
-                : this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS);
+        aoClicarNavegarParaListagem: function () {
+            this.exibirEspera(() => this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS));
         }
     });
 });

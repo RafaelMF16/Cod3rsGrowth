@@ -11,7 +11,7 @@ sap.ui.define([
 
     const nomeDaViewJogo = "listagemJogo.ListagemJogo";
     const nomeDaViewDetalhesJogo = "detalhesJogo.DetalhesJogo"
-	const tabelaJogoId = "idTabelaJogo";
+	const tabelaidJogo = "idTabelaJogo";
 
     Opa5.createPageObjects({
         paginaDetalhesOuRemoverJogo: {
@@ -86,7 +86,7 @@ sap.ui.define([
 
 				aoApertarEmMais: function () {
 					return this.waitFor({
-						id: tabelaJogoId,
+						id: tabelaidJogo,
 						viewName: nomeDaViewJogo,
 						actions: new Press(),
 						errorMessage: "A tabela não tem botão para carregar mais items"

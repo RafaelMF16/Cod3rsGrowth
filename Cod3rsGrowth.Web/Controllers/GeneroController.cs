@@ -6,7 +6,7 @@ namespace Cod3rsGrowth.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GeneroControlador : ControllerBase
+    public class GeneroController : ControllerBase
     {
         [HttpGet]
         public IActionResult ObterGeneros()

@@ -1,96 +1,109 @@
 <mvc:View 
-    xmlns:macros="sap.fe.macros" 
+controllerName="ui5.codersgrowth.app.adicionarJogo.AdicionarJogo"
     xmlns:form="sap.ui.layout.form" 
     xmlns:core="sap.ui.core" 
     xmlns:f="sap.f" 
-    controllerName="ui5.codersgrowth.app.adicionarJogo.AdicionarJogo"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true">
-    <Page >
-        <customHeader>
-            <Toolbar >
-                <FlexBox 
-                    height="100%"
-                    width="100%"
-                    alignItems="Center"
-                    justifyContent="SpaceBetween">
-                    <Button 
-                        icon="sap-icon://nav-back"
-                        press=".aoClicarVoltarParaTelaDeListagem"/>
-                    <Title 
-                        text="{i18n>tituloGeral}"
-                        titleStyle= "H3"/>
-                    <Button 
-                        icon="sap-icon://home"/>
-                </FlexBox>
-            </Toolbar>
-        </customHeader>
-        <FlexBox 
-            class= "sapUiTinyMargin"
-            width="auto"
-            height="100%"
-            direction="Column"
-            backgroundDesign="Transparent">
-            <form:SimpleForm 
-                editable="true"
-                layout="ResponsiveGridLayout"
-                labelSpanM="1"
-                emptySpanL="9">
-                <form:toolbar>
-                    <OverflowToolbar >
-                        <Title
-                            id="tituloPaginasAdicionarOuEditar"
-                            titleStyle="H4"/>
-                        <ToolbarSpacer />
-                        <Button 
-                            text="{i18n>adicionarJogoBotaoSalvarTexto}"
-                            icon="sap-icon://save"
-                            press=".salvarJogo"/>
-                        <Button 
-                            text="{i18n>adicionarJogoBotaoCancelarTexto}"
-                            icon="sap-icon://sys-cancel-2"
-                            press=".cancelarAdicaoDeJogo"/>
-                    </OverflowToolbar>
-                </form:toolbar>
-                <form:content>
-                    <Label 
-                        text="{i18n>adicionarJogoLabelNomeTexto}" 
-                        required="true"
-                        design="Bold"/>
-                    <Input
-                        id="idInputNome"
-                        placeholder="{i18n>placeholderInputNome}"
-                        required="true"
-                        valueStateText="{i18n>campoNomeVazioTexto}"
-                        value="{nomeModeloJogo>/nome}"/>
-                    <Label 
-                        text="{i18n>adicionarJogoLabelPrecoTexto}"
-                        design="Bold"/>
-                    <Input 
-                        id="idInputPreco"
-                        placeholder="{i18n>placeholderInputPreco}"
-                        type="Number"
-                        valueStateText="{i18n>campoPrecoVazioTexto}"/>
-                        <Label 
-                        text="{i18n>adicionarJogoLabelGeneroTexto}"
-                        required="true"
-                        design="Bold"/>
-                    <Select 
-                        id="idSelectGenero"
-                        required="true"
-                        items="{listaGeneros>/}"
-                        width="100%"
-                        valueStateText="{i18n>selectGeneroNaoDefinidoTexto}">
-                        <core:ListItem 
-                            key="{listaGeneros>key}"
-                            text="{
-                                path: 'listaGeneros>descricao',
-                                formatter: '.formatter.formatarValorPadraoSelectParaTelaDeCriacao'
-                            }"/>
-                    </Select>
-                </form:content>
-            </form:SimpleForm>
-        </FlexBox>
-    </Page>
+    <f:DynamicPage>
+        <f:content>
+            <FlexBox 
+                class= "sapUiTinyMargin"
+                width="auto"
+                direction="Column"
+                backgroundDesign="Transparent">
+                <form:Form 
+                    editable="true">
+                    <form:layout>
+                        <form:ResponsiveGridLayout 
+                            labelSpanM="4"
+                            emptySpanL="4"/>
+                    </form:layout>
+
+                    <form:toolbar>
+                        <OverflowToolbar 
+                            class="sapUiTinyMarginTopBottom">
+                            <FlexBox 
+                                justifyContent="Start"
+                                alignItems="Start"
+                                width="50%"
+                                height="100%">
+                                <Button 
+                                    icon="sap-icon://nav-back"
+                                    press=".aoClicarNavegarParaListagem"
+                                    class="sapUiTinyMarginEnd"/>
+
+                                <Title
+                                    id="idAdicionarOuEditarTitulo"
+                                    titleStyle="H4"/>
+                            </FlexBox>
+
+                            <FlexBox
+                                width="50%"
+                                height="100%"
+                                alignItems="Center"
+                                justifyContent="End">
+                                <Button 
+                                    text="{i18n>Common.Cancelar}"
+                                    tooltip="{i18n>Common.Cancelar}"
+                                    press=".aoClicarCancelarAdicaoDoJogo"
+                                    class="sapUiTinyMarginEnd"
+                                    type="Reject"
+                                    width="80px"/>
+                                
+                                <Button 
+                                    text="{i18n>Common.Salvar}"
+                                    tooltip="{i18n>Common.Salvar}"
+                                    press="aoClicarSalvarJogo"
+                                    type="Emphasized"
+                                    width="80px"/>
+                            </FlexBox>
+                        </OverflowToolbar>
+                    </form:toolbar>
+
+                    <form:FormContainer >
+                        <form:FormElement 
+                            label="{i18n>AdicionarJogo.Form.Nome.Label}">
+                            <Input
+                                placeholder="{i18n>AdicionarJogo.Form.Input.Nome.PlaceHolder}"
+                                required="true"
+                                valueStateText="{i18n>AdicionarJogo.Form.Nome.ValueStateText}"
+                                valueState="{camposValueState>/valueStateNome}"
+                                value="{jogo>/nome}"/>
+                        </form:FormElement>
+
+                        <form:FormElement
+                            label="{i18n>AdicionarJogo.Form.Preco.Label}">
+                            <Input 
+                                required="true"
+                                placeholder="{i18n>AdicionarJogo.Form.Input.Preco.PlaceHolder}"
+                                type="Number"
+                                valueStateText="{i18n>AdicionarJogo.Form.Preco.ValueStateText}"
+                                valueState="{camposValueState>/valueStatePreco}"
+                                value="{jogo>/preco}"/>
+                        </form:FormElement>
+
+                        <form:FormElement
+                            label="{i18n>AdicionarJogo.Form.Genero.Label}">
+                            <Select 
+                                required="true"
+                                items="{generos>/}"
+                                width="100%"
+                                valueStateText="{i18n>AdicionarJogo.Form.Genero.ValueStateText}"
+                                valueState="{camposValueState>/valueStateGenero}"
+                                selectedKey="{jogo>/genero}">
+                                <core:ListItem 
+                                    key="{generos>key}"
+                                    text="{
+                                        path: 'generos>descricao',
+                                        formatter: '.formatter.formatarValorPadraoSelectParaTelaDeCriacao'
+                                    }"/>
+                            </Select>
+                        </form:FormElement>
+                    </form:FormContainer>
+                </form:Form>
+            </FlexBox>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>

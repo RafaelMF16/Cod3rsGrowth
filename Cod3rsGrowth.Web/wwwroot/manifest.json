@@ -61,11 +61,11 @@
 				"name": "appListagemJogo",
 				"target": "listagemJogo"
          	}, {
-				"pattern": "AdicionarJogo/:jogoId:",
+				"pattern": "AdicionarJogo/:idJogo:",
 				"name": "appAdicionarJogo",
 				"target": "adicionarJogo"
 			}, {
-				"pattern": "DetalhesJogo/{jogoId}",
+				"pattern": "DetalhesJogo/{idJogo}",
 				"name": "appDetalhesJogo",
 				"target": "detalhesJogo"
 			}],
