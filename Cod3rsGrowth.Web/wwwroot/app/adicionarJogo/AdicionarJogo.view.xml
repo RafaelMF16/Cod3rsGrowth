@@ -35,7 +35,7 @@ controllerName="ui5.codersgrowth.app.adicionarJogo.AdicionarJogo"
                                     class="sapUiTinyMarginEnd"/>
 
                                 <Title
-                                    text="{i18n>AdicionarJogo.Titulo}"
+                                    id="idAdicionarOuEditarTitulo"
                                     titleStyle="H4"/>
                             </FlexBox>
 
@@ -49,13 +49,15 @@ controllerName="ui5.codersgrowth.app.adicionarJogo.AdicionarJogo"
                                     tooltip="{i18n>Common.Cancelar}"
                                     press=".aoClicarCancelarAdicaoDoJogo"
                                     class="sapUiTinyMarginEnd"
-                                    type="Ghost"/>
+                                    type="Reject"
+                                    width="80px"/>
                                 
                                 <Button 
                                     text="{i18n>Common.Salvar}"
                                     tooltip="{i18n>Common.Salvar}"
                                     press="aoClicarSalvarJogo"
-                                    type="Emphasized"/>
+                                    type="Emphasized"
+                                    width="80px"/>
                             </FlexBox>
                         </OverflowToolbar>
                     </form:toolbar>
@@ -74,6 +76,7 @@ controllerName="ui5.codersgrowth.app.adicionarJogo.AdicionarJogo"
                         <form:FormElement
                             label="{i18n>AdicionarJogo.Form.Preco.Label}">
                             <Input 
+                                required="true"
                                 placeholder="{i18n>AdicionarJogo.Form.Input.Preco.PlaceHolder}"
                                 type="Number"
                                 valueStateText="{i18n>AdicionarJogo.Form.Preco.ValueStateText}"

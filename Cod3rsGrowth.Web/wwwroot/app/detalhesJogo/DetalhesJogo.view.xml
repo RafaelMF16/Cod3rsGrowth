@@ -1,74 +1,95 @@
-<mvc:View xmlns:unified="sap.ui.unified" xmlns:calendar="sap.ui.unified.calendar" xmlns:uxap="sap.uxap" 
+<mvc:View xmlns:form="sap.ui.layout.form" 
+    xmlns:uxap="sap.uxap" 
     controllerName="ui5.codersgrowth.app.detalhesJogo.DetalhesJogo"
     xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout"
-	xmlns:form="sap.ui.layout.form"
-	xmlns:macros="sap.fe.macros"
     displayBlock="true">
-    <Page >
-        <customHeader>
-            <Toolbar >
-                <FlexBox 
-                    height="100%"
-                    width="100%"
-                    alignItems="Center"
-                    justifyContent="SpaceBetween">
-                    <Button 
-                        icon="sap-icon://nav-back"
-                        press=".aoClicarVoltarParaTelaDeListagem"/>
-                    <Title 
-                        text="{i18n>tituloGeral}"
-                        titleStyle= "H3"/>
-                    <Button 
-                        icon="sap-icon://home"/>
-                </FlexBox>
-            </Toolbar>
-        </customHeader>
-        <FlexBox 
-            class= "sapUiTinyMargin"
-            width="auto"
-            height="100%"
-            direction="Column"
-            backgroundDesign="Transparent">
-            <form:SimpleForm 
-                editable="true"
-                layout="ResponsiveGridLayout"
-                labelSpanM="1"
-                emptySpanL="9">
-                <form:toolbar>
-                    <OverflowToolbar >
+    <uxap:ObjectPageLayout >
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle >
+                <uxap:heading>
+                    <FlexBox 
+                        alignItems="Center">
+                        <Button 
+                            icon="sap-icon://nav-back"
+                            press="aoClicarVoltarParaListagem"
+                            type="Transparent"/>
+
                         <Title 
-                            text="{i18n>tituloDetalhesTexto}"
-                            titleStyle="H4"/>
-                        <Title
-                            id= "idJogoNomeTitulo"
-                            text="{jogo>/nome}"
-                            titleStyle="H4"/>
-                        <ToolbarSpacer />
-                        <Button 
-                            text="{i18n>detalhesBotaoEditarTexto}"
-                            icon="sap-icon://edit"
-                            press=".aoClicarIrParaEdicao"/>
-                        <Button 
-                            text="{i18n>detalhesBotaoRemoverTexto}"
-                            icon="sap-icon://delete"
-                            press=".aoClicarRemoverJogo"/>
-                    </OverflowToolbar>
-                </form:toolbar>
-                <form:content>
-                    <Label 
-                        text="{i18n>detalhesLabelPrecoTexto}"
-                        design="Bold"/>
-                    <Text 
-                        text="{jogo>/preco}"/>
-                    <Label 
-                        text="{i18n>detalhesLabelGeneroTexto}"
-                        design="Bold"/>
-                    <Text 
-                        text="{jogo>/genero}"/>
-                </form:content>
-            </form:SimpleForm>
-        </FlexBox>
-    </Page>
+                            class="sapUiSmallMarginBegin"
+                            text="{jogo>/nome}" />                        
+                    </FlexBox>
+                </uxap:heading>
+
+                <uxap:actions>
+                    <Button
+                        press="aoClicarRemoverJogo"
+                        tooltip="{i18n>Common.Remover}"
+                        text="{i18n>Common.Remover}"
+                        type="Reject" 
+                        width="80px"/>
+
+                    <Button
+                        press="aoClicarIrParaEdicao"
+                        tooltip="{i18n>Common.Editar}"
+                        text="{i18n>Common.Editar}"
+                        type="Emphasized" 
+                        width="80px"/>
+                </uxap:actions>
+            </uxap:ObjectPageDynamicHeaderTitle> 
+        </uxap:headerTitle>
+
+        <uxap:headerContent>
+            <FlexBox
+                height="100px"
+                alignItems="Center"
+                justifyContent="SpaceBetween"
+                class="sapUiNoMargin">
+                <form:Form >
+                        <form:layout>
+                            <form:ResponsiveGridLayout 
+                                labelSpanM="2"     
+                                columnsL="1"       
+                                labelSpanL="2"     
+                                emptySpanL="0"     
+                                adjustLabelSpan="false"/>
+                        </form:layout>
+
+                        <form:FormContainer >
+                            <form:FormElement >
+                                <HBox >
+                                    <Label 
+                                        text="{i18n>Detalhes.ObjectAttribute.Genero.Titulo}" 
+                                        design="Bold"
+                                        showColon="true"
+                                        class="sapUiTinyMarginEnd"/>
+
+                                    <Text 
+                                    text="{jogo>/genero}"
+                                    wrapping="false"/>
+                                </HBox>
+                            </form:FormElement>
+
+                            <form:FormElement >
+                                <HBox >
+                                    <Label 
+                                        text="{i18n>Detalhes.ObjectAttribute.Preco.Titulo}" 
+                                        design="Bold"
+                                        showColon="true"
+                                        class="sapUiTinyMarginEnd"/>
+
+                                    <Text 
+                                    text="{ 
+                                        path: 'jogo>/preco', 
+                                        formatter: '.formatter.formatarJogosGratis'
+                                    }"
+                                    wrapping="false"/>
+                                </HBox>
+                            </form:FormElement>
+                        </form:FormContainer>
+                    </form:Form>
+            </FlexBox>
+        </uxap:headerContent>
+    </uxap:ObjectPageLayout>
 </mvc:View>

@@ -13,7 +13,7 @@ sap.ui.define([
                 ? modeloValueState.valueStateNome = valueStateDeErro
                 : modeloValueState.valueStateNome = valueStatePadrao
               
-            !jogo.preco || jogo.preco.trim() === stringVazia
+            !jogo.preco
                 ? modeloValueState.valueStatePreco = valueStateDeErro
                 : modeloValueState.valueStatePreco = valueStatePadrao
             

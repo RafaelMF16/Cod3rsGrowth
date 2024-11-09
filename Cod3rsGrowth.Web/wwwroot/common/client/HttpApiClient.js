@@ -10,7 +10,7 @@ sap.ui.define([
     const CONTENT_TYPE_JSON = "application/json";
 
 	return { 
-        obterTodos: function (url, view) {
+        get: function (url, view) {
             return fetch(url)
                 .then(response => {
                     if (!response.ok){
@@ -27,7 +27,7 @@ sap.ui.define([
                 });
         },
 
-        criar: function (url, dados, view) {
+        post: function (url, dados, view) {
             const opcoes = {
                 method: 'POST',
                 headers: {
@@ -56,7 +56,7 @@ sap.ui.define([
                 });
         },
 
-        atualizar: function (url, dados, view) {
+        patch: function (url, dados, view) {
             const opcoes = {
                 method: 'PATCH',
                 headers: {
@@ -74,7 +74,7 @@ sap.ui.define([
                                 this._exibirMensagemDeErro(response, view);
                             });
                     } else {
-                        return response.json();                
+                        this._exibirMensagemDeSucesso(view);               
                     }
                 })
                 .catch(error => {
@@ -82,7 +82,30 @@ sap.ui.define([
                 });
         },
 
-        
+        delete: function (url, view) {
+            const opcoes = {
+                method: 'DELETE',
+                headers: {
+                    Accept: CONTENT_TYPE_JSON,
+                    'Content-Type': CONTENT_TYPE_JSON
+                },
+            };
+
+            return fetch(url, opcoes)
+                .then(response => {
+                    if (!response.ok){
+                        response.json()
+                            .then(response => {
+                                this._exibirMensagemDeErro(response, view);
+                            });
+                    } else {
+                        this._exibirMensagemDeSucesso(view);               
+                    }
+                })
+                .catch(error => {
+                    throw error;
+                });
+        },
 
         _exibirMensagemDeErro: function (error, view) {
             const erroDeValidacao = "Erro de validação"

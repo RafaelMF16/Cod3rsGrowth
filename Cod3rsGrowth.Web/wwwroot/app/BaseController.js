@@ -38,8 +38,8 @@ sap.ui.define([
 		},
 
 		carregarGeneros: async function () {
-			const viewListagem = this.getView();
-			let dados = await Repositorio.obterTodosGeneros(viewListagem);
+			const view = this.getView();
+			let dados = await Repositorio.obterTodosGeneros(view);
 
 			this.modeloGeneros(new JSONModel(dados));
 		},
@@ -51,6 +51,12 @@ sap.ui.define([
 				}, true)
 				: this.getRouter().navTo(rota, {}, true);
 		},
+		
+		modeloJogo: function (jsonModel) {
+            const nomeModeloJogo = "jogo";
+
+            return this.modelo(nomeModeloJogo, jsonModel);
+        },
 
 		debounce: function (funcao, tempoDeEspera){
 			let timeout;
@@ -82,7 +88,7 @@ sap.ui.define([
 			   sap.ui.getCore().applyTheme(nomeModoClaro);
 		},
 
-		mostrarMensagemDeAviso: function(view){
+		mostrarMensagemDeAviso: function(view, idJogo){
 			const propriedadesI18n = view.getModel("i18n").getResourceBundle();
 			const mensagemDeAviso = propriedadesI18n.getText("MessageBox.Aviso.TemCertezaQueDesejaCancelar");
 
@@ -94,8 +100,11 @@ sap.ui.define([
 				emphasizedAction: MessageBox.Action.YES,
                 styleClass: "sResponsivePaddingClasses",
 				onClose: (sAction) => {
-					if (sAction === sap.m.MessageBox.Action.YES)
-						this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS);
+					if (sAction === sap.m.MessageBox.Action.YES) {
+						!!idJogo
+							? this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DE_DETALHE, idJogo)
+							: this.navegarPara(ConstantesDaRota.NOME_DA_ROTA_DA_LISTAGEM_DE_JOGOS);
+					}
 				},
                 dependentOn: view
             });

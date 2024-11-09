@@ -19,7 +19,7 @@
         <headerToolbar>
             <OverflowToolbar >
                 <Title 
-                    id="idListaJogoTitulo"
+                    id=""
                     titleStyle="H4"/>
                 <ToolbarSpacer />
                 <SearchField 

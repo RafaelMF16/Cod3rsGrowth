@@ -18,13 +18,13 @@ sap.ui.define([
                     ? `?${queryParams}` 
                     : '';
             }
-            return HttpApiClient.obterTodos(url, view);
+            return HttpApiClient.get(url, view);
         },
 
         obterTodosGeneros: function (view) {
             let url = ConstantesDoBanco.CAMINHO_PARA_API_GENERO;
 
-            return HttpApiClient.obterTodos(url, view);
+            return HttpApiClient.get(url, view);
         },
 
         obterPorId: function (id, view) {
@@ -39,13 +39,13 @@ sap.ui.define([
 
         atualizar: function (dados, view) {
             let url = ConstantesDoBanco.CAMINHO_PARA_API_JOGO
-            return HttpApiClient.uploadPost(url, dados, view);
+            return HttpApiClient.patch(url, dados, view);
         },
         
         criar: function (dados, view) {
             let url = ConstantesDoBanco.CAMINHO_PARA_API_JOGO;
 
-            return HttpApiClient.criar(url, dados, view);
+            return HttpApiClient.post(url, dados, view);
         },
 
     }
